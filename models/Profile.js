@@ -27,9 +27,15 @@ const ProfileSchema = new mongoose.Schema({
 	},
 	contacts: [
 		{
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'user',
-			required: true,
+			id: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'user',
+				required: true,
+			},
+			nickname: {
+				type: String,
+				default: '',
+			},
 		},
 	],
 	blocklist: [

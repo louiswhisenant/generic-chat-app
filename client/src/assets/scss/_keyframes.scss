@@ -1,0 +1,12 @@
+@keyframes button-pulse-3 {
+	from {
+		color: $color-3;
+		box-shadow: 0 0 0 0.175rem $color-3;
+		background-color: initial;
+	}
+	to {
+		color: $color-2;
+		box-shadow: none;
+		background-color: lighten($color-3, 5%);
+	}
+}

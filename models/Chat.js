@@ -1,53 +1,30 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const PostSchema = new Schema({
-	participants: [
-		{
-			id: {
-				type: Schema.Types.ObjectId,
-				ref: 'user',
+const ChatSchema = new Schema(
+	{
+		participants: [
+			{
+				id: {
+					type: Schema.Types.ObjectId,
+					ref: 'user',
+				},
+				role: {
+					type: String,
+					enum: ['author', 'admin', 'participant'],
+					required: true,
+					default: 'participant',
+				},
 			},
-			name: {
-				type: String,
-				required: true,
-			},
-			role: {
-				type: String,
-				enum: ['author', 'admin', 'participant'],
-				required: true,
-				default: 'participant',
-			},
+		],
+		desc: {
+			type: String,
 		},
-	],
-	desc: {
-		type: String,
-	},
-	name: {
-		type: String,
-	},
-	messages: [
-		{
-			status: {
-				type: String,
-				enum: ['sent', 'delivered', 'read', 'error', 'loading'],
-				required: true,
-				default: 'loading',
-			},
-			text: {
-				type: String,
-				required: true,
-			},
-			date: {
-				type: Date,
-				default: Date.now,
-			},
+		name: {
+			type: String,
 		},
-	],
-	date: {
-		type: Date,
-		default: Date.now,
 	},
-});
+	{ timestamps: true }
+);
 
-module.exports = Post = mongoose.model('post', PostSchema);
+module.exports = Chat = mongoose.model('chat', ChatSchema);

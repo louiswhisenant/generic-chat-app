@@ -37,8 +37,9 @@ connectDB();
 
 // Define routes
 // app.use('/api/EXAMPLE', require('./routes/api/EXAMPLE'));
-// app.use('/api/auth', require('./routes/api/auth'));
-// app.use('/api/chats', require('./routes/api/chats'));
+app.use('/api/auth', require('./routes/api/auth'));
+app.use('/api/chats', require('./routes/api/chats'));
+app.use('/api/messages', require('./routes/api/messages'));
 app.use('/api/profiles', require('./routes/api/profiles'));
 app.use('/api/users', require('./routes/api/users'));
 

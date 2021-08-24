@@ -1,0 +1,40 @@
+#bootstrap-overrides {
+	// BTN
+	.btn {
+		background-color: transparent;
+		border-radius: 0.25rem;
+		border: none;
+		padding: 0.5rem;
+	}
+
+	.btn-3 {
+		color: $color-3;
+		box-shadow: 0 0 0 0.175rem $color-3;
+
+		&:hover {
+			background-color: $color-3;
+			color: $color-2;
+			box-shadow: 0 0 0 0.175rem transparent;
+			transition: ease 0.5s all;
+		}
+
+		&:focus {
+			background-color: darken($color-3, 10%);
+			color: $color-2;
+			transition: ease 0.5s all;
+			outline: none;
+		}
+
+		&:active {
+			background-color: darken($color-3, 15%);
+			position: relative;
+			top: 0.1rem;
+			transition: ease 0.3s all;
+		}
+	}
+
+	.btn-4 {
+		color: $color-4;
+		box-shadow: 0 0 0 0.175rem $color-4;
+	}
+}

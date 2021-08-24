@@ -1,0 +1,49 @@
+// ALERT
+#bootstrap-overrides {
+	.alert {
+		position: fixed;
+		min-width: 75vw;
+		padding: 0.8rem;
+		top: 5rem;
+		left: 50%;
+		transform: translateX(-50%);
+		background: lighten($color-1, 10%);
+		color: $color-2;
+		text-align: center;
+		border: none;
+	}
+
+	.alert-text {
+		position: absolute;
+		left: 50%;
+		top: 50%;
+		transform: translate(-50%, -50%);
+		background: none;
+
+		i {
+			background-color: transparent;
+		}
+	}
+
+	.close-alert {
+		background-color: transparent;
+		padding: 0 0.5rem;
+		color: $color-2;
+		font-size: 1.2rem;
+		float: right;
+		border: none;
+		cursor: pointer;
+	}
+
+	.alert-success {
+		background-color: darken($color-green, 10%);
+	}
+
+	.alert-warning {
+		background-color: darken($color-orange, 10%);
+	}
+
+	.alert-danger {
+		background-color: darken($color-red, 10%);
+	}
+}

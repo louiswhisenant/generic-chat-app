@@ -1,0 +1,51 @@
+$color-1: #292929;
+$color-2: #eeeeee;
+$color-3: #1a9eaf;
+$color-4: #cc8500;
+$dark: #4b4b4b;
+
+$shadow: #202020;
+
+$initialized: #7397af;
+$submitted: #067d9b;
+$retrieving: #d19945;
+$retrieved: #e06c00;
+$stocking: #4fc25b;
+$complete: #00750a;
+
+$color-orange: #e06c00;
+$color-green: #06720f;
+$color-red: #a10000;
+
+$bp-sm: 576px;
+$bp-md: 768px;
+$bp-lg: 992px;
+$bp-xl: 1200px;
+$bp-xxl: 1400px;
+
+:export {
+	color1: $color-1;
+	color2: $color-2;
+	color3: $color-3;
+	color4: $color-4;
+
+	dark: $dark;
+	colorShadow: $shadow;
+
+	initialized: $initialized;
+	submitted: $submitted;
+	retrieving: $retrieving;
+	retrieved: $retrieved;
+	stocking: $stocking;
+	complete: $complete;
+
+	colorOrange: $color-orange;
+	colorGreen: $color-green;
+	colorRed: $color-red;
+
+	bpSM: $bp-sm;
+	bpMD: $bp-md;
+	bpLG: $bp-lg;
+	bpXL: $bp-xl;
+	bpXXL: $bp-xxl;
+}

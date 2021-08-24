@@ -1,0 +1,122 @@
+:export {
+  color1: #292929;
+  color2: #eeeeee;
+  color3: #1a9eaf;
+  color4: #cc8500;
+  dark: #4b4b4b;
+  colorShadow: #202020;
+  initialized: #7397af;
+  submitted: #067d9b;
+  retrieving: #d19945;
+  retrieved: #e06c00;
+  stocking: #4fc25b;
+  complete: #00750a;
+  colorOrange: #e06c00;
+  colorGreen: #06720f;
+  colorRed: #a10000;
+  bpSM: 576px;
+  bpMD: 768px;
+  bpLG: 992px;
+  bpXL: 1200px;
+  bpXXL: 1400px;
+}
+
+#bootstrap-overrides .btn {
+  background-color: transparent;
+  border-radius: 0.25rem;
+  border: none;
+  padding: 0.5rem;
+}
+#bootstrap-overrides .btn-3 {
+  color: #1a9eaf;
+  box-shadow: 0 0 0 0.175rem #1a9eaf;
+}
+#bootstrap-overrides .btn-3:hover {
+  background-color: #1a9eaf;
+  color: #eeeeee;
+  box-shadow: 0 0 0 0.175rem transparent;
+  transition: ease 0.5s all;
+}
+#bootstrap-overrides .btn-3:focus {
+  background-color: #137683;
+  color: #eeeeee;
+  transition: ease 0.5s all;
+  outline: none;
+}
+#bootstrap-overrides .btn-3:active {
+  background-color: #10626c;
+  position: relative;
+  top: 0.1rem;
+  transition: ease 0.3s all;
+}
+#bootstrap-overrides .btn-4 {
+  color: #cc8500;
+  box-shadow: 0 0 0 0.175rem #cc8500;
+}
+
+@keyframes button-pulse-3 {
+  from {
+    color: #1a9eaf;
+    box-shadow: 0 0 0 0.175rem #1a9eaf;
+    background-color: initial;
+  }
+  to {
+    color: #eeeeee;
+    box-shadow: none;
+    background-color: #1db2c5;
+  }
+}
+#bootstrap-overrides .alert {
+  position: fixed;
+  min-width: 75vw;
+  padding: 0.8rem;
+  top: 5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #434343;
+  color: #eeeeee;
+  text-align: center;
+  border: none;
+}
+#bootstrap-overrides .alert-text {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: none;
+}
+#bootstrap-overrides .alert-text i {
+  background-color: transparent;
+}
+#bootstrap-overrides .close-alert {
+  background-color: transparent;
+  padding: 0 0.5rem;
+  color: #eeeeee;
+  font-size: 1.2rem;
+  float: right;
+  border: none;
+  cursor: pointer;
+}
+#bootstrap-overrides .alert-success {
+  background-color: #034209;
+}
+#bootstrap-overrides .alert-warning {
+  background-color: #ad5300;
+}
+#bootstrap-overrides .alert-danger {
+  background-color: #6e0000;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  background-color: #292929;
+  color: #eeeeee;
+}
+
+html,
+body {
+  background-color: #292929;
+  color: #eeeeee;
+}
