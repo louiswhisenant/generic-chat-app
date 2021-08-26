@@ -4,10 +4,10 @@ import Chats from '../chats/Chats';
 
 const Dashboard = () => {
 	return (
-		<div>
+		<div className='fullscreen'>
 			<Chats />
-			<Button className='btn-3'>
-				<i className='fas fa-pen-square'></i>
+			<Button className='btn btn-3 btn-circle'>
+				<i className='fas fa-pen bg-transparent'></i>
 			</Button>
 		</div>
 	);

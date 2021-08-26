@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Container, Form, Input } from 'reactstrap';
+import { Form, FormGroup, Input, Label } from 'reactstrap';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../../redux/actions/auth';
@@ -9,6 +9,8 @@ const Login = ({ isAuthenticated, login }) => {
 		email: '',
 		password: '',
 	});
+	const emailInput = document.querySelector('#login-email');
+	const passwordInput = document.querySelector('#login-password');
 
 	const { email, password } = data;
 
@@ -27,34 +29,62 @@ const Login = ({ isAuthenticated, login }) => {
 	}
 
 	return (
-		<Container>
-			<h1 className='text-center my-2'>Login</h1>
+		<div
+			className='fullscreen d-flex flex-column align-items-center justify-content-center'
+			id='login'>
+			<h1 className='title text-center mb-4'>Login</h1>
 			<Form
 				action='submit'
 				onSubmit={(e) => {
 					onSubmit(e);
 				}}
-				className='d-flex flex-column mt-4'>
-				<Input
-					type='email'
-					name='email'
-					value={email}
-					onChange={(e) => onChange(e)}
-					className='my-1'
-				/>
-				<Input
-					type='password'
-					name='password'
-					value={password}
-					onChange={(e) => onChange(e)}
-					className='my-1'
-				/>
-				<Input type='submit' value='Login' className='btn btn-3 mt-2' />
+				className='d-flex flex-column align-items-center justify-content-center'>
+				<FormGroup className='mb-2'>
+					<Input
+						type='email'
+						name='email'
+						value={email}
+						onChange={(e) => onChange(e)}
+						className='input'
+						autoFocus
+						id='login-email'
+						placeholder='email'
+						autoComplete='email'
+					/>
+					{email === '' && (
+						<Label
+							for='email'
+							className='label'
+							onClick={() => emailInput.focus()}>
+							email
+						</Label>
+					)}
+				</FormGroup>
+				<FormGroup className='mb-4'>
+					<Input
+						type='password'
+						name='password'
+						value={password}
+						onChange={(e) => onChange(e)}
+						className='input'
+						id='login-password'
+						autoComplete='current-password'
+					/>
+					{password === '' && (
+						<Label
+							for='password'
+							className='label'
+							onClick={() => passwordInput.focus()}>
+							password
+						</Label>
+					)}
+				</FormGroup>
+				<Input type='submit' value='Login' className='btn btn-3 mb-3' />
 			</Form>
-			<Link to='/register' className='btn btn-4 my-2'>
+			<Link to='/register' className='btn btn-4'>
 				New User?
 			</Link>
-		</Container>
+		</div>
 	);
 };
 

@@ -1,4 +1,7 @@
 // -------------- Module Imports -------------- //
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Lobster&display=swap');
+// font-family: 'Josefin Sans', sans-serif;
+// font-family: 'Lobster', cursive;
 
 // ---------- variables ----------- //
 @import './variables.module.scss';
@@ -12,6 +15,7 @@
 
 // ---------- layout ----------- //
 @import './components/layout/_Alert.scss';
+@import './components/layout/_Landing.scss';
 
 // ---------- loading ----------- //
 // @import './components/loading/_Loading.scss';
@@ -27,7 +31,16 @@
 }
 
 html,
-body {
+#bootstrap-overrides {
 	background-color: $color-1;
 	color: $color-2;
+	font-family: 'Josefin Sans', sans-serif;
+}
+
+.fullscreen {
+	height: 100vh;
+}
+
+.title {
+	font-family: 'Lobster', cursive;
 }

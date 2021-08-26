@@ -5,6 +5,55 @@
 		border-radius: 0.25rem;
 		border: none;
 		padding: 0.5rem;
+		width: 7rem;
+		color: $color-2;
+		box-shadow: 0 0 0 0.175rem $color-2;
+
+		&:hover {
+			background-color: $dark;
+			color: $color-2;
+			box-shadow: none;
+			transition: ease 0.5s all;
+		}
+
+		&:focus {
+			outline: none;
+			color: $color-2;
+
+			&:not(:hover) {
+				box-shadow: 0 0 0 0.175rem darken($dark, 10%);
+			}
+
+			&:not(:active) {
+				background: $dark;
+				background-image: linear-gradient(
+					45deg,
+					$dark 0%,
+					$dark 15%,
+					lighten($dark, 15%) 25%,
+					$dark 45%,
+					$dark 100%
+				);
+
+				background-repeat: no-repeat;
+				background-size: 1000%, 600%;
+				display: inline-block;
+				position: relative;
+
+				animation: 2.5s 1s shimmer reverse infinite linear;
+			}
+		}
+
+		&:active {
+			background-color: darken($dark, 10%);
+			position: relative;
+			top: 0.2rem;
+			transition: ease 0.3s all;
+		}
+
+		i {
+			color: inherit;
+		}
 	}
 
 	.btn-3 {
@@ -13,28 +62,155 @@
 
 		&:hover {
 			background-color: $color-3;
-			color: $color-2;
-			box-shadow: 0 0 0 0.175rem transparent;
-			transition: ease 0.5s all;
 		}
 
 		&:focus {
-			background-color: darken($color-3, 10%);
-			color: $color-2;
-			transition: ease 0.5s all;
-			outline: none;
+			&:not(:hover) {
+				box-shadow: 0 0 0 0.175rem darken($color-3, 10%);
+			}
+
+			&:not(:active) {
+				background: $color-3;
+				background-image: linear-gradient(
+					45deg,
+					$color-3 0%,
+					$color-3 15%,
+					lighten($color-3, 15%) 25%,
+					$color-3 45%,
+					$color-3 100%
+				);
+
+				background-repeat: no-repeat;
+				background-size: 1000%, 600%;
+				display: inline-block;
+				position: relative;
+
+				animation: 2.5s 1s shimmer reverse infinite linear;
+			}
 		}
 
 		&:active {
-			background-color: darken($color-3, 15%);
-			position: relative;
-			top: 0.1rem;
-			transition: ease 0.3s all;
+			background-color: darken($color-3, 10%);
 		}
 	}
 
 	.btn-4 {
 		color: $color-4;
 		box-shadow: 0 0 0 0.175rem $color-4;
+
+		&:hover {
+			background-color: $color-4;
+		}
+
+		&:focus {
+			&:not(:hover) {
+				box-shadow: 0 0 0 0.175rem darken($color-4, 10%);
+			}
+
+			&:not(:active) {
+				background: $color-4;
+				background-image: linear-gradient(
+					45deg,
+					$color-4 0%,
+					$color-4 15%,
+					lighten($color-4, 15%) 25%,
+					$color-4 45%,
+					$color-4 100%
+				);
+
+				background-repeat: no-repeat;
+				background-size: 1000%, 600%;
+				display: inline-block;
+				position: relative;
+
+				animation: 2.5s 1s shimmer reverse infinite linear;
+			}
+		}
+
+		&:active {
+			background-color: darken($color-4, 10%);
+		}
+	}
+
+	// form-group with .input and .label functioning as placeholder
+	.form-group {
+		position: relative;
+
+		.input {
+			z-index: 2;
+			min-width: 15rem;
+			border: 0;
+			outline: 0;
+			background: transparent;
+			background-color: transparent;
+			border-radius: 0;
+			border-bottom: 0.2rem solid darken($color-3, 10%);
+			color: $color-4;
+
+			&:hover {
+				border-bottom: 0.2rem solid rgba($color-4, 0.5);
+			}
+
+			&:focus {
+				outline: 0;
+				box-shadow: none;
+				border-width: 0.2rem;
+				border-image: linear-gradient(
+					to right,
+					lighten($color-4, 10%),
+					$color-4,
+					darken($color-4, 10%)
+				);
+				border-image-slice: 1;
+
+				~ .label {
+					left: 100%;
+					top: 0;
+					transform: translate(-100%, 0%);
+					transition: 0.2s;
+					font-size: 0.8rem;
+					color: $color-4;
+				}
+			}
+
+			&::placeholder {
+				color: transparent;
+			}
+
+			&:placeholder-shown ~ .label {
+			}
+
+			/* reset input */
+			&:required,
+			&:invalid {
+				box-shadow: none;
+			}
+		}
+
+		input:-webkit-autofill {
+			-webkit-background-clip: text !important;
+			-webkit-text-fill-color: $color-green;
+
+			&:hover {
+				border-bottom: 0.2rem solid rgba($color-4, 0.5);
+			}
+
+			&:focus {
+				-webkit-background-clip: text !important;
+				-webkit-text-fill-color: $color-green;
+			}
+		}
+
+		.label {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			color: rgba($color-3, 0.5);
+			background-color: transparent;
+			cursor: text;
+			z-index: 1;
+			transition: 0.2s;
+		}
 	}
 }

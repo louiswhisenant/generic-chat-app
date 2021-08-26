@@ -10,3 +10,13 @@
 		background-color: lighten($color-3, 5%);
 	}
 }
+
+@keyframes shimmer {
+	0% {
+		background-position: -10% 110%;
+	}
+
+	100% {
+		background-position: 110% -10%;
+	}
+}

@@ -1,8 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Josefin+Sans&family=Lobster&display=swap");
 :export {
   color1: #292929;
   color2: #eeeeee;
-  color3: #1a9eaf;
-  color4: #cc8500;
+  color3: #118392;
+  color4: #ad7100;
   dark: #4b4b4b;
   colorShadow: #202020;
   initialized: #7397af;
@@ -26,85 +27,226 @@
   border-radius: 0.25rem;
   border: none;
   padding: 0.5rem;
-}
-#bootstrap-overrides .btn-3 {
-  color: #1a9eaf;
-  box-shadow: 0 0 0 0.175rem #1a9eaf;
-}
-#bootstrap-overrides .btn-3:hover {
-  background-color: #1a9eaf;
+  width: 7rem;
   color: #eeeeee;
-  box-shadow: 0 0 0 0.175rem transparent;
+  box-shadow: 0 0 0 0.175rem #eeeeee;
+}
+#bootstrap-overrides .btn:hover {
+  background-color: #4b4b4b;
+  color: #eeeeee;
+  box-shadow: none;
   transition: ease 0.5s all;
 }
-#bootstrap-overrides .btn-3:focus {
-  background-color: #137683;
-  color: #eeeeee;
-  transition: ease 0.5s all;
+#bootstrap-overrides .btn:focus {
   outline: none;
+  color: #eeeeee;
 }
-#bootstrap-overrides .btn-3:active {
-  background-color: #10626c;
+#bootstrap-overrides .btn:focus:not(:hover) {
+  box-shadow: 0 0 0 0.175rem #323232;
+}
+#bootstrap-overrides .btn:focus:not(:active) {
+  background: #4b4b4b;
+  background-image: linear-gradient(45deg, #4b4b4b 0%, #4b4b4b 15%, #717171 25%, #4b4b4b 45%, #4b4b4b 100%);
+  background-repeat: no-repeat;
+  background-size: 1000%, 600%;
+  display: inline-block;
   position: relative;
-  top: 0.1rem;
+  animation: 2.5s 1s shimmer reverse infinite linear;
+}
+#bootstrap-overrides .btn:active {
+  background-color: #323232;
+  position: relative;
+  top: 0.2rem;
   transition: ease 0.3s all;
 }
+#bootstrap-overrides .btn i {
+  color: inherit;
+}
+#bootstrap-overrides .btn-3 {
+  color: #118392;
+  box-shadow: 0 0 0 0.175rem #118392;
+}
+#bootstrap-overrides .btn-3:hover {
+  background-color: #118392;
+}
+#bootstrap-overrides .btn-3:focus:not(:hover) {
+  box-shadow: 0 0 0 0.175rem #0c5a64;
+}
+#bootstrap-overrides .btn-3:focus:not(:active) {
+  background: #118392;
+  background-image: linear-gradient(45deg, #118392 0%, #118392 15%, #19c0d7 25%, #118392 45%, #118392 100%);
+  background-repeat: no-repeat;
+  background-size: 1000%, 600%;
+  display: inline-block;
+  position: relative;
+  animation: 2.5s 1s shimmer reverse infinite linear;
+}
+#bootstrap-overrides .btn-3:active {
+  background-color: #0c5a64;
+}
 #bootstrap-overrides .btn-4 {
-  color: #cc8500;
-  box-shadow: 0 0 0 0.175rem #cc8500;
+  color: #ad7100;
+  box-shadow: 0 0 0 0.175rem #ad7100;
+}
+#bootstrap-overrides .btn-4:hover {
+  background-color: #ad7100;
+}
+#bootstrap-overrides .btn-4:focus:not(:hover) {
+  box-shadow: 0 0 0 0.175rem #7a5000;
+}
+#bootstrap-overrides .btn-4:focus:not(:active) {
+  background: #ad7100;
+  background-image: linear-gradient(45deg, #ad7100 0%, #ad7100 15%, #faa300 25%, #ad7100 45%, #ad7100 100%);
+  background-repeat: no-repeat;
+  background-size: 1000%, 600%;
+  display: inline-block;
+  position: relative;
+  animation: 2.5s 1s shimmer reverse infinite linear;
+}
+#bootstrap-overrides .btn-4:active {
+  background-color: #7a5000;
+}
+#bootstrap-overrides .form-group {
+  position: relative;
+}
+#bootstrap-overrides .form-group .input {
+  z-index: 2;
+  min-width: 15rem;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  background-color: transparent;
+  border-radius: 0;
+  border-bottom: 0.2rem solid #0c5a64;
+  color: #ad7100;
+  /* reset input */
+}
+#bootstrap-overrides .form-group .input:hover {
+  border-bottom: 0.2rem solid rgba(173, 113, 0, 0.5);
+}
+#bootstrap-overrides .form-group .input:focus {
+  outline: 0;
+  box-shadow: none;
+  border-width: 0.2rem;
+  border-image: linear-gradient(to right, #e09200, #ad7100, #7a5000);
+  border-image-slice: 1;
+}
+#bootstrap-overrides .form-group .input:focus ~ .label {
+  left: 100%;
+  top: 0;
+  transform: translate(-100%, 0%);
+  transition: 0.2s;
+  font-size: 0.8rem;
+  color: #ad7100;
+}
+#bootstrap-overrides .form-group .input::placeholder {
+  color: transparent;
+}
+#bootstrap-overrides .form-group .input:required, #bootstrap-overrides .form-group .input:invalid {
+  box-shadow: none;
+}
+#bootstrap-overrides .form-group input:-webkit-autofill {
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: #06720f;
+}
+#bootstrap-overrides .form-group input:-webkit-autofill:hover {
+  border-bottom: 0.2rem solid rgba(173, 113, 0, 0.5);
+}
+#bootstrap-overrides .form-group input:-webkit-autofill:focus {
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: #06720f;
+}
+#bootstrap-overrides .form-group .label {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: rgba(17, 131, 146, 0.5);
+  background-color: transparent;
+  cursor: text;
+  z-index: 1;
+  transition: 0.2s;
 }
 
 @keyframes button-pulse-3 {
   from {
-    color: #1a9eaf;
-    box-shadow: 0 0 0 0.175rem #1a9eaf;
+    color: #118392;
+    box-shadow: 0 0 0 0.175rem #118392;
     background-color: initial;
   }
   to {
     color: #eeeeee;
     box-shadow: none;
-    background-color: #1db2c5;
+    background-color: #1497a9;
   }
 }
-#bootstrap-overrides .alert {
+@keyframes shimmer {
+  0% {
+    background-position: -10% 110%;
+  }
+  100% {
+    background-position: 110% -10%;
+  }
+}
+#login .title {
+  color: #1497a9;
+}
+
+#alert-anchor {
   position: fixed;
-  min-width: 75vw;
-  padding: 0.8rem;
+  width: 75vw;
   top: 5rem;
   left: 50%;
   transform: translateX(-50%);
+  z-index: 100;
+}
+#alert-anchor .alert {
+  width: 100%;
   background: #434343;
   color: #eeeeee;
-  text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
   border: none;
+  margin-bottom: 1rem;
+  position: relative;
 }
-#bootstrap-overrides .alert-text {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+#alert-anchor .alert-text {
   background: none;
+  text-align: center;
+  max-width: 75%;
+  margin: 0;
 }
-#bootstrap-overrides .alert-text i {
+#alert-anchor .alert-text i {
   background-color: transparent;
 }
-#bootstrap-overrides .close-alert {
+#alert-anchor .close-alert {
+  position: absolute;
   background-color: transparent;
-  padding: 0 0.5rem;
+  left: 100%;
+  top: 50%;
+  transform: translate(-100%, -50%);
+  padding: 0 1rem;
   color: #eeeeee;
-  font-size: 1.2rem;
-  float: right;
+  font-size: 2rem;
   border: none;
   cursor: pointer;
 }
-#bootstrap-overrides .alert-success {
+#alert-anchor .alert-success {
   background-color: #034209;
 }
-#bootstrap-overrides .alert-warning {
+#alert-anchor .alert-warning {
   background-color: #ad5300;
 }
-#bootstrap-overrides .alert-danger {
+#alert-anchor .alert-danger {
   background-color: #6e0000;
+}
+
+#landing .title {
+  font-family: "Lobster", cursive;
+  font-size: 3rem;
+  color: #ad7100;
 }
 
 * {
@@ -116,7 +258,16 @@
 }
 
 html,
-body {
+#bootstrap-overrides {
   background-color: #292929;
   color: #eeeeee;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+.fullscreen {
+  height: 100vh;
+}
+
+.title {
+  font-family: "Lobster", cursive;
 }

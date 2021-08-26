@@ -15,25 +15,29 @@ const Alert = ({ alerts, removeAlert }) => {
 	const danger = <i className='fas fa-times-circle'></i>;
 
 	return (
-		alerts !== null &&
-		alerts.length > 0 &&
-		alerts.map((alert) => (
-			<div key={alert.id} className={`alert alert-${alert.alertType}`}>
-				<p className='alert-text'>
-					{alert.alertType === 'success'
-						? success
-						: alert.alertType === 'warning'
-						? warning
-						: alert.alertType === 'danger' && danger}{' '}
-					{alert.msg}
-				</p>
-				<button
-					className='close-alert'
-					onClick={() => closeAlert(alert.id)}>
-					&times;
-				</button>
-			</div>
-		))
+		<div id='alert-anchor'>
+			{alerts !== null &&
+				alerts.length > 0 &&
+				alerts.map((alert) => (
+					<div
+						key={alert.id}
+						className={`alert alert-${alert.alertType}`}>
+						<p className='alert-text'>
+							{alert.alertType === 'success'
+								? success
+								: alert.alertType === 'warning'
+								? warning
+								: alert.alertType === 'danger' && danger}{' '}
+							{alert.msg}
+						</p>
+						<button
+							className='close-alert'
+							onClick={() => closeAlert(alert.id)}>
+							&times;
+						</button>
+					</div>
+				))}
+		</div>
 	);
 };
 
