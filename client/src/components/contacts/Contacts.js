@@ -1,7 +1,21 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
-const Contacts = () => {
-	return <div>Contacts</div>;
+const Contacts = ({ profile: { name, status, bio, blocklist, contacts } }) => {
+	return (
+		<div>
+			{contacts.map((contact) => (
+				<div>
+					<h3>{contact.nickname}</h3>
+					<p>{contact.id}</p>
+				</div>
+			))}
+		</div>
+	);
 };
 
-export default Contacts;
+const mapStateToProps = (state) => ({
+	profile: state.profile.profile,
+});
+
+export default connect(mapStateToProps, null)(Contacts);

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getChats } from '../../redux/actions/chat';
 import { Spinner } from 'reactstrap';
+import Moment from 'react-moment';
 
 const Chats = ({ chat: { chats, loading }, getChats }) => {
 	useEffect(() => {
@@ -10,7 +11,7 @@ const Chats = ({ chat: { chats, loading }, getChats }) => {
 	}, [getChats]);
 
 	return (
-		<div>
+		<div id='chats'>
 			{loading ? (
 				<Spinner />
 			) : (
@@ -20,8 +21,24 @@ const Chats = ({ chat: { chats, loading }, getChats }) => {
 						className='chat-link'
 						key={chat._id}>
 						<div className='chat'>
-							<div className='chat-name'>
-								{chat.name ? chat.name : 'NO NAME'}
+							{chat.thumbnail ? (
+								<div className='thumbnail'>
+									{chat.thumbnail}
+								</div>
+							) : (
+								<div className='avatar'>
+									<p className='participants'>
+										{chat.participants.map((p) =>
+											p.id.charAt(0)
+										)}
+									</p>
+								</div>
+							)}
+							<div className='chat-info'>
+								<div className='chat-name'>
+									{chat.name ? chat.name : 'NO NAME'}
+								</div>
+								<Moment fromNow>{chat.updatedAt}</Moment>
 							</div>
 						</div>
 					</Link>

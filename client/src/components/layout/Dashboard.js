@@ -1,16 +1,26 @@
-import React from 'react';
-import { Button } from 'reactstrap';
+import React, { useEffect } from 'react';
+import { Container } from 'reactstrap';
+import { connect } from 'react-redux';
+import { getCurrentProfile } from '../../redux/actions/profile';
+import NewChat from '../chats/chat/NewChat';
 import Chats from '../chats/Chats';
+import DashNav from './dash-nav/DashNav';
 
-const Dashboard = () => {
+const Dashboard = ({ getCurrentProfile }) => {
+	useEffect(() => {
+		getCurrentProfile();
+		console.log('getCurrentProfile called');
+	}, [getCurrentProfile]);
+
 	return (
-		<div className='fullscreen'>
-			<Chats />
-			<Button className='btn btn-3 btn-circle'>
-				<i className='fas fa-pen bg-transparent'></i>
-			</Button>
+		<div className='fullscreen' id='dashboard'>
+			<DashNav />
+			<Container className='mt-5'>
+				<Chats />
+				<NewChat />
+			</Container>
 		</div>
 	);
 };
 
-export default Dashboard;
+export default connect(null, { getCurrentProfile })(Dashboard);

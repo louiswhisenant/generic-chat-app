@@ -21,6 +21,10 @@ const MessageSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		deliverAt: {
+			type: Date,
+			default: Date.now(),
+		},
 	},
 	{ timestamps: true }
 );

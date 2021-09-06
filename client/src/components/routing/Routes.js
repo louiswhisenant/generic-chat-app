@@ -16,19 +16,19 @@ import CreateProfile from '../profile/CreateProfile';
 import EditProfile from '../profile/EditProfile';
 
 // Contacts
-import Contacts from '../contacts/Contact';
+import Contacts from '../contacts/Contacts';
 import Contact from '../contacts/Contact';
 
 // Chats
 import Dashboard from '../layout/Dashboard';
-import Chat from '../chats/Chat';
+import Chat from '../chats/chat/Chat';
 
 // Not Found
 import NotFound from '../layout/NotFound';
 
 const Routes = () => {
 	return (
-		<section className='container'>
+		<section>
 			<Alert />
 			<Switch>
 				<Route exact path='/register' component={Register} />

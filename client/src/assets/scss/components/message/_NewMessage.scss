@@ -1,0 +1,45 @@
+#message-new {
+	width: 100%;
+	background-color: darken($color-1, 15%);
+	padding: 0.25rem;
+
+	.form-group {
+		width: 100%;
+	}
+
+	.message-send {
+		width: 3rem;
+		box-shadow: none;
+		color: $color-3;
+
+		&:hover {
+			background-color: transparent;
+		}
+	}
+
+	&:hover {
+		.message-send {
+			color: rgba($color-4, 0.5);
+		}
+	}
+
+	.message-input {
+		&:hover {
+			+ .message-send {
+				color: rgba($color-4, 0.5);
+			}
+		}
+
+		&:active {
+			+ .message-send {
+				color: $color-4;
+			}
+		}
+
+		&:focus {
+			+ .message-send {
+				color: $color-4;
+			}
+		}
+	}
+}

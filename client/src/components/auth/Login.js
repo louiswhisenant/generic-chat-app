@@ -6,13 +6,13 @@ import { login } from '../../redux/actions/auth';
 
 const Login = ({ isAuthenticated, login }) => {
 	const [data, setData] = useState({
-		email: '',
+		account: '',
 		password: '',
 	});
-	const emailInput = document.querySelector('#login-email');
+	const accountInput = document.querySelector('#login-account');
 	const passwordInput = document.querySelector('#login-password');
 
-	const { email, password } = data;
+	const { account, password } = data;
 
 	const onChange = (e) => {
 		setData({ ...data, [e.target.name]: e.target.value });
@@ -21,7 +21,7 @@ const Login = ({ isAuthenticated, login }) => {
 	const onSubmit = (e) => {
 		e.preventDefault();
 
-		login(email, password);
+		login(account, password);
 	};
 
 	if (isAuthenticated) {
@@ -41,22 +41,22 @@ const Login = ({ isAuthenticated, login }) => {
 				className='d-flex flex-column align-items-center justify-content-center'>
 				<FormGroup className='mb-2'>
 					<Input
-						type='email'
-						name='email'
-						value={email}
+						type='text'
+						name='account'
+						value={account}
 						onChange={(e) => onChange(e)}
 						className='input'
 						autoFocus
-						id='login-email'
-						placeholder='email'
-						autoComplete='email'
+						id='login-account'
+						placeholder='email or username'
+						autoComplete='off'
 					/>
-					{email === '' && (
+					{account === '' && (
 						<Label
-							for='email'
+							for='account'
 							className='label'
-							onClick={() => emailInput.focus()}>
-							email
+							onClick={() => accountInput.focus()}>
+							email/username
 						</Label>
 					)}
 				</FormGroup>

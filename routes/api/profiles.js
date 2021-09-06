@@ -7,7 +7,7 @@ const Profile = require('../../models/Profile');
 const User = require('../../models/User');
 const Chat = require('../../models/Chat');
 
-// @route   GET api/profile/me
+// @route   GET api/profiles/me
 // @desc    get current user's profile
 // @access  Private
 router.get('/me', auth, async (req, res) => {
@@ -30,7 +30,7 @@ router.get('/me', auth, async (req, res) => {
 	}
 });
 
-// @route   GET api/profile
+// @route   GET api/profiles
 // @desc    get all profiles
 // @access  public
 router.get('/', async (req, res) => {
@@ -43,7 +43,7 @@ router.get('/', async (req, res) => {
 	}
 });
 
-// @route   GET api/profile/user/:user_id
+// @route   GET api/profiles/user/:user_id
 // @desc    get profile by id
 // @access  public
 router.get('/user/:user_id', async (req, res) => {
@@ -65,7 +65,7 @@ router.get('/user/:user_id', async (req, res) => {
 	}
 });
 
-// @route    POST api/profile
+// @route    POST api/profiles
 // @desc     Create or update user profile
 // @access   Private
 router.post(
@@ -114,7 +114,7 @@ router.post(
 	}
 );
 
-// @route   DELETE api/profile/
+// @route   DELETE api/profiles/
 // @desc    Delete profile and user
 // @access  Private
 router.delete('/', auth, async (req, res) => {

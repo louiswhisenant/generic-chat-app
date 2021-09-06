@@ -35,6 +35,10 @@ router.post(
 				text: encryptedText,
 			});
 
+			if (req.body.deliverAt) {
+				newMessage.deliverAt = req.body.deliverAt;
+			}
+
 			const message = await newMessage.save();
 
 			res.json(message);
@@ -50,8 +54,11 @@ router.post(
 // @access  Private
 router.get('/:chat', auth, async (req, res) => {
 	try {
-		const messages = await Message.find({ chat: req.params.chat }).sort({
-			createdAt: -1,
+		const messages = await Message.find({
+			chat: req.params.chat,
+			deliverAt: { $lte: Date.now() },
+		}).sort({
+			createdAt: 1,
 		});
 
 		messages.forEach((message) => {
@@ -99,6 +106,7 @@ router.put(
 			).toString();
 
 			message.text = encryptedText;
+			message.__v = message.__v + 1;
 
 			await message.save();
 

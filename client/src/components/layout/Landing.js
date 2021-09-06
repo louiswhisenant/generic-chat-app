@@ -1,7 +1,12 @@
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-const Landing = () => {
+const Landing = ({ isAuthenticated }) => {
 	const name = Array.from('generic-chat-app');
+
+	if (isAuthenticated) {
+		return <Redirect to='/chats' />;
+	}
 
 	return (
 		<div
@@ -18,4 +23,8 @@ const Landing = () => {
 	);
 };
 
-export default Landing;
+const mapStateToProps = (state) => ({
+	isAuthenticated: state.auth.isAuthenticated,
+});
+
+export default connect(mapStateToProps, null)(Landing);

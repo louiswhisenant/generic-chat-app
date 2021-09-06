@@ -13,9 +13,20 @@
 // ---------- auth ----------- //
 @import './components/auth/_Login.scss';
 
+// ---------- chats ----------- //
+@import './components/chats/chat/_ChatNav.scss';
+@import './components/chats/_Chats.scss';
+@import './components/chats/chat/_Chat.scss';
+
 // ---------- layout ----------- //
 @import './components/layout/_Alert.scss';
 @import './components/layout/_Landing.scss';
+@import './components/layout/_DashNav.scss';
+@import './components/layout/_Dashboard.scss';
+
+// ---------- message ----------- //
+@import './components/message/_Message.scss';
+@import './components/message/_NewMessage.scss';
 
 // ---------- loading ----------- //
 // @import './components/loading/_Loading.scss';
@@ -26,7 +37,7 @@
 	box-sizing: border-box;
 	margin: 0;
 	padding: 0;
-	background-color: $color-1;
+	background-color: transparent;
 	color: $color-2;
 }
 

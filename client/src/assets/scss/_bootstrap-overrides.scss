@@ -1,4 +1,9 @@
 #bootstrap-overrides {
+	// Link/a
+	a {
+		text-decoration: none;
+	}
+
 	// BTN
 	.btn {
 		background-color: transparent;
@@ -132,6 +137,12 @@
 		}
 	}
 
+	.btn-circle {
+		width: 4rem;
+		height: 4rem;
+		border-radius: 50%;
+	}
+
 	// form-group with .input and .label functioning as placeholder
 	.form-group {
 		position: relative;
@@ -188,7 +199,7 @@
 		}
 
 		input:-webkit-autofill {
-			-webkit-background-clip: text !important;
+			-webkit-background-clip: text;
 			-webkit-text-fill-color: $color-green;
 
 			&:hover {
@@ -196,7 +207,7 @@
 			}
 
 			&:focus {
-				-webkit-background-clip: text !important;
+				-webkit-background-clip: text;
 				-webkit-text-fill-color: $color-green;
 			}
 		}

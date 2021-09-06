@@ -18,7 +18,11 @@ export const createMessage = (formData, chat) => async (dispatch) => {
 		},
 	};
 	try {
-		const res = await axios.post(`/api/chats/${chat}`, formData, config);
+		const res = await axios.post(
+			`/api/messages/${chat}`,
+			{ text: formData },
+			config
+		);
 
 		dispatch({
 			type: CREATE_MESSAGE,
@@ -34,6 +38,7 @@ export const createMessage = (formData, chat) => async (dispatch) => {
 				status: err.response.status,
 			},
 		});
+		dispatch(setAlert('Something went wrong', 'danger'));
 	}
 };
 
@@ -80,7 +85,7 @@ export const getMessages = (chat) => async (dispatch) => {
 // Edit message
 export const editMessage = (chat, message, formData) => async (dispatch) => {
 	try {
-		await axios.put(`/api/chats/${chat}/${message}`);
+		await axios.put(`/api/messages/${chat}/${message}`);
 
 		dispatch({
 			type: EDIT_MESSAGE,
@@ -102,7 +107,7 @@ export const editMessage = (chat, message, formData) => async (dispatch) => {
 // Delete message
 export const deleteMessage = (chat, message) => async (dispatch) => {
 	try {
-		await axios.delete(`/api/chats/${chat}/${message}`);
+		await axios.delete(`/api/messages/${chat}/${message}`);
 
 		dispatch({
 			type: DELETE_MESSAGE,
