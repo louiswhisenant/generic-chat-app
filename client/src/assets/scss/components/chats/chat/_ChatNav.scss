@@ -8,4 +8,23 @@
 	.back-to-chats {
 		margin: 0 1rem 0 1rem;
 	}
+
+	.message-context-options {
+		margin-left: auto;
+		display: flex;
+		width: 50%;
+		max-width: 20rem;
+		flex-direction: row;
+		justify-content: flex-end;
+
+		i {
+			cursor: pointer;
+			padding: 0.5rem 1rem;
+			margin: 0 0.5rem;
+
+			&:hover {
+				color: $color-3;
+			}
+		}
+	}
 }

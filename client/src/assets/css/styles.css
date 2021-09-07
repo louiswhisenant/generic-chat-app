@@ -210,6 +210,22 @@
 #chat-nav .back-to-chats {
   margin: 0 1rem 0 1rem;
 }
+#chat-nav .message-context-options {
+  margin-left: auto;
+  display: flex;
+  width: 50%;
+  max-width: 20rem;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+#chat-nav .message-context-options i {
+  cursor: pointer;
+  padding: 0.5rem 1rem;
+  margin: 0 0.5rem;
+}
+#chat-nav .message-context-options i:hover {
+  color: #118392;
+}
 
 #chats .chat-link .chat {
   width: 100%;
@@ -243,6 +259,15 @@
   flex-direction: column;
   margin-top: 3.5rem;
   margin-bottom: 3.5rem;
+}
+#chat #chat-messages .chat-fade {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 20vh;
+  width: 100%;
+  z-index: 100;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
 }
 
 #alert-anchor {
@@ -448,6 +473,8 @@
   padding: 0.25rem 0.5rem;
   border-radius: 0.25rem;
   position: relative;
+  cursor: pointer;
+  transition: margin 0.3s ease;
 }
 .message .message-info {
   display: flex;
@@ -484,18 +511,15 @@
   align-self: flex-start;
   background-color: #585858;
 }
-
-.message-context-modal {
-  position: fixed;
-  top: 50%;
-  width: 50%;
-  left: 25%;
-  border-radius: 0.25rem;
-  background-color: #4b4b4b;
-  padding: 1rem;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+.message.message-selected.user-true {
+  background-color: #0e6f7b;
+  margin-right: 1.5rem;
+  transition: margin-right ease 0.3s;
+}
+.message.message-selected.user-false {
+  background-color: #946000;
+  margin-left: 1.5rem;
+  transition: margin-left ease 0.3s;
 }
 
 #message-new {

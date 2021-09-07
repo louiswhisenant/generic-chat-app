@@ -34,6 +34,7 @@ const Chat = ({
 			<div id='chat'>
 				<ChatNav />
 				<div id='chat-messages'>
+					<div className='chat-fade'></div>
 					{!loading && messages.length > 0 ? (
 						messages.map(
 							({
@@ -72,4 +73,7 @@ const mapStateToProps = (state) => ({
 	chat: state.chat,
 });
 
-export default connect(mapStateToProps, { getMessages, getChat })(Chat);
+export default connect(mapStateToProps, {
+	getMessages,
+	getChat,
+})(Chat);

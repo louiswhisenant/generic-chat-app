@@ -4,12 +4,16 @@ import {
 	GET_MESSAGES,
 	EDIT_MESSAGE,
 	DELETE_MESSAGE,
+	SELECT_MESSAGE,
+	DESELECT_MESSAGE,
+	CLEAR_SELECTED,
 	MESSAGE_ERROR,
 } from '../actions/types';
 
 const initialState = {
 	message: null,
 	messages: [],
+	selected: [],
 	loading: true,
 	error: {},
 };
@@ -50,6 +54,24 @@ export default (state = initialState, action) => {
 				messages: state.messages.filter(
 					(message) => message._id !== payload
 				),
+				loading: false,
+			};
+		case SELECT_MESSAGE:
+			return {
+				...state,
+				selected: [...state.selected, payload],
+				loading: false,
+			};
+		case DESELECT_MESSAGE:
+			return {
+				...state,
+				selected: state.selected.filter((id) => id !== payload),
+				loading: false,
+			};
+		case CLEAR_SELECTED:
+			return {
+				...state,
+				selected: [],
 				loading: false,
 			};
 		case MESSAGE_ERROR:

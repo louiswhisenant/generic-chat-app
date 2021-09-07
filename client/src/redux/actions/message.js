@@ -8,6 +8,9 @@ import {
 	DELETE_MESSAGE,
 	CREATE_MESSAGE,
 	EDIT_MESSAGE,
+	SELECT_MESSAGE,
+	DESELECT_MESSAGE,
+	CLEAR_SELECTED,
 } from './types';
 
 // Create message
@@ -115,6 +118,59 @@ export const deleteMessage = (chat, message) => async (dispatch) => {
 		});
 
 		dispatch(setAlert('Message deleted', 'success'));
+	} catch (err) {
+		dispatch({
+			type: MESSAGE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Select Message
+export const selectMessage = (id) => (dispatch) => {
+	try {
+		dispatch({
+			type: SELECT_MESSAGE,
+			payload: id,
+		});
+	} catch (err) {
+		dispatch({
+			type: MESSAGE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Deselect Message
+export const deselectMessage = (id) => (dispatch) => {
+	try {
+		dispatch({
+			type: DESELECT_MESSAGE,
+			payload: id,
+		});
+	} catch (err) {
+		dispatch({
+			type: MESSAGE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Clear Selected
+export const clearSelectedMessages = () => (dispatch) => {
+	try {
+		dispatch({
+			type: CLEAR_SELECTED,
+		});
 	} catch (err) {
 		dispatch({
 			type: MESSAGE_ERROR,
