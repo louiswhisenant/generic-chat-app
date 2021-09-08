@@ -1,10 +1,9 @@
 // ALERT
 #alert-anchor {
 	position: fixed;
-	width: 75vw;
-	top: 5rem;
-	left: 50%;
-	transform: translateX(-50%);
+	width: 100%;
+	top: 3rem;
+	left: 0;
 	z-index: 100;
 
 	.alert {
@@ -16,6 +15,7 @@
 		align-items: center;
 		justify-content: center;
 		border: none;
+		border-radius: 0;
 		margin-bottom: 1rem;
 		position: relative;
 	}

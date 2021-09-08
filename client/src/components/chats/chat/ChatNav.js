@@ -5,18 +5,33 @@ import { Fragment } from 'react';
 import {
 	clearSelectedMessages,
 	deleteMessage,
+	getMessage,
 } from '../../../redux/actions/message';
 
 const ChatNav = ({
 	chat: { chat, loading },
 	selected,
 	chatId,
+	user,
+	getMessage,
 	clearSelectedMessages,
 	deleteMessage,
 }) => {
+	const onEdit = () => {
+		getMessage(chatId, selected[0].id, 'edit');
+	};
+
+	const onReply = () => {
+		getMessage(chatId, selected[0].id, 'reply');
+	};
+
+	const onCopy = () => {
+		console.log('copy');
+	};
+
 	const onDelete = () => {
-		console.log(chatId, selected);
-		deleteMessage(chatId, selected);
+		const toDelete = selected.map((obj) => obj.id);
+		deleteMessage(chatId, toDelete);
 	};
 
 	const onClear = () => {
@@ -41,7 +56,6 @@ const ChatNav = ({
 		</Fragment>
 	);
 
-	// @TODO - validate that single selected message is authored by user to show edit icon
 	const messageSelected = (
 		<Fragment>
 			<NavbarBrand className='count'>
@@ -51,9 +65,11 @@ const ChatNav = ({
 			<div className='message-context-options'>
 				{selected.length === 1 && (
 					<Fragment>
-						<i className='fas fa-pen'></i>
-						<i className='fas fa-reply'></i>
-						<i className='fas fa-copy'></i>
+						{selected[0].author === user._id && (
+							<i className='fas fa-pen' onClick={onEdit}></i>
+						)}
+						<i className='fas fa-reply' onClick={onReply}></i>
+						<i className='fas fa-copy' onClick={onCopy}></i>
 					</Fragment>
 				)}
 				<i className='fas fa-trash' onClick={onDelete}></i>
@@ -78,9 +94,11 @@ const ChatNav = ({
 const mapStateToProps = (state) => ({
 	chat: state.chat,
 	selected: state.message.selected,
+	user: state.auth.user,
 });
 
 export default connect(mapStateToProps, {
+	getMessage,
 	clearSelectedMessages,
 	deleteMessage,
 })(ChatNav);

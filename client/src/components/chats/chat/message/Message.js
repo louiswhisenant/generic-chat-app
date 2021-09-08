@@ -18,8 +18,10 @@ const Message = ({
 	selectMessage,
 	deselectMessage,
 }) => {
-	const onClick = () => {
-		selected.includes(id) ? deselectMessage(id) : selectMessage(id);
+	const onClick = ({ id, author }) => {
+		selected.find((obj) => obj.id === id)
+			? deselectMessage(id)
+			: selectMessage({ id, author });
 	};
 
 	return (
@@ -27,9 +29,13 @@ const Message = ({
 			<div
 				className={`message ${
 					author === user._id ? 'user-true' : 'user-false'
-				} ${selected.includes(id) ? 'message-selected' : ''}`}
+				} ${
+					selected.find((obj) => obj.id === id)
+						? 'message-selected'
+						: ''
+				}`}
 				onClick={() => {
-					onClick();
+					onClick({ id, author });
 				}}>
 				<div className='message-info'>
 					<Moment format='hh:mm a' className='message-info-time'>

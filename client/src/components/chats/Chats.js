@@ -21,7 +21,7 @@ const Chats = ({ chat: { chats, loading }, getChats, resetMessages }) => {
 			) : (
 				chats.map((chat) => (
 					<Link
-						to={`/chats/${chat._id}`}
+						to={`/chats/${chat._id}#last-message`}
 						className='chat-link'
 						key={chat._id}>
 						<div className='chat'>

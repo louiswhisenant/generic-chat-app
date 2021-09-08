@@ -12,6 +12,7 @@ import {
 	DESELECT_MESSAGE,
 	CLEAR_SELECTED,
 	MESSAGE_RESET,
+	CLEAR_MESSAGE,
 } from './types';
 
 // Create message
@@ -47,13 +48,13 @@ export const createMessage = (formData, chat) => async (dispatch) => {
 };
 
 // Get message
-export const getMessage = (chat, message) => async (dispatch) => {
+export const getMessage = (chat, message, type) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/api/messages/${chat}/${message}`);
 
 		dispatch({
 			type: GET_MESSAGE,
-			payload: res.data,
+			payload: { ...res.data, type },
 		});
 	} catch (err) {
 		dispatch({
@@ -121,7 +122,9 @@ export const deleteMessage = (chat, messages) => async (dispatch) => {
 		});
 
 		messages.length > 1
-			? dispatch(setAlert('Messages deleted', 'success'))
+			? dispatch(
+					setAlert(`${messages.length} messages deleted`, 'success')
+			  )
 			: dispatch(setAlert('Message deleted', 'success'));
 
 		dispatch({ type: CLEAR_SELECTED });
@@ -137,22 +140,24 @@ export const deleteMessage = (chat, messages) => async (dispatch) => {
 };
 
 // Select Message
-export const selectMessage = (id) => (dispatch) => {
-	try {
-		dispatch({
-			type: SELECT_MESSAGE,
-			payload: id,
-		});
-	} catch (err) {
-		dispatch({
-			type: MESSAGE_ERROR,
-			payload: {
-				msg: err.response.statusText,
-				status: err.response.status,
-			},
-		});
-	}
-};
+export const selectMessage =
+	({ id, author }) =>
+	(dispatch) => {
+		try {
+			dispatch({
+				type: SELECT_MESSAGE,
+				payload: { id, author },
+			});
+		} catch (err) {
+			dispatch({
+				type: MESSAGE_ERROR,
+				payload: {
+					msg: err.response.statusText,
+					status: err.response.status,
+				},
+			});
+		}
+	};
 
 // Deselect Message
 export const deselectMessage = (id) => (dispatch) => {
@@ -172,7 +177,7 @@ export const deselectMessage = (id) => (dispatch) => {
 	}
 };
 
-// Clear Selected
+// Clear selected
 export const clearSelectedMessages = () => (dispatch) => {
 	try {
 		dispatch({
@@ -189,7 +194,24 @@ export const clearSelectedMessages = () => (dispatch) => {
 	}
 };
 
-// Clear Selected
+// Clear message
+export const clearMessage = () => (dispatch) => {
+	try {
+		dispatch({
+			type: CLEAR_MESSAGE,
+		});
+	} catch (err) {
+		dispatch({
+			type: MESSAGE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Clear message state
 export const resetMessages = () => (dispatch) => {
 	try {
 		dispatch({

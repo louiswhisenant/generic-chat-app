@@ -18,16 +18,16 @@
 @import './components/chats/_Chats.scss';
 @import './components/chats/chat/_Chat.scss';
 @import './components/chats/_NewChat.scss';
+// -------------------- message ----------- //
+@import './components/chats/chat/message/_Message.scss';
+@import './components/chats/chat/message/_NewMessage.scss';
+@import './components/chats/chat/message/_MessagePreview.scss';
 
 // ---------- layout ----------- //
 @import './components/layout/_Alert.scss';
 @import './components/layout/_Landing.scss';
 @import './components/layout/_DashNav.scss';
 @import './components/layout/_Dashboard.scss';
-
-// ---------- message ----------- //
-@import './components/message/_Message.scss';
-@import './components/message/_NewMessage.scss';
 
 // ---------- loading ----------- //
 // @import './components/loading/_Loading.scss';

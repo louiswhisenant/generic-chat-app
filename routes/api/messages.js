@@ -41,6 +41,10 @@ router.post(
 
 			const message = await newMessage.save();
 
+			const bytes = CryptoJS.AES.decrypt(message.text, CRYPTO_KEY);
+			const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+			message.text = decryptedText;
+
 			res.json(message);
 		} catch (err) {
 			console.error(err.message);
@@ -48,6 +52,27 @@ router.post(
 		}
 	}
 );
+
+// @route   GET api/messages/:chat/:message
+// @desc    Get single message
+// @access  Private
+router.get('/:chat/:message', auth, async (req, res) => {
+	try {
+		const message = await Message.findOne({
+			chat: req.params.chat,
+			_id: req.params.message,
+		});
+
+		const bytes = CryptoJS.AES.decrypt(message.text, CRYPTO_KEY);
+		const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+		message.text = decryptedText;
+
+		res.json(message);
+	} catch (err) {
+		console.error(err.message);
+		res.status(500).send('Server Error');
+	}
+});
 
 // @route   GET api/messages/:chat
 // @desc    Get all chat messages
@@ -62,8 +87,8 @@ router.get('/:chat', auth, async (req, res) => {
 		});
 
 		messages.forEach((message) => {
-			var bytes = CryptoJS.AES.decrypt(message.text, CRYPTO_KEY);
-			var decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+			const bytes = CryptoJS.AES.decrypt(message.text, CRYPTO_KEY);
+			const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
 			message.text = decryptedText;
 		});
 

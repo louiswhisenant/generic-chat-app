@@ -7,6 +7,7 @@ import {
 	SELECT_MESSAGE,
 	DESELECT_MESSAGE,
 	CLEAR_SELECTED,
+	CLEAR_MESSAGE,
 	MESSAGE_ERROR,
 	MESSAGE_RESET,
 } from '../actions/types';
@@ -26,7 +27,7 @@ export default (state = initialState, action) => {
 		case CREATE_MESSAGE:
 			return {
 				...state,
-				messages: [payload, ...state.messages],
+				messages: [...state.messages, payload],
 				loading: false,
 			};
 		case GET_MESSAGE:
@@ -66,13 +67,19 @@ export default (state = initialState, action) => {
 		case DESELECT_MESSAGE:
 			return {
 				...state,
-				selected: state.selected.filter((id) => id !== payload),
+				selected: state.selected.filter((obj) => obj.id !== payload),
 				loading: false,
 			};
 		case CLEAR_SELECTED:
 			return {
 				...state,
 				selected: [],
+				loading: false,
+			};
+		case CLEAR_MESSAGE:
+			return {
+				...state,
+				message: null,
 				loading: false,
 			};
 		case MESSAGE_RESET:
