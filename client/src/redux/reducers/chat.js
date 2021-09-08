@@ -5,6 +5,7 @@ import {
 	EDIT_CHAT,
 	DELETE_CHAT,
 	CHAT_ERROR,
+	CLEAR_CHAT,
 } from '../actions/types';
 
 const initialState = {
@@ -55,6 +56,12 @@ export default (state = initialState, action) => {
 				...state,
 				loading: false,
 				error: payload,
+			};
+		case CLEAR_CHAT:
+			return {
+				...state,
+				chat: null,
+				loading: false,
 			};
 		default:
 			return state;

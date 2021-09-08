@@ -11,6 +11,7 @@ import {
 	SELECT_MESSAGE,
 	DESELECT_MESSAGE,
 	CLEAR_SELECTED,
+	MESSAGE_RESET,
 } from './types';
 
 // Create message
@@ -88,7 +89,7 @@ export const getMessages = (chat) => async (dispatch) => {
 // Edit message
 export const editMessage = (chat, message, formData) => async (dispatch) => {
 	try {
-		await axios.put(`/api/messages/${chat}/${message}`);
+		await axios.put(`/api/messages/${chat}/${message}`, formData);
 
 		dispatch({
 			type: EDIT_MESSAGE,
@@ -108,16 +109,22 @@ export const editMessage = (chat, message, formData) => async (dispatch) => {
 };
 
 // Delete message
-export const deleteMessage = (chat, message) => async (dispatch) => {
+export const deleteMessage = (chat, messages) => async (dispatch) => {
 	try {
-		await axios.delete(`/api/messages/${chat}/${message}`);
+		await axios.delete(`/api/messages/${chat}`, {
+			data: { selected: messages },
+		});
 
 		dispatch({
 			type: DELETE_MESSAGE,
-			payload: message,
+			payload: messages,
 		});
 
-		dispatch(setAlert('Message deleted', 'success'));
+		messages.length > 1
+			? dispatch(setAlert('Messages deleted', 'success'))
+			: dispatch(setAlert('Message deleted', 'success'));
+
+		dispatch({ type: CLEAR_SELECTED });
 	} catch (err) {
 		dispatch({
 			type: MESSAGE_ERROR,
@@ -170,6 +177,23 @@ export const clearSelectedMessages = () => (dispatch) => {
 	try {
 		dispatch({
 			type: CLEAR_SELECTED,
+		});
+	} catch (err) {
+		dispatch({
+			type: MESSAGE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Clear Selected
+export const resetMessages = () => (dispatch) => {
+	try {
+		dispatch({
+			type: MESSAGE_RESET,
 		});
 	} catch (err) {
 		dispatch({

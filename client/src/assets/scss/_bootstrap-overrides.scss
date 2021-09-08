@@ -224,4 +224,10 @@
 			transition: 0.2s;
 		}
 	}
+
+	.spinner-border {
+		position: absolute;
+		top: calc(50% - 1rem);
+		left: calc(50% - 1rem);
+	}
 }

@@ -7,6 +7,7 @@ import {
 	CHAT_ERROR,
 	DELETE_CHAT,
 	CREATE_CHAT,
+	CLEAR_CHAT,
 } from './types';
 
 // Get chat
@@ -87,6 +88,23 @@ export const createChat = (formData) => async (dispatch) => {
 		});
 
 		dispatch(setAlert('Chat created', 'success'));
+	} catch (err) {
+		dispatch({
+			type: CHAT_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Clear chat
+export const clearChat = () => (dispatch) => {
+	try {
+		dispatch({
+			type: CLEAR_CHAT,
+		});
 	} catch (err) {
 		dispatch({
 			type: CHAT_ERROR,

@@ -1,14 +1,18 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { getChats } from '../../redux/actions/chat';
+import { clearChat, getChats } from '../../redux/actions/chat';
+import { resetMessages } from '../../redux/actions/message';
+
 import { Spinner } from 'reactstrap';
 import Moment from 'react-moment';
 
-const Chats = ({ chat: { chats, loading }, getChats }) => {
+const Chats = ({ chat: { chats, loading }, getChats, resetMessages }) => {
 	useEffect(() => {
 		getChats();
-	}, [getChats]);
+		resetMessages();
+		clearChat();
+	}, [getChats, resetMessages]);
 
 	return (
 		<div id='chats'>
@@ -52,4 +56,8 @@ const mapStateToProps = (state) => ({
 	chat: state.chat,
 });
 
-export default connect(mapStateToProps, { getChats })(Chats);
+export default connect(mapStateToProps, {
+	getChats,
+	resetMessages,
+	clearChat,
+})(Chats);

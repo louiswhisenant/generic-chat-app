@@ -121,18 +121,12 @@ router.put(
 // @route   DELETE api/messages/:chat/:message
 // @desc    Delete a chat
 // @access  Private
-router.delete('/:chat/:message', auth, async (req, res) => {
+router.delete('/:chat', auth, async (req, res) => {
 	try {
-		const message = await Message.findOne({
+		await Message.deleteMany({
 			chat: req.params.chat,
-			_id: req.params.message,
+			_id: { $in: req.body.selected },
 		});
-
-		if (!message) {
-			return res.status(404).json({ msg: 'Message not found' });
-		}
-
-		await message.remove();
 
 		res.json({ msg: 'Message deleted' });
 	} catch (err) {

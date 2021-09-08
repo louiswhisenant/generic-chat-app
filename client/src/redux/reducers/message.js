@@ -8,6 +8,7 @@ import {
 	DESELECT_MESSAGE,
 	CLEAR_SELECTED,
 	MESSAGE_ERROR,
+	MESSAGE_RESET,
 } from '../actions/types';
 
 const initialState = {
@@ -52,7 +53,7 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				messages: state.messages.filter(
-					(message) => message._id !== payload
+					(message) => payload.includes(message._id) === false
 				),
 				loading: false,
 			};
@@ -73,6 +74,14 @@ export default (state = initialState, action) => {
 				...state,
 				selected: [],
 				loading: false,
+			};
+		case MESSAGE_RESET:
+			return {
+				message: null,
+				messages: [],
+				selected: [],
+				loading: true,
+				error: {},
 			};
 		case MESSAGE_ERROR:
 			return {

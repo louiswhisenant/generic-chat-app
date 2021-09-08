@@ -1,0 +1,58 @@
+#new-chat {
+	#new-chat-modal {
+		position: absolute;
+		top: 25%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		padding: 1rem;
+		background-color: $dark;
+		width: 20rem;
+		max-width: 75%;
+		max-height: 50%;
+		overflow-y: scroll;
+		border-radius: 0.25rem;
+
+		.new-chat-modal-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			.new-chat-modal-title {
+				font-family: 'Lobster', cursive;
+				color: $color-3;
+				padding: 0.5rem;
+			}
+
+			.new-chat-modal-close {
+				border: none;
+				padding: 0.5rem;
+			}
+		}
+	}
+
+	#new-chat {
+		position: absolute;
+		top: 85vh;
+		right: 3rem;
+		background-color: $dark;
+		box-shadow: none;
+
+		&:hover {
+			background-color: darken($dark, 10%);
+			transition: ease 0.5s background-color;
+		}
+
+		&:focus {
+			&:not(:hover) {
+				box-shadow: 0 0 0 0.175rem darken($color-2, 25%);
+			}
+		}
+
+		&:active {
+			background-color: darken($dark, 10%);
+			transition: 0s all;
+			top: unset;
+			top: calc(85vh + 0.2rem);
+		}
+	}
+}

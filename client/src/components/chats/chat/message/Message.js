@@ -13,7 +13,6 @@ const Message = ({
 	status,
 	author,
 	auth: { user, loading },
-	chat,
 	id,
 	selected,
 	selectMessage,

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Container } from 'reactstrap';
 import { connect } from 'react-redux';
 import { getCurrentProfile } from '../../redux/actions/profile';
@@ -9,7 +9,6 @@ import DashNav from './dash-nav/DashNav';
 const Dashboard = ({ getCurrentProfile }) => {
 	useEffect(() => {
 		getCurrentProfile();
-		console.log('getCurrentProfile called');
 	}, [getCurrentProfile]);
 
 	return (

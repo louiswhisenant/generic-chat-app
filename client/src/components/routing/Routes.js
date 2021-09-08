@@ -22,6 +22,7 @@ import Contact from '../contacts/Contact';
 // Chats
 import Dashboard from '../layout/Dashboard';
 import Chat from '../chats/chat/Chat';
+import ChatSettings from '../chats/chat/ChatSettings';
 
 // Not Found
 import NotFound from '../layout/NotFound';
@@ -49,6 +50,11 @@ const Routes = () => {
 
 				<PrivateRoute exact path='/chats' component={Dashboard} />
 				<PrivateRoute exact path='/chats/:id' component={Chat} />
+				<PrivateRoute
+					exact
+					path='/chats/:id/settings'
+					component={ChatSettings}
+				/>
 
 				<Route component={NotFound} />
 			</Switch>

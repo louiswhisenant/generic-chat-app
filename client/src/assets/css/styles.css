@@ -175,6 +175,11 @@
   z-index: 1;
   transition: 0.2s;
 }
+#bootstrap-overrides .spinner-border {
+  position: absolute;
+  top: calc(50% - 1rem);
+  left: calc(50% - 1rem);
+}
 
 @keyframes button-pulse-3 {
   from {
@@ -210,6 +215,10 @@
 #chat-nav .back-to-chats {
   margin: 0 1rem 0 1rem;
 }
+#chat-nav .navbar-brand-name {
+  font-family: "Lobster", cursive;
+}
+#chat-nav .chat-context-options,
 #chat-nav .message-context-options {
   margin-left: auto;
   display: flex;
@@ -218,11 +227,13 @@
   flex-direction: row;
   justify-content: flex-end;
 }
+#chat-nav .chat-context-options i,
 #chat-nav .message-context-options i {
   cursor: pointer;
   padding: 0.5rem 1rem;
   margin: 0 0.5rem;
 }
+#chat-nav .chat-context-options i:hover,
 #chat-nav .message-context-options i:hover {
   color: #118392;
 }
@@ -266,8 +277,55 @@
   left: 0;
   height: 20vh;
   width: 100%;
-  z-index: 100;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
+}
+
+#new-chat #new-chat-modal {
+  position: absolute;
+  top: 25%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1rem;
+  background-color: #4b4b4b;
+  width: 20rem;
+  max-width: 75%;
+  max-height: 50%;
+  overflow-y: scroll;
+  border-radius: 0.25rem;
+}
+#new-chat #new-chat-modal .new-chat-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#new-chat #new-chat-modal .new-chat-modal-header .new-chat-modal-title {
+  font-family: "Lobster", cursive;
+  color: #118392;
+  padding: 0.5rem;
+}
+#new-chat #new-chat-modal .new-chat-modal-header .new-chat-modal-close {
+  border: none;
+  padding: 0.5rem;
+}
+#new-chat #new-chat {
+  position: absolute;
+  top: 85vh;
+  right: 3rem;
+  background-color: #4b4b4b;
+  box-shadow: none;
+}
+#new-chat #new-chat:hover {
+  background-color: #323232;
+  transition: ease 0.5s background-color;
+}
+#new-chat #new-chat:focus:not(:hover) {
+  box-shadow: 0 0 0 0.175rem #aeaeae;
+}
+#new-chat #new-chat:active {
+  background-color: #323232;
+  transition: 0s all;
+  top: unset;
+  top: calc(85vh + 0.2rem);
 }
 
 #alert-anchor {
@@ -444,33 +502,13 @@
 #dashboard {
   position: relative;
 }
-#dashboard #new-chat {
-  position: absolute;
-  top: 85vh;
-  right: 3rem;
-  background-color: #4b4b4b;
-  box-shadow: none;
-}
-#dashboard #new-chat:hover {
-  background-color: #323232;
-  transition: ease 0.5s background-color;
-}
-#dashboard #new-chat:focus:not(:hover) {
-  box-shadow: 0 0 0 0.175rem #aeaeae;
-}
-#dashboard #new-chat:active {
-  background-color: #323232;
-  transition: 0s all;
-  top: unset;
-  top: calc(85vh + 0.2rem);
-}
 
 .message {
   background-color: #050505;
   min-width: 25%;
-  max-width: 85%;
+  max-width: 75%;
   margin: 0.25rem 0.5rem;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 1rem;
   border-radius: 0.25rem;
   position: relative;
   cursor: pointer;
@@ -520,6 +558,12 @@
   background-color: #946000;
   margin-left: 1.5rem;
   transition: margin-left ease 0.3s;
+}
+.message.message-selected .message-info .message-info-status-anchor .message-info-status.status-read {
+  color: #eeeeee;
+}
+.message.message-selected .message-info .message-info-status-anchor .message-info-status.status-error {
+  color: black;
 }
 
 #message-new {

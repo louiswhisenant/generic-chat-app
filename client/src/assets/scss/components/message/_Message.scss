@@ -1,9 +1,9 @@
 .message {
 	background-color: darken($color-1, 14%);
 	min-width: 25%;
-	max-width: 85%;
+	max-width: 75%;
 	margin: 0.25rem 0.5rem;
-	padding: 0.25rem 0.5rem;
+	padding: 0.25rem 1rem;
 	border-radius: 0.25rem;
 	position: relative;
 	cursor: pointer;
@@ -64,6 +64,20 @@
 			background-color: darken($color-4, 5%);
 			margin-left: 1.5rem;
 			transition: margin-left ease 0.3s;
+		}
+
+		.message-info {
+			.message-info-status-anchor {
+				.message-info-status {
+					&.status-read {
+						color: $color-2;
+					}
+
+					&.status-error {
+						color: darken($color-1, 20%);
+					}
+				}
+			}
 		}
 	}
 }

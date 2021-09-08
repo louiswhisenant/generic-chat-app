@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect } from 'react';
 import { Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
 import { getMessages } from '../../../redux/actions/message';
@@ -14,25 +14,15 @@ const Chat = ({
 	getMessages,
 	getChat,
 }) => {
-	const lastMessage = useRef(null);
-
-	const scrollToLast = () => {
-		lastMessage.current?.scrollIntoView({ behavior: 'smooth' });
-	};
-
 	useEffect(() => {
 		getMessages(match.params.id);
 		getChat(match.params.id);
 	}, [getMessages, getChat, match]);
 
-	useEffect(() => {
-		scrollToLast();
-	}, [getMessages]);
-
 	return (
 		!chat.loading && (
 			<div id='chat'>
-				<ChatNav />
+				<ChatNav chatId={match.params.id} />
 				<div id='chat-messages'>
 					<div className='chat-fade'></div>
 					{!loading && messages.length > 0 ? (
@@ -53,14 +43,13 @@ const Chat = ({
 									status={status}
 									author={author}
 									key={_id}
-									chat={match.params.id}
 								/>
 							)
 						)
 					) : (
 						<Spinner />
 					)}
-					<div className='last-message' ref={lastMessage}></div>
+					<div className='last-message' id='last-message'></div>
 				</div>
 				<NewMessage chat={match.params.id} />
 			</div>

@@ -26,6 +26,7 @@ export const GET_CHATS = 'GET_CHATS';
 export const EDIT_CHAT = 'EDIT_CHAT';
 export const DELETE_CHAT = 'DELETE_CHAT';
 export const CHAT_ERROR = 'CHAT_ERROR';
+export const CLEAR_CHAT = 'CLEAR_CHAT';
 
 // Message
 export const CREATE_MESSAGE = 'CREATE_MESSAGE';
@@ -37,3 +38,4 @@ export const MESSAGE_ERROR = 'MESSAGE_ERROR';
 export const SELECT_MESSAGE = 'SELECT_MESSAGE';
 export const DESELECT_MESSAGE = 'DESELECT_MESSAGE';
 export const CLEAR_SELECTED = 'CLEAR_SELECTED';
+export const MESSAGE_RESET = 'MESSAGE_RESET';
