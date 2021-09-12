@@ -73,7 +73,7 @@ const NewChat = ({
 			<div id='new-chat' ref={modalRef}>
 				<Button
 					className='btn btn-4-solid btn-circle'
-					id='new-chat'
+					id='new-chat-btn'
 					onClick={toggle}>
 					<i className='fas fa-pen bg-transparent'></i>
 				</Button>
@@ -91,7 +91,9 @@ const NewChat = ({
 						<hr className='header-line' />
 						<div className='new-chat-modal-body'>
 							{profile.contacts.map((contact) => (
-								<div onClick={() => createNewChat(contact.id)}>
+								<div
+									onClick={() => createNewChat(contact.id)}
+									key={contact.id}>
 									<h3>{contact.nickname}</h3>
 									<p>{contact.id}</p>
 									<hr className='contact-line' />

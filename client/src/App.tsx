@@ -1,5 +1,7 @@
-import React from 'react';
 import { Fragment, useEffect } from 'react';
+
+// Routing
+import Routes from './components/routing/Routes';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // Styles
@@ -16,9 +18,6 @@ import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import { loadUser } from './redux/actions/auth';
-
-// Routing
-import Routes from './components/routing/Routes';
 
 if (localStorage.token) {
 	setAuthToken(localStorage.token);

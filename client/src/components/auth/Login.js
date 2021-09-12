@@ -9,8 +9,6 @@ const Login = ({ isAuthenticated, login }) => {
 		account: '',
 		password: '',
 	});
-	const accountInput = document.querySelector('#login-account');
-	const passwordInput = document.querySelector('#login-password');
 
 	const { account, password } = data;
 
@@ -25,7 +23,7 @@ const Login = ({ isAuthenticated, login }) => {
 	};
 
 	if (isAuthenticated) {
-		return <Redirect to='/chats' />;
+		return <Redirect to='/dash' />;
 	}
 
 	return (
@@ -52,10 +50,7 @@ const Login = ({ isAuthenticated, login }) => {
 						autoComplete='off'
 					/>
 					{account === '' && (
-						<Label
-							for='account'
-							className='label'
-							onClick={() => accountInput.focus()}>
+						<Label for='account' className='label'>
 							email/username
 						</Label>
 					)}
@@ -71,10 +66,7 @@ const Login = ({ isAuthenticated, login }) => {
 						autoComplete='current-password'
 					/>
 					{password === '' && (
-						<Label
-							for='password'
-							className='label'
-							onClick={() => passwordInput.focus()}>
+						<Label for='password' className='label'>
 							password
 						</Label>
 					)}

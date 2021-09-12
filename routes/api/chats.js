@@ -39,6 +39,36 @@ router.post(
 	}
 );
 
+// @route   POST api/chats/:chat
+// @desc    Edit chat
+// @access  Private
+router.put('/:chat', auth, async (req, res) => {
+	const { name, participants } = req.body;
+
+	try {
+		const chat = await Chat.findOne({
+			_id: req.params.chat,
+			'participants.id': req.user.id,
+		});
+
+		if (!chat) {
+			return res.status(404).json({ msg: 'Request cannot be completed' });
+		}
+
+		if (name) chat.name = name;
+		if (participants) Chat.participants = participants;
+		chat.updatedAt = Date.now();
+		chat.__v = chat.__v + 1;
+
+		await chat.save();
+
+		res.json(chat);
+	} catch (err) {
+		console.error(err);
+		res.status(500).send('Server Error');
+	}
+});
+
 // @route   GET api/chats
 // @desc    Get all user chats
 // @access  Private

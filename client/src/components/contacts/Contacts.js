@@ -1,4 +1,3 @@
-import React from 'react';
 import { connect } from 'react-redux';
 
 const Contacts = ({ profile: { name, status, bio, blocklist, contacts } }) => {

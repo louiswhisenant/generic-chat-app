@@ -44,6 +44,7 @@ const Chat = ({
 										status={status}
 										author={author}
 										id={_id}
+										key={_id}
 									/>
 								)
 							)}

@@ -7,13 +7,14 @@ import {
 	NavItem,
 	Button,
 } from 'reactstrap';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { logout } from '../../../redux/actions/auth';
 import { connect } from 'react-redux';
 
-const DashNav = ({ logout }) => {
+const DashNav = ({ url, logout }) => {
 	const navRef = useRef(null);
 	const [isOpen, setIsOpen] = useState(false);
+	const [navBrand, setNavBrand] = useState('generic-chat-app');
 
 	const handleNavToggle = () => setIsOpen(!isOpen);
 
@@ -33,6 +34,18 @@ const DashNav = ({ logout }) => {
 		// eslint-disable-next-line
 	}, []);
 
+	const location = useLocation();
+
+	useEffect(() => {
+		const l = location.pathname;
+
+		l.length === 5
+			? setNavBrand('generic-chat-app')
+			: setNavBrand(
+					l.substring(6, 7).toUpperCase().concat(l.substring(7))
+			  );
+	}, [location]);
+
 	return (
 		<div ref={navRef} className='nav-anchor' id='nav-anchor'>
 			<Navbar dark id='dash-nav'>
@@ -40,7 +53,12 @@ const DashNav = ({ logout }) => {
 					<i className='fas fa-bars'></i>
 				</Button>
 
-				<NavbarBrand>generic-chat-app</NavbarBrand>
+				<NavbarBrand>{navBrand}</NavbarBrand>
+				{location.pathname !== '/dash' && (
+					<Link to='/dash' className='back-to-dash'>
+						<i className='fas fa-times'></i>
+					</Link>
+				)}
 			</Navbar>
 
 			<Collapse isOpen={isOpen} navbar className='width'>
@@ -48,7 +66,7 @@ const DashNav = ({ logout }) => {
 					{/* <NavUser /> Loading issue on initial login */}
 					<NavItem className='dash-nav-settings'>
 						<Link
-							to='/settings'
+							to={`${url}/settings`}
 							onClick={() => setIsOpen(false)}
 							className='nav-item-content'>
 							<div className='i-bg'>
@@ -59,7 +77,7 @@ const DashNav = ({ logout }) => {
 					</NavItem>
 					<NavItem className='dash-nav-contacts'>
 						<Link
-							to='/contacts'
+							to={`${url}/contacts`}
 							onClick={() => setIsOpen(false)}
 							className='nav-item-content'>
 							<div className='i-bg'>

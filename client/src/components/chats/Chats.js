@@ -6,6 +6,7 @@ import { resetMessages } from '../../redux/actions/message';
 
 import { Spinner } from 'reactstrap';
 import Moment from 'react-moment';
+import NewChat from './chat/NewChat';
 
 const Chats = ({ chat: { chats, loading }, getChats, resetMessages }) => {
 	useEffect(() => {
@@ -48,6 +49,7 @@ const Chats = ({ chat: { chats, loading }, getChats, resetMessages }) => {
 					</Link>
 				))
 			)}
+			{!loading && <NewChat />}
 		</div>
 	);
 };

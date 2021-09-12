@@ -8,6 +8,7 @@ import {
 	DELETE_CHAT,
 	CREATE_CHAT,
 	CLEAR_CHAT,
+	EDIT_CHAT,
 } from './types';
 
 // Get chat
@@ -88,6 +89,33 @@ export const createChat = (formData) => async (dispatch) => {
 		});
 
 		dispatch(setAlert('Chat created', 'success'));
+	} catch (err) {
+		dispatch({
+			type: CHAT_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Edit chat
+export const editChat = (chat, formData) => async (dispatch) => {
+	const config = {
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	};
+	try {
+		const res = await axios.put(`/api/chats/${chat}`, formData, config);
+
+		dispatch({
+			type: EDIT_CHAT,
+			payload: res.data,
+		});
+
+		dispatch(setAlert('Changes saved', 'success'));
 	} catch (err) {
 		dispatch({
 			type: CHAT_ERROR,

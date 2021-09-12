@@ -82,7 +82,7 @@ const ChatNav = ({
 
 	return (
 		<Navbar dark className='fixed-top' id='chat-nav'>
-			<Link to='/chats' className='back-to-chats'>
+			<Link to='/dash' className='back-to-chats'>
 				<i className='fas fa-arrow-left'></i>
 			</Link>
 

@@ -1,4 +1,3 @@
-import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
 // routing
@@ -48,7 +47,7 @@ const Routes = () => {
 				<Route exact path='/contacts' component={Contacts} />
 				<Route exact path='/contacts/:id' component={Contact} />
 
-				<PrivateRoute exact path='/chats' component={Dashboard} />
+				<PrivateRoute path='/dash' component={Dashboard}></PrivateRoute>
 				<PrivateRoute exact path='/chats/:id' component={Chat} />
 				<PrivateRoute
 					exact

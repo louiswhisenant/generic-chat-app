@@ -40,6 +40,7 @@ export default (state = initialState, action) => {
 		case EDIT_CHAT:
 			return {
 				...state,
+				chat: payload,
 				chats: state.chats.map((chat) =>
 					chat._id === payload._id ? payload : chat
 				),

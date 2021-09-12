@@ -34,7 +34,7 @@ const Register = ({ isAuthenticated, register, setAlert }) => {
 	};
 
 	if (isAuthenticated) {
-		return <Redirect to='/chats' />;
+		return <Redirect to='/dash' />;
 	}
 
 	return (

@@ -1,0 +1,20 @@
+#chat-settings {
+	padding-top: 3.5rem;
+
+	.chat-name {
+		margin: 1rem 0rem;
+
+		.change-chat-name-btn {
+			margin: 1rem 0;
+		}
+	}
+
+	.chat-participants {
+		.participant-card {
+			margin: 0.5rem 0;
+			padding: 0.5rem;
+			background-color: $dark;
+			border-radius: 0.25rem;
+		}
+	}
+}

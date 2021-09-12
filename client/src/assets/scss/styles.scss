@@ -14,11 +14,13 @@
 @import './components/auth/_Login.scss';
 
 // ---------- chats ----------- //
-@import './components/chats/chat/_ChatNav.scss';
-@import './components/chats/_Chats.scss';
-@import './components/chats/chat/_Chat.scss';
 @import './components/chats/_NewChat.scss';
-// -------------------- message ----------- //
+@import './components/chats/_Chats.scss';
+// -------------------- chat ----------- //
+@import './components/chats/chat/_Chat.scss';
+@import './components/chats/chat/_ChatNav.scss';
+@import './components/chats/chat/_ChatSettings.scss';
+// ------------------------------- message ----------- //
 @import './components/chats/chat/message/_Message.scss';
 @import './components/chats/chat/message/_NewMessage.scss';
 @import './components/chats/chat/message/_MessagePreview.scss';
@@ -55,4 +57,12 @@ html,
 
 .title {
 	font-family: 'Lobster', cursive;
+}
+
+.color-3 {
+	color: $color-3;
+}
+
+.color-4 {
+	color: $color-4;
 }
