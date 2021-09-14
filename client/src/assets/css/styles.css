@@ -395,6 +395,21 @@
 .message .message-info .message-info-status-anchor i:nth-child(2) {
   left: 0.3rem;
 }
+.message .message-reply {
+  font-size: 0.8rem;
+  border-left: 0.2rem solid #118392;
+  padding-left: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+.message .message-reply p {
+  margin: 0;
+}
+.message .message-reply p.message-reply-author {
+  opacity: 0.5;
+}
+.message .message-reply p.message-reply-text {
+  margin-left: 0.5rem;
+}
 .message.user-true {
   align-self: flex-end;
   background-color: #171717;
@@ -407,6 +422,9 @@
   background-color: #0e6f7b;
   margin-right: 1.5rem;
   transition: margin-right ease 0.3s;
+}
+.message.message-selected.user-true .message-reply {
+  border-color: #ad7100;
 }
 .message.message-selected.user-false {
   background-color: #946000;

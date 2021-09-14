@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
 	Button,
 	Form,
@@ -30,7 +30,9 @@ const NewMessage = ({
 		if (!loading && message && message.type === 'edit') {
 			setMessageText(message.text);
 			messageInput.focus();
-		} else if (!loading && !message) {
+		} else if (!loading && message && message.type === 'reply') {
+			messageInput.focus();
+		} else {
 			setMessageText('');
 		}
 	}, [loading, message, messageInput]);
@@ -42,12 +44,23 @@ const NewMessage = ({
 	const onSubmit = async (e) => {
 		e.preventDefault();
 
-		if (message && message.type === 'edit') {
-			await editMessage(message.chat, message._id, messageText);
+		if (message) {
+			if (message.type === 'edit') {
+				await editMessage(message.chat, message._id, messageText);
+			} else if (message.type === 'reply') {
+				const reply = {
+					text: message.text,
+					id: message._id,
+					author: message.author,
+				};
+
+				await createMessage({ text: messageText, reply }, chat);
+			}
+
 			clearMessage();
 			clearSelectedMessages();
 		} else {
-			await createMessage(messageText, chat);
+			await createMessage({ text: messageText }, chat);
 			setMessageText('');
 			messageInput.focus();
 		}
@@ -79,6 +92,10 @@ const NewMessage = ({
 								message &&
 								message.type === 'edit' ? (
 									<i className='fas fa-check'></i>
+								) : !loading &&
+								  message &&
+								  message.type === 'reply' ? (
+									<i className='fas fa-reply'></i>
 								) : (
 									<i className='fas fa-paper-plane'></i>
 								)}

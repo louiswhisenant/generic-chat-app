@@ -4,10 +4,11 @@ const auth = require('../../middleware/auth');
 const { body, validationResult } = require('express-validator');
 const Message = require('../../models/Message');
 const User = require('../../models/User');
-const config = require('../../config');
-const CryptoJS = require('crypto-js');
+// const config = require('../../config');
+// const CryptoJS = require('crypto-js');
 
-const { CRYPTO_KEY } = config;
+// const { CRYPTO_KEY } = config;
+const { encryptString, decryptString } = require('../../utils/encryption');
 
 // @route   POST api/messages/:chat
 // @desc    Create message
@@ -22,28 +23,32 @@ router.post(
 		}
 
 		try {
-			const encryptedText = CryptoJS.AES.encrypt(
-				req.body.text,
-				CRYPTO_KEY
-			).toString();
-
 			// TODO: Validate that user is authorized to post to this chat.
 
 			const newMessage = new Message({
 				chat: req.params.chat,
 				author: req.user.id,
-				text: encryptedText,
+				text: encryptString(req.body.text),
 			});
 
 			if (req.body.deliverAt) {
 				newMessage.deliverAt = req.body.deliverAt;
 			}
+			if (req.body.reply) {
+				newMessage.reply = {
+					text: encryptString(req.body.reply.text),
+					id: req.body.reply.id,
+					author: req.body.reply.author,
+				};
+			}
 
 			const message = await newMessage.save();
 
-			const bytes = CryptoJS.AES.decrypt(message.text, CRYPTO_KEY);
-			const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
-			message.text = decryptedText;
+			message.text = decryptString(message.text);
+
+			if (message.reply.id && message.reply.text) {
+				message.reply.text = decryptString(message.reply.text);
+			}
 
 			res.json(message);
 		} catch (err) {
@@ -63,9 +68,11 @@ router.get('/:chat/:message', auth, async (req, res) => {
 			_id: req.params.message,
 		});
 
-		const bytes = CryptoJS.AES.decrypt(message.text, CRYPTO_KEY);
-		const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
-		message.text = decryptedText;
+		message.text = decryptString(message.text);
+
+		if (message.reply.id && message.reply.text) {
+			message.reply.text = decryptString(message.reply.text);
+		}
 
 		res.json(message);
 	} catch (err) {
@@ -87,9 +94,11 @@ router.get('/:chat', auth, async (req, res) => {
 		});
 
 		messages.forEach((message) => {
-			const bytes = CryptoJS.AES.decrypt(message.text, CRYPTO_KEY);
-			const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
-			message.text = decryptedText;
+			message.text = decryptString(message.text);
+
+			if (message.reply.id && message.reply.text) {
+				message.reply.text = decryptString(message.reply.text);
+			}
 		});
 
 		res.json(messages);
@@ -125,19 +134,16 @@ router.put(
 				return res.status(401).json({ msg: 'User not authorized' });
 			}
 
-			const encryptedText = CryptoJS.AES.encrypt(
-				req.body.text,
-				CRYPTO_KEY
-			).toString();
-
-			message.text = encryptedText;
+			message.text = encryptString(req.body.text);
 			message.__v = message.__v + 1;
 
 			await message.save();
 
-			const bytes = CryptoJS.AES.decrypt(message.text, CRYPTO_KEY);
-			const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
-			message.text = decryptedText;
+			message.text = decryptString(message.text);
+
+			if (message.reply.id && message.reply.text) {
+				message.reply.text = decryptString(message.reply.text);
+			}
 
 			res.json(message);
 		} catch (err) {

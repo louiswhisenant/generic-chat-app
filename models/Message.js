@@ -21,6 +21,19 @@ const MessageSchema = new Schema(
 			type: String,
 			required: true,
 		},
+		reply: {
+			text: {
+				type: String,
+			},
+			id: {
+				type: Schema.Types.ObjectId,
+				ref: 'message',
+			},
+			author: {
+				type: Schema.Types.ObjectId,
+				ref: 'user',
+			},
+		},
 		deliverAt: {
 			type: Date,
 			default: Date.now(),

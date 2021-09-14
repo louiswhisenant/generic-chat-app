@@ -5,6 +5,7 @@ import {
 	deselectMessage,
 	selectMessage,
 } from '../../../../redux/actions/message';
+import message from '../../../../redux/reducers/message';
 
 const Message = ({
 	text,
@@ -14,6 +15,7 @@ const Message = ({
 	author,
 	auth: { user, loading },
 	id,
+	reply,
 	selected,
 	selectMessage,
 	deselectMessage,
@@ -22,6 +24,10 @@ const Message = ({
 		selected.find((obj) => obj.id === id)
 			? deselectMessage(id)
 			: selectMessage({ id, author });
+	};
+
+	const onReplyClick = () => {
+		console.log('scroll to original message');
 	};
 
 	return (
@@ -64,6 +70,13 @@ const Message = ({
 						)}
 					</div>
 				</div>
+
+				{reply && (
+					<div className='message-reply' onClick={onReplyClick}>
+						<p className='message-reply-author'>{reply.author}</p>
+						<p className='message-reply-text'>{reply.text}</p>
+					</div>
+				)}
 
 				<p className='message-text'>{text}</p>
 			</div>

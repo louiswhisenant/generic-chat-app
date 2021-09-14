@@ -36,6 +36,7 @@ const Chat = ({
 									status,
 									author,
 									_id,
+									reply,
 								}) => (
 									<Message
 										text={text}
@@ -44,6 +45,7 @@ const Chat = ({
 										status={status}
 										author={author}
 										id={_id}
+										reply={reply}
 										key={_id}
 									/>
 								)

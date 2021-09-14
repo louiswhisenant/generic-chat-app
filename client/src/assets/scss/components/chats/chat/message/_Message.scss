@@ -43,6 +43,24 @@
 		}
 	}
 
+	.message-reply {
+		font-size: 0.8rem;
+		border-left: 0.2rem solid $color-3;
+		padding-left: 0.5rem;
+		margin-bottom: 0.5rem;
+		p {
+			margin: 0;
+
+			&.message-reply-author {
+				opacity: 0.5;
+			}
+
+			&.message-reply-text {
+				margin-left: 0.5rem;
+			}
+		}
+	}
+
 	&.user-true {
 		align-self: flex-end;
 		background-color: darken($color-1, 7%);
@@ -58,6 +76,10 @@
 			background-color: darken($color-3, 5%);
 			margin-right: 1.5rem;
 			transition: margin-right ease 0.3s;
+
+			.message-reply {
+				border-color: $color-4;
+			}
 		}
 
 		&.user-false {

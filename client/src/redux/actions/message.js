@@ -22,12 +22,9 @@ export const createMessage = (formData, chat) => async (dispatch) => {
 			'Content-Type': 'application/json',
 		},
 	};
+
 	try {
-		const res = await axios.post(
-			`/api/messages/${chat}`,
-			{ text: formData },
-			config
-		);
+		const res = await axios.post(`/api/messages/${chat}`, formData, config);
 
 		dispatch({
 			type: CREATE_MESSAGE,
