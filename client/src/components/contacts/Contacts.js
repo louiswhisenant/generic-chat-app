@@ -4,7 +4,7 @@ const Contacts = ({ profile: { name, status, bio, blocklist, contacts } }) => {
 	return (
 		<div>
 			{contacts.map((contact) => (
-				<div>
+				<div key={contact.id}>
 					<h3>{contact.nickname}</h3>
 					<p>{contact.id}</p>
 				</div>

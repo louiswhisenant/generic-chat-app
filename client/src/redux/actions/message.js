@@ -89,12 +89,21 @@ export const getMessages = (chat) => async (dispatch) => {
 
 // Edit message
 export const editMessage = (chat, message, formData) => async (dispatch) => {
+	const config = {
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	};
 	try {
-		await axios.put(`/api/messages/${chat}/${message}`, formData);
+		const res = await axios.put(
+			`/api/messages/${chat}/${message}`,
+			{ text: formData },
+			config
+		);
 
 		dispatch({
 			type: EDIT_MESSAGE,
-			payload: formData,
+			payload: res.data,
 		});
 
 		dispatch(setAlert('Message edited', 'success'));

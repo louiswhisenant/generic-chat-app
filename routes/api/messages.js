@@ -99,7 +99,7 @@ router.get('/:chat', auth, async (req, res) => {
 	}
 });
 
-// @route   POST api/messages/:chat/:message
+// @route   PUT api/messages/:chat/:message
 // @desc    Edit message
 // @access  Private
 router.put(
@@ -134,6 +134,10 @@ router.put(
 			message.__v = message.__v + 1;
 
 			await message.save();
+
+			const bytes = CryptoJS.AES.decrypt(message.text, CRYPTO_KEY);
+			const decryptedText = bytes.toString(CryptoJS.enc.Utf8);
+			message.text = decryptedText;
 
 			res.json(message);
 		} catch (err) {

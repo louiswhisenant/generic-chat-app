@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Button,
 	Form,
@@ -7,23 +7,50 @@ import {
 	InputGroup,
 	InputGroupAddon,
 } from 'reactstrap';
-import { createMessage } from '../../../../redux/actions/message';
+import {
+	clearMessage,
+	clearSelectedMessages,
+	createMessage,
+	editMessage,
+} from '../../../../redux/actions/message';
 import { connect } from 'react-redux';
 
-const NewMessage = ({ chat, createMessage }) => {
-	const [message, setMessage] = useState('');
+const NewMessage = ({
+	chat,
+	message: { message, loading },
+	createMessage,
+	clearMessage,
+	clearSelectedMessages,
+	editMessage,
+}) => {
+	const [messageText, setMessageText] = useState('');
 	const messageInput = document.querySelector('#message-input');
 
+	useEffect(() => {
+		if (!loading && message && message.type === 'edit') {
+			setMessageText(message.text);
+			messageInput.focus();
+		} else if (!loading && !message) {
+			setMessageText('');
+		}
+	}, [loading, message, messageInput]);
+
 	const onChange = (e) => {
-		setMessage(e.target.value);
+		setMessageText(e.target.value);
 	};
 
 	const onSubmit = async (e) => {
 		e.preventDefault();
 
-		await createMessage(message, chat);
-		setMessage('');
-		messageInput.focus();
+		if (message && message.type === 'edit') {
+			await editMessage(message.chat, message._id, messageText);
+			clearMessage();
+			clearSelectedMessages();
+		} else {
+			await createMessage(messageText, chat);
+			setMessageText('');
+			messageInput.focus();
+		}
 	};
 
 	return (
@@ -39,7 +66,7 @@ const NewMessage = ({ chat, createMessage }) => {
 						<Input
 							type='text'
 							name='message'
-							value={message}
+							value={messageText}
 							onChange={(e) => onChange(e)}
 							className='input'
 							autoFocus
@@ -48,7 +75,13 @@ const NewMessage = ({ chat, createMessage }) => {
 						/>
 						<InputGroupAddon addonType='append'>
 							<Button type='submit' className='message-send'>
-								<i className='fas fa-paper-plane'></i>
+								{!loading &&
+								message &&
+								message.type === 'edit' ? (
+									<i className='fas fa-check'></i>
+								) : (
+									<i className='fas fa-paper-plane'></i>
+								)}
 							</Button>
 						</InputGroupAddon>
 					</InputGroup>
@@ -58,4 +91,13 @@ const NewMessage = ({ chat, createMessage }) => {
 	);
 };
 
-export default connect(null, { createMessage })(NewMessage);
+const mapStateToProps = (state) => ({
+	message: state.message,
+});
+
+export default connect(mapStateToProps, {
+	createMessage,
+	clearMessage,
+	clearSelectedMessages,
+	editMessage,
+})(NewMessage);
