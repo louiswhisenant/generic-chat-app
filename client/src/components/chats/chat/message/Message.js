@@ -1,11 +1,10 @@
-import { Fragment } from 'react';
+import { Fragment, useEffect, useRef } from 'react';
 import { connect } from 'react-redux';
 import Moment from 'react-moment';
 import {
 	deselectMessage,
 	selectMessage,
 } from '../../../../redux/actions/message';
-import message from '../../../../redux/reducers/message';
 
 const Message = ({
 	text,
@@ -20,15 +19,48 @@ const Message = ({
 	selectMessage,
 	deselectMessage,
 }) => {
-	const onClick = ({ id, author }) => {
-		selected.find((obj) => obj.id === id)
-			? deselectMessage(id)
-			: selectMessage({ id, author });
+	const replyRef = useRef(null);
+
+	const onReplyClick = (id, author) => {
+		const original = document.getElementById(id);
+
+		original.scrollIntoView({
+			block: 'center',
+			behavior: 'smooth',
+		});
+
+		deselectMessage(id);
+
+		setTimeout(() => {
+			selectMessage({ id, author });
+		}, 250);
 	};
 
-	const onReplyClick = () => {
-		console.log('scroll to original message');
+	const onClick = (e, id, author) => {
+		if (replyRef.current && replyRef.current.contains(e.target)) {
+			return;
+		} else {
+			document.removeEventListener('click', clickListener);
+
+			selected.find((obj) => obj.id === id)
+				? deselectMessage(id)
+				: selectMessage({ id, author });
+		}
 	};
+
+	const clickListener = (e) => {
+		if (replyRef.current && replyRef.current.contains(e.target)) {
+			return;
+		}
+	};
+
+	useEffect(() => {
+		document.addEventListener('click', clickListener);
+		return () => {
+			document.removeEventListener('click', clickListener);
+		};
+		// eslint-disable-next-line
+	}, []);
 
 	return (
 		!loading && (
@@ -40,9 +72,10 @@ const Message = ({
 						? 'message-selected'
 						: ''
 				}`}
-				onClick={() => {
-					onClick({ id, author });
-				}}>
+				onClick={(e) => {
+					onClick(e, id, author);
+				}}
+				id={id}>
 				<div className='message-info'>
 					<Moment format='hh:mm a' className='message-info-time'>
 						{updatedAt}
@@ -72,9 +105,17 @@ const Message = ({
 				</div>
 
 				{reply && (
-					<div className='message-reply' onClick={onReplyClick}>
+					<div className='message-reply'>
 						<p className='message-reply-author'>{reply.author}</p>
 						<p className='message-reply-text'>{reply.text}</p>
+						<div
+							className='message-reply-scroll'
+							ref={replyRef}
+							onClick={() => {
+								onReplyClick(reply.id, reply.author);
+							}}>
+							<i className='fas fa-comment-alt'></i>
+						</div>
 					</div>
 				)}
 

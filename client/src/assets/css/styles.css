@@ -252,7 +252,7 @@
   background-color: #323232;
   transition: 0s all;
   top: unset;
-  top: calc(85vh + 0.2rem);
+  top: calc(90vh + 0.2rem);
 }
 
 #chats .chat-link .chat {
@@ -301,9 +301,7 @@
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.4) 50%, transparent 100%);
 }
 #chat #chat-messages .last-message {
-  position: absolute;
-  bottom: 0;
-  left: 50%;
+  height: 0;
   visibility: hidden;
 }
 
@@ -400,6 +398,7 @@
   border-left: 0.2rem solid #118392;
   padding-left: 0.5rem;
   margin-bottom: 0.5rem;
+  position: relative;
 }
 .message .message-reply p {
   margin: 0;
@@ -409,6 +408,13 @@
 }
 .message .message-reply p.message-reply-text {
   margin-left: 0.5rem;
+}
+.message .message-reply .message-reply-scroll {
+  opacity: 0.3;
+  position: absolute;
+  left: -3.5rem;
+  top: 50%;
+  transform: translateY(-50%);
 }
 .message.user-true {
   align-self: flex-end;
@@ -501,6 +507,46 @@
   margin: 0.5rem;
   padding: 0.25rem 1rem;
   border-left: 0.2rem solid #118392;
+}
+
+#bookmarks-anchor {
+  position: relative;
+}
+#bookmarks-anchor .bookmarks-trigger {
+  position: fixed;
+  top: 4.5rem;
+  left: 1.2rem;
+  cursor: pointer;
+  z-index: 1;
+}
+#bookmarks-anchor .bookmarks {
+  position: fixed;
+  width: 50vw;
+  height: calc(100vh - 7rem);
+  top: 3.5rem;
+  left: 0;
+  background-color: #101010;
+  z-index: 1030;
+  padding: 1rem;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column;
+}
+#bookmarks-anchor .bookmarks .bookmarks-close {
+  margin-left: auto;
+}
+#bookmarks-anchor .bookmarks .bookmark .bookmark-date {
+  opacity: 0.5;
+}
+#bookmarks-anchor .bookmarks .bookmark .bookmark-text {
+  max-height: 6rem;
+  overflow-y: scroll;
+}
+#bookmarks-anchor .bookmarks .bookmark hr {
+  color: #118392;
+}
+#bookmarks-anchor .bookmarks .bookmark:nth-of-type(2n) hr {
+  color: #ad7100;
 }
 
 #alert-anchor {

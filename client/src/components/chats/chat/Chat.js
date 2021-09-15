@@ -7,6 +7,7 @@ import Message from './message/Message';
 import ChatNav from './ChatNav';
 import NewMessage from './message/NewMessage';
 import MessagePreview from './message/MessagePreview';
+import Bookmarks from './message/Bookmarks';
 
 const Chat = ({
 	match,
@@ -20,11 +21,23 @@ const Chat = ({
 		getChat(match.params.id);
 	}, [getMessages, getChat, match]);
 
+	useEffect(() => {
+		if (!chat.loading && !loading) {
+			const lastMessage = document.getElementById('last-message');
+
+			lastMessage.scrollIntoView({
+				block: 'start',
+				behavior: 'smooth',
+			});
+		}
+	}, [chat.loading, loading]);
+
 	return (
 		!chat.loading && (
 			<div id='chat'>
 				<ChatNav chatId={match.params.id} />
 				<div id='chat-messages'>
+					<Bookmarks />
 					<div className='chat-fade'></div>
 					{!loading && messages.length > 0 ? (
 						<Fragment>
