@@ -24,6 +24,8 @@ const NewMessage = ({
 	editMessage,
 }) => {
 	const [messageText, setMessageText] = useState('');
+	const [expand, setExpand] = useState(false);
+
 	const messageInput = document.querySelector('#message-input');
 
 	useEffect(() => {
@@ -62,6 +64,7 @@ const NewMessage = ({
 		} else {
 			await createMessage({ text: messageText }, chat);
 			setMessageText('');
+			setExpand(false);
 			messageInput.focus();
 		}
 	};
@@ -75,19 +78,31 @@ const NewMessage = ({
 				}}
 				className='d-flex align-items-center justify-content-center'>
 				<FormGroup className='mb-2'>
-					<InputGroup>
-						<Input
+					<InputGroup className='message-new-input-group'>
+						<InputGroupAddon addonType='prepend'>
+							<Button
+								className='input-group-addon message-new-expand'
+								onClick={() => {
+									setExpand(true);
+								}}>
+								<i className='fas fa-expand'></i>
+							</Button>
+						</InputGroupAddon>
+						<textarea
 							type='text'
 							name='message'
 							value={messageText}
 							onChange={(e) => onChange(e)}
-							className='input'
+							className={`input message-input ${
+								expand ? 'expanded' : ''
+							}`}
 							autoFocus
 							id='message-input'
-							autoComplete='off'
-						/>
+							autoComplete='off'></textarea>
 						<InputGroupAddon addonType='append'>
-							<Button type='submit' className='message-send'>
+							<Button
+								type='submit'
+								className='input-group-addon message-new-submit'>
 								{!loading &&
 								message &&
 								message.type === 'edit' ? (
@@ -101,6 +116,13 @@ const NewMessage = ({
 								)}
 							</Button>
 						</InputGroupAddon>
+						{expand && (
+							<i
+								className='fas fa-compress expanded-close'
+								onClick={() => {
+									setExpand(false);
+								}}></i>
+						)}
 					</InputGroup>
 				</FormGroup>
 			</Form>

@@ -7,12 +7,14 @@ import {
 	deleteMessage,
 	getMessage,
 } from '../../../redux/actions/message';
+import { editChat } from '../../../redux/actions/chat';
 
 const ChatNav = ({
 	chat: { chat, loading },
 	selected,
 	chatId,
 	user,
+	message,
 	getMessage,
 	clearSelectedMessages,
 	deleteMessage,
@@ -25,8 +27,31 @@ const ChatNav = ({
 		getMessage(chatId, selected[0].id, 'reply');
 	};
 
-	const onCopy = () => {
-		console.log('copy');
+	// const onCopy = () => {
+	// 	console.log('copy');
+	// };
+
+	const onBookmark = async () => {
+		await getMessage(chatId, selected[0].id, 'bookmark');
+
+		if (message) {
+			const messageToAdd = {
+				date: message.deliverAt,
+				id: message._id,
+				author: message.author,
+				text: message.text,
+			};
+
+			const participants = chat.participants.forEach((p) => {
+				if (p.id === user._id) {
+					p.bookmarks = [...p.bookmarks, messageToAdd];
+				}
+			});
+
+			editChat(chatId, { participants });
+		} else {
+			console.log("message hasn't loaded yet");
+		}
 	};
 
 	const onDelete = () => {
@@ -69,7 +94,8 @@ const ChatNav = ({
 							<i className='fas fa-pen' onClick={onEdit}></i>
 						)}
 						<i className='fas fa-reply' onClick={onReply}></i>
-						<i className='fas fa-copy' onClick={onCopy}></i>
+						{/* <i className='fas fa-copy' onClick={onCopy}></i> */}
+						<i className='fas fa-bookmark' onClick={onBookmark}></i>
 					</Fragment>
 				)}
 				<i className='fas fa-trash' onClick={onDelete}></i>
@@ -95,6 +121,7 @@ const mapStateToProps = (state) => ({
 	chat: state.chat,
 	selected: state.message.selected,
 	user: state.auth.user,
+	message: state.message.message,
 });
 
 export default connect(mapStateToProps, {

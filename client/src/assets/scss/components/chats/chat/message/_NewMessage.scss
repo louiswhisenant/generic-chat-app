@@ -2,43 +2,61 @@
 	width: 100%;
 	background-color: darken($color-1, 15%);
 	padding: 0.25rem;
+	max-height: 10rem;
 
 	.form-group {
 		width: 100%;
-	}
 
-	.message-send {
-		width: 3rem;
-		box-shadow: none;
-		color: $color-3;
+		.message-new-input-group {
+			flex-wrap: nowrap;
 
-		&:hover {
-			background-color: transparent;
-		}
-	}
+			.message-input {
+				align-self: flex-end;
+				height: 2rem;
+				line-height: 1rem;
+				padding: 0.2rem 0.5rem;
 
-	&:hover {
-		.message-send {
-			color: rgba($color-4, 0.5);
-		}
-	}
+				&:hover {
+					color: rgba($color-4, 0.5);
+				}
 
-	.message-input {
-		&:hover {
-			+ .message-send {
-				color: rgba($color-4, 0.5);
+				&:active {
+					color: $color-4;
+				}
+
+				&:focus {
+					color: $color-4;
+				}
+
+				&.expanded {
+					position: fixed;
+					top: 10%;
+					left: 5%;
+					width: (90%);
+					height: calc(80%);
+					border-radius: 0.25rem;
+					z-index: 100;
+					background-color: $color-1;
+					padding: 1rem;
+				}
 			}
-		}
 
-		&:active {
-			+ .message-send {
-				color: $color-4;
+			.input-group-addon {
+				width: 3rem;
+				box-shadow: none;
+				color: $color-3;
+
+				&:hover {
+					background-color: transparent;
+				}
 			}
-		}
 
-		&:focus {
-			+ .message-send {
-				color: $color-4;
+			.expanded-close {
+				position: fixed;
+				bottom: 1.5rem;
+				left: 1.5rem;
+				cursor: pointer;
+				z-index: 101;
 			}
 		}
 	}

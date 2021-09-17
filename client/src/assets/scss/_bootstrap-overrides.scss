@@ -137,6 +137,24 @@
 		}
 	}
 
+	.btn-basic {
+		background-color: transparent;
+		border-radius: 0.25rem;
+		border: none;
+		padding: 0.5rem;
+		width: 7rem;
+		color: $color-2;
+
+		&:focus {
+			outline: none;
+			color: $color-2;
+		}
+
+		&:active {
+			background-color: darken($dark, 10%);
+		}
+	}
+
 	.btn-circle {
 		width: 4rem;
 		height: 4rem;
@@ -151,6 +169,7 @@
 			position: relative;
 			z-index: 2;
 			min-width: 15rem;
+			width: 100%;
 			border: 0;
 			outline: 0;
 			background: transparent;
@@ -158,6 +177,7 @@
 			border-radius: 0;
 			border-bottom: 0.2rem solid darken($color-3, 10%);
 			color: $color-4;
+			resize: none;
 
 			&:hover {
 				border-bottom: 0.2rem solid rgba($color-4, 0.5);

@@ -1,22 +1,14 @@
 import { useState, useEffect, useRef } from 'react';
-import {
-	Collapse,
-	Navbar,
-	NavbarBrand,
-	Nav,
-	NavItem,
-	Button,
-} from 'reactstrap';
+import { Navbar, NavbarBrand, Nav, NavItem, Button, Spinner } from 'reactstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { logout } from '../../../redux/actions/auth';
 import { connect } from 'react-redux';
+import NavUser from './NavUser';
 
-const DashNav = ({ url, logout }) => {
+const DashNav = ({ auth, profile, url, logout }) => {
 	const navRef = useRef(null);
 	const [isOpen, setIsOpen] = useState(false);
 	const [navBrand, setNavBrand] = useState('generic-chat-app');
-
-	const handleNavToggle = () => setIsOpen(!isOpen);
 
 	const clickListener = (e) => {
 		if (navRef.current && navRef.current.contains(e.target)) {
@@ -49,7 +41,11 @@ const DashNav = ({ url, logout }) => {
 	return (
 		<div ref={navRef} className='nav-anchor' id='nav-anchor'>
 			<Navbar dark id='dash-nav'>
-				<Button className='navbar-toggler' onClick={handleNavToggle}>
+				<Button
+					className='navbar-toggler'
+					onClick={() => {
+						setIsOpen(!isOpen);
+					}}>
 					<i className='fas fa-bars'></i>
 				</Button>
 
@@ -61,9 +57,17 @@ const DashNav = ({ url, logout }) => {
 				)}
 			</Navbar>
 
-			<Collapse isOpen={isOpen} navbar className='width'>
+			<div
+				isOpen={isOpen}
+				navbar
+				className={`nav-content ${isOpen ? 'show' : ''}`}>
 				<Nav className='ml-auto' navbar>
-					{/* <NavUser /> Loading issue on initial login */}
+					<i
+						className='fas fa-times dash-nav-close'
+						onClick={() => {
+							setIsOpen(false);
+						}}></i>
+					{!auth.loading && !profile.loading && <NavUser />}
 					<NavItem className='dash-nav-settings'>
 						<Link
 							to={`${url}/settings`}
@@ -110,9 +114,14 @@ const DashNav = ({ url, logout }) => {
 						</button>
 					</NavItem>
 				</Nav>
-			</Collapse>
+			</div>
 		</div>
 	);
 };
 
-export default connect(null, { logout })(DashNav);
+const mapStateToProps = (state) => ({
+	auth: state.auth,
+	profile: state.profile,
+});
+
+export default connect(mapStateToProps, { logout })(DashNav);

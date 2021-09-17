@@ -4,10 +4,7 @@ const auth = require('../../middleware/auth');
 const { body, validationResult } = require('express-validator');
 const Message = require('../../models/Message');
 const User = require('../../models/User');
-// const config = require('../../config');
-// const CryptoJS = require('crypto-js');
 
-// const { CRYPTO_KEY } = config;
 const { encryptString, decryptString } = require('../../utils/encryption');
 
 // @route   POST api/messages/:chat

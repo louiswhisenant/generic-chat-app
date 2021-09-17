@@ -26,6 +26,12 @@
 @import './components/chats/chat/message/_MessagePreview.scss';
 @import './components/chats/chat/message/_Bookmarks.scss';
 
+// ---------- contacts ----------- //
+@import './components/contacts/_Contacts.scss';
+
+// ---------- profile ----------- //
+@import './components/profile/_CreateProfile.scss';
+
 // ---------- layout ----------- //
 @import './components/layout/_Alert.scss';
 @import './components/layout/_Landing.scss';
@@ -50,6 +56,19 @@ html,
 	background-color: $color-1;
 	color: $color-2;
 	font-family: 'Josefin Sans', sans-serif;
+}
+
+::-webkit-scrollbar {
+	width: 0.2rem;
+}
+
+::-webkit-scrollbar-thumb {
+	background-color: lighten($dark, 10%);
+	border-radius: 0.2rem;
+}
+
+::-webkit-scrollbar-track {
+	background-color: darken($color-1, 10%);
 }
 
 .fullscreen {

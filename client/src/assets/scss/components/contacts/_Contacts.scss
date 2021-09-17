@@ -1,0 +1,60 @@
+#contacts {
+	padding-top: 2rem;
+
+	.contacts-tabs {
+		display: flex;
+		align-items: flex-end;
+		justify-content: center;
+
+		.contacts-tab {
+			z-index: 1;
+			background-color: darken($dark, 5%);
+			box-shadow: none;
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+			width: 40%;
+			font-family: 'Lobster', cursive;
+
+			&.tab-contacts {
+				margin-right: -0.5rem;
+				color: $color-3;
+
+				i {
+					color: $color-3;
+				}
+			}
+
+			&.tab-blocklist {
+				margin-left: -0.5rem;
+				color: $color-4;
+
+				i {
+					color: $color-4;
+				}
+			}
+
+			&.current {
+				z-index: 2;
+				background: none;
+				background-color: $dark;
+				height: 3.2rem;
+				margin-bottom: -0.2rem;
+			}
+		}
+	}
+
+	.contacts-page {
+		padding-bottom: 100%;
+	}
+
+	.contact-card {
+		background-color: $dark;
+		padding: 0.5rem 1rem;
+		margin-bottom: 0.5rem;
+		border-radius: 0.25rem;
+
+		.contact-card-name {
+			font-family: 'Lobster', cursive;
+		}
+	}
+}

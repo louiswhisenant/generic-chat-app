@@ -35,13 +35,13 @@ export default (state = initialState, action) => {
 				...state,
 				profile: null,
 				error: payload,
-				loading: false,
+				loading: true,
 			};
 		case CLEAR_PROFILE:
 			return {
 				...state,
 				profile: null,
-				loading: false,
+				loading: true,
 			};
 		default:
 			return state;

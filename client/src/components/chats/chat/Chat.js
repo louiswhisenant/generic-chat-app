@@ -30,14 +30,14 @@ const Chat = ({
 				behavior: 'smooth',
 			});
 		}
-	}, [chat.loading, loading]);
+	}, [chat.loading, messages, loading]);
 
 	return (
 		!chat.loading && (
 			<div id='chat'>
 				<ChatNav chatId={match.params.id} />
 				<div id='chat-messages'>
-					<Bookmarks />
+					<Bookmarks chat={chat} />
 					<div className='chat-fade'></div>
 					{!loading && messages.length > 0 ? (
 						<Fragment>
@@ -71,7 +71,9 @@ const Chat = ({
 						<Spinner />
 					)}
 				</div>
-				{!loading && message !== null && <MessagePreview />}
+				{!loading &&
+					message !== null &&
+					message.type !== 'bookmark' && <MessagePreview />}
 				<NewMessage chat={match.params.id} />
 			</div>
 		)

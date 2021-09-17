@@ -35,9 +35,9 @@
 		}
 	}
 
-	.navbar-collapse {
+	.nav-content {
 		position: absolute;
-		z-index: 1;
+		z-index: 1030;
 		left: -161%;
 		height: 100vh;
 		width: 80%;
@@ -51,97 +51,99 @@
 			transition: left 0.2s ease;
 		}
 
-		&.collapsing {
-			height: 100vh;
-			transition: left 0.3s ease;
-		}
+		.navbar-nav {
+			height: 100%;
 
-		&:not(.show) {
-			display: initial;
-		}
-	}
-
-	.navbar-nav {
-		height: 100%;
-
-		.nav-item {
-			margin: 0;
-			background-color: darken($dark, 10%);
-			width: 100%;
-			display: flex;
-			justify-content: flex-start;
-			align-items: center;
-			border-radius: 0;
-			cursor: pointer;
-
-			&#nav-user {
-				background-color: transparent;
+			.dash-nav-close {
+				margin: 0.75rem 0.75rem 0.75rem auto;
+				cursor: pointer;
 			}
 
-			&:hover {
-				.nav-item-content {
-					margin-left: 0.5rem;
-					transition: margin-left 0.3s ease;
-				}
-			}
-
-			.nav-item-content {
-				text-decoration: none;
-				color: $color-2;
-				height: 100%;
+			.nav-item {
+				margin: 0;
+				background-color: darken($dark, 10%);
 				width: 100%;
-				border: none;
-				padding: 1rem;
 				display: flex;
-				align-items: center;
 				justify-content: flex-start;
-				transition: margin-left 0.3s ease;
+				align-items: center;
+				border-radius: 0;
+				cursor: pointer;
 
-				&:focus {
-					margin-left: 0.5rem;
-					transition: margin-left 0.3s ease;
-					outline: none;
-
-					&:not(:active) {
-						.i-bg {
-							background: darken($color-3, 5%);
-							background-image: linear-gradient(
-								45deg,
-								darken($color-3, 5%) 0%,
-								darken($color-3, 5%) 15%,
-								lighten(darken($color-3, 5%), 15%) 25%,
-								darken($color-3, 5%) 45%,
-								darken($color-3, 5%) 100%
-							);
-
-							background-size: 1000%, 600%;
-
-							animation: 2.5s 1s shimmer reverse infinite linear;
-						}
-					}
-				}
-
-				&:active {
-					position: relative;
-					top: 0.2rem;
-					transition: ease 0.3s all;
-
-					.i-bg {
-						background-color: darken($color-3, 10%);
-					}
-				}
-
-				.i-bg {
-					margin-right: 0.5rem;
-					background-color: darken($color-3, 5%);
-					border-radius: 50%;
-					padding: 0.5rem;
-					width: 2.2rem;
-					height: 2.2rem;
-					margin-right: 1rem;
+				&#nav-user {
+					background-color: transparent;
 					display: flex;
+					flex-direction: column;
 					align-items: center;
 					justify-content: center;
+					text-align: center;
+				}
+
+				&:hover {
+					.nav-item-content {
+						margin-left: 0.5rem;
+						transition: margin-left 0.3s ease;
+					}
+				}
+
+				.nav-item-content {
+					text-decoration: none;
+					color: $color-2;
+					height: 100%;
+					width: 100%;
+					border: none;
+					padding: 1rem;
+					display: flex;
+					align-items: center;
+					justify-content: flex-start;
+					transition: margin-left 0.3s ease;
+
+					&:focus {
+						margin-left: 0.5rem;
+						transition: margin-left 0.3s ease;
+						outline: none;
+
+						&:not(:active) {
+							.i-bg {
+								background: darken($color-3, 5%);
+								background-image: linear-gradient(
+									45deg,
+									darken($color-3, 5%) 0%,
+									darken($color-3, 5%) 15%,
+									lighten(darken($color-3, 5%), 15%) 25%,
+									darken($color-3, 5%) 45%,
+									darken($color-3, 5%) 100%
+								);
+
+								background-size: 1000%, 600%;
+
+								animation: 2.5s 1s shimmer reverse infinite
+									linear;
+							}
+						}
+					}
+
+					&:active {
+						position: relative;
+						top: 0.2rem;
+						transition: ease 0.3s all;
+
+						.i-bg {
+							background-color: darken($color-3, 10%);
+						}
+					}
+
+					.i-bg {
+						margin-right: 0.5rem;
+						background-color: darken($color-3, 5%);
+						border-radius: 50%;
+						padding: 0.5rem;
+						width: 2.2rem;
+						height: 2.2rem;
+						margin-right: 1rem;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+					}
 				}
 			}
 		}

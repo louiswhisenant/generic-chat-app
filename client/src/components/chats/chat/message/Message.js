@@ -29,8 +29,6 @@ const Message = ({
 			behavior: 'smooth',
 		});
 
-		deselectMessage(id);
-
 		setTimeout(() => {
 			selectMessage({ id, author });
 		}, 250);

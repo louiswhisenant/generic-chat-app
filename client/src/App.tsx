@@ -18,15 +18,23 @@ import setAuthToken from './utils/setAuthToken';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 import { loadUser } from './redux/actions/auth';
+import { getCurrentProfile } from './redux/actions/profile';
 
 if (localStorage.token) {
 	setAuthToken(localStorage.token);
 }
 
 const App = () => {
+
 	useEffect(() => {
-		store.dispatch(loadUser());
+		const onRender = async () => {
+			await store.dispatch(loadUser());
+			store.dispatch(getCurrentProfile());
+		}
+
+		onRender();
 	}, []);
+
 	return (
 		<Provider store={store}>
 			<Router>

@@ -8,6 +8,7 @@ const ChatSchema = new Schema(
 				id: {
 					type: Schema.Types.ObjectId,
 					ref: 'user',
+					required: true,
 				},
 				role: {
 					type: String,
@@ -15,6 +16,24 @@ const ChatSchema = new Schema(
 					required: true,
 					default: 'participant',
 				},
+				bookmarks: [
+					{
+						id: {
+							type: Schema.Types.ObjectId,
+							ref: 'message',
+						},
+						author: {
+							type: Schema.Types.ObjectId,
+							ref: 'user',
+						},
+						text: {
+							type: String,
+						},
+						date: {
+							type: Date,
+						},
+					},
+				],
 			},
 		],
 		desc: {

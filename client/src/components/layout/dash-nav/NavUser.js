@@ -2,21 +2,38 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { NavItem } from 'reactstrap';
 
-const NavUser = ({ auth: { user, loading } }) => {
+const NavUser = ({
+	user: { username, email },
+	profile: {
+		name: { first, last },
+		bio,
+		status,
+	},
+}) => {
 	return (
-		!loading && (
-			<NavItem
-				className='d-flex flex-column align-items-start'
-				id='nav-user'>
-				<div>{user.username}</div>
-				<div>{user.email}</div>
-			</NavItem>
-		)
+		<NavItem className='nav-user' id='nav-user'>
+			<div className='status-dot'>
+				<i
+					className={`fas fa-circle
+					${status === 'online' ? 'color-green' : ''} 
+					${status === 'hidden' ? 'color-1' : ''} 
+					${status === 'offline' ? 'color-1' : ''}
+					`}></i>
+			</div>
+			<h5>
+				{first}
+				{last && last}
+			</h5>
+			<small>{bio}</small>
+			<p className='nav-user-user'>{username}</p>
+			<p className='nav-user-email'>{email}</p>
+		</NavItem>
 	);
 };
 
 const mapStateToProps = (state) => ({
-	auth: state.auth,
+	user: state.auth.user,
+	profile: state.profile.profile,
 });
 
 export default connect(mapStateToProps, null)(NavUser);

@@ -97,7 +97,7 @@ export const updateProfile =
 			);
 
 			if (!edit) {
-				history.push('/dashboard');
+				history.push('/dash');
 			}
 		} catch (err) {
 			const errors = err.response.data.errors;

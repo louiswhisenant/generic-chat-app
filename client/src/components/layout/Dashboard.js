@@ -1,7 +1,4 @@
-import { useEffect } from 'react';
 import { Container } from 'reactstrap';
-import { connect } from 'react-redux';
-import { getCurrentProfile } from '../../redux/actions/profile';
 import Chats from '../chats/Chats';
 import DashNav from './dash-nav/DashNav';
 import { Switch, useRouteMatch } from 'react-router';
@@ -9,12 +6,8 @@ import PrivateRoute from '../routing/PrivateRoute';
 import Contacts from '../contacts/Contacts';
 import Settings from './Settings';
 
-const Dashboard = ({ getCurrentProfile }) => {
+const Dashboard = () => {
 	let { path, url } = useRouteMatch();
-
-	useEffect(() => {
-		getCurrentProfile();
-	}, [getCurrentProfile]);
 
 	return (
 		<div className='' id='dashboard'>
@@ -37,4 +30,4 @@ const Dashboard = ({ getCurrentProfile }) => {
 	);
 };
 
-export default connect(null, { getCurrentProfile })(Dashboard);
+export default Dashboard;
