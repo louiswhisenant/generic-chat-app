@@ -22,6 +22,7 @@ export default (state = initialState, action) => {
 		case CREATE_CHAT:
 			return {
 				...state,
+				chat: payload,
 				chats: [payload, ...state.chats],
 				loading: false,
 			};
@@ -49,6 +50,7 @@ export default (state = initialState, action) => {
 		case DELETE_CHAT:
 			return {
 				...state,
+				chat: state.chat._id === payload ? null : state.chat.chat,
 				chats: state.chats.filter((chat) => chat._id !== payload),
 				loading: false,
 			};

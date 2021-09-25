@@ -27,12 +27,8 @@ if (localStorage.token) {
 const App = () => {
 
 	useEffect(() => {
-		const onRender = async () => {
-			await store.dispatch(loadUser());
-			store.dispatch(getCurrentProfile());
-		}
-
-		onRender();
+		store.dispatch(loadUser());
+		store.dispatch(getCurrentProfile());
 	}, []);
 
 	return (

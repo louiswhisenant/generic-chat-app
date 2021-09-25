@@ -1,8 +1,66 @@
 import { connect } from 'react-redux';
-import { useState } from 'react';
+import { Fragment, useEffect, useState } from 'react';
+import NewContact from './NewContact';
+import { createChat } from '../../redux/actions/chat';
+import { getContactProfiles } from '../../redux/actions/profile';
+import { Spinner } from 'reactstrap';
+import Contact from './Contact';
+import { useHistory } from 'react-router';
 
-const Contacts = ({ profile: { blocklist, contacts } }) => {
+const Contacts = ({
+	profile: {
+		profile: { blocklist, contacts },
+		profiles,
+		loading,
+	},
+	chat: { chat, chats },
+	user,
+	createChat,
+	getContactProfiles,
+}) => {
+	const history = useHistory();
+
 	const [page2, setPage2] = useState(false);
+	const [collapse, setCollapse] = useState(null);
+
+	const goToChat = (id) => {
+		let isChat;
+
+		// Look for an already existing chat that matches participants...
+		chats.forEach((chat) => {
+			const check = chat.participants.filter(
+				(p) => p.id === user._id || p.id === id
+			);
+
+			if (check.length === 2) {
+				isChat = chat._id;
+			} else {
+				return;
+			}
+		});
+
+		// ...if it exists, push to that chat, else create
+		if (isChat) {
+			history.push(`/chats/${isChat}`);
+		} else {
+			const data = {
+				invites: [
+					{
+						id,
+						role: 'admin',
+					},
+				],
+			};
+
+			createChat(data);
+
+			history.push(`/chats/${chat}`);
+		}
+	};
+
+	useEffect(() => {
+		getContactProfiles();
+	}, [getContactProfiles]);
 
 	return (
 		<div id='contacts'>
@@ -28,50 +86,78 @@ const Contacts = ({ profile: { blocklist, contacts } }) => {
 			</div>
 
 			<div className={`contacts-page ${page2 ? 'page-2' : 'page-1'}`}>
-				{!page2 ? (
-					<div id='contacts-contacts'>
-						{contacts.length > 0 ? (
-							contacts.map((contact) => (
-								<div className='contact-card' key={contact.id}>
-									<h3 className='contact-card-name'>
-										{contact.nickname}
-									</h3>
-									<p className='contact-card-id'>
-										{contact.id}
-									</p>
-								</div>
-							))
+				{profiles.length > 0 && !loading ? (
+					<Fragment>
+						{!page2 ? (
+							<div id='contacts-contacts'>
+								{profiles.map((profile) => (
+									<div
+										className='contact-card'
+										onClick={() => {
+											setCollapse(profile.user._id);
+										}}>
+										<Contact contact={profile} />
+										{collapse === profile.user._id && (
+											<div className='contact-actions'>
+												<button className='btn btn-4'>
+													<i className='fas fa-search'></i>
+												</button>
+												<button
+													className='btn btn-3'
+													onClick={() => {
+														goToChat(
+															profile.user._id
+														);
+													}}>
+													<i className='fas fa-comment-alt'></i>
+												</button>
+												<button className='btn btn-red'>
+													<i className='fas fa-user-minus'></i>
+												</button>
+											</div>
+										)}
+									</div>
+								))}
+							</div>
 						) : (
-							<div className='contact-card'>
-								You have no contacts.
+							<div id='contacts-blocklisted'>
+								{blocklist.length > 0 ? (
+									blocklist.map((blocked) => (
+										<div
+											className='contact-card'
+											key={blocked}>
+											<h3 className='contact-card-name'>
+												{blocked}
+											</h3>
+											<p className='contact-card-id'>
+												{blocked}
+											</p>
+										</div>
+									))
+								) : (
+									<div className='contact-card'>
+										You have no blocked users.
+									</div>
+								)}
 							</div>
 						)}
-					</div>
+					</Fragment>
 				) : (
-					<div id='contacts-blocklisted'>
-						{blocklist.length > 0 ? (
-							blocklist.map((blocked) => (
-								<div className='contact-card' key={blocked}>
-									<h3 className='contact-card-name'>
-										{blocked}
-									</h3>
-									<p className='contact-card-id'>{blocked}</p>
-								</div>
-							))
-						) : (
-							<div className='contact-card'>
-								You have no blocked users.
-							</div>
-						)}
-					</div>
+					<Spinner />
 				)}
 			</div>
+
+			<NewContact />
 		</div>
 	);
 };
 
 const mapStateToProps = (state) => ({
-	profile: state.profile.profile,
+	profile: state.profile,
+	chat: state.chat,
+	user: state.auth.user,
 });
 
-export default connect(mapStateToProps, null)(Contacts);
+export default connect(mapStateToProps, { createChat, getContactProfiles })(
+	Contacts
+);

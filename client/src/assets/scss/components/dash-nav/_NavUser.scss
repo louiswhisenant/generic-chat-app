@@ -1,0 +1,33 @@
+#nav-user {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+
+	.nav-user-header {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		margin-bottom: 1rem;
+
+		.new-user-title {
+			margin: 0;
+		}
+
+		.status-dot {
+			font-size: 0.5rem;
+			margin-left: 0.5rem;
+		}
+	}
+
+	.nav-user-info {
+		p {
+			margin-bottom: 0;
+		}
+
+		.nav-user-user {
+			margin-top: 1rem;
+		}
+	}
+}

@@ -21,7 +21,7 @@ import Contact from '../contacts/Contact';
 // Chats
 import Dashboard from '../layout/Dashboard';
 import Chat from '../chats/chat/Chat';
-import ChatSettings from '../chats/chat/ChatSettings';
+import ChatSettings from '../chats/chat/chat-settings/ChatSettings';
 
 // Not Found
 import NotFound from '../layout/NotFound';

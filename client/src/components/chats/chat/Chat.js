@@ -22,7 +22,7 @@ const Chat = ({
 	}, [getMessages, getChat, match]);
 
 	useEffect(() => {
-		if (!chat.loading && !loading) {
+		if (!chat.loading && !loading && messages.length > 0) {
 			const lastMessage = document.getElementById('last-message');
 
 			lastMessage.scrollIntoView({
@@ -63,10 +63,12 @@ const Chat = ({
 									/>
 								)
 							)}
-							<div className='last-message' id='last-message'>
-								.
-							</div>
+							<div
+								className='last-message'
+								id='last-message'></div>
 						</Fragment>
+					) : !loading && messages.length === 0 ? (
+						<div className='no-messages-yet'>No messages yet.</div>
 					) : (
 						<Spinner />
 					)}

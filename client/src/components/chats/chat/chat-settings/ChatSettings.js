@@ -11,8 +11,9 @@ import {
 	Navbar,
 	NavbarBrand,
 } from 'reactstrap';
-import { setAlert } from '../../../redux/actions/alert';
-import { editChat } from '../../../redux/actions/chat';
+import { setAlert } from '../../../../redux/actions/alert';
+import { editChat } from '../../../../redux/actions/chat';
+import DeleteChat from './DeleteChat';
 
 const ChatSettings = ({ chat, editChat, setAlert }) => {
 	const [name, setName] = useState(``);
@@ -91,6 +92,8 @@ const ChatSettings = ({ chat, editChat, setAlert }) => {
 							</div>
 						))}
 					</div>
+
+					<DeleteChat />
 				</Container>
 			)}
 		</Fragment>

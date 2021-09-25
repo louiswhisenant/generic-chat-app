@@ -4,11 +4,15 @@ import {
 	PROFILE_ERROR,
 	CLEAR_PROFILE,
 	UPDATE_PROFILE,
+	PROFILE_LOADING,
+	GET_PROFILE_SEARCH,
+	CLEAR_PROFILE_SEARCH,
 } from '../actions/types';
 
 const initialState = {
 	profile: null,
 	profiles: [],
+	search: null,
 	loading: true,
 	error: {},
 };
@@ -30,17 +34,33 @@ export default (state = initialState, action) => {
 				profiles: payload,
 				loading: false,
 			};
+		case GET_PROFILE_SEARCH:
+			return {
+				...state,
+				search: payload,
+				loading: false,
+			};
 		case PROFILE_ERROR:
 			return {
 				...state,
-				profile: null,
 				error: payload,
-				loading: true,
+				loading: false,
 			};
 		case CLEAR_PROFILE:
 			return {
 				...state,
 				profile: null,
+				loading: false,
+			};
+		case CLEAR_PROFILE_SEARCH:
+			return {
+				...state,
+				search: null,
+				loading: false,
+			};
+		case PROFILE_LOADING:
+			return {
+				...state,
 				loading: true,
 			};
 		default:

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { register } from '../../redux/actions/auth';
 import { setAlert } from '../../redux/actions/alert';
 
-const Register = ({ isAuthenticated, profile, register, setAlert }) => {
+const Register = ({ isAuthenticated, register, setAlert }) => {
 	const [data, setData] = useState({
 		username: '',
 		email: '',
@@ -34,11 +34,7 @@ const Register = ({ isAuthenticated, profile, register, setAlert }) => {
 	};
 
 	if (isAuthenticated) {
-		if (!profile) {
-			return <Redirect to='/create-profile' />;
-		} else {
-			return <Redirect to='/dash' />;
-		}
+		return <Redirect to='/create-profile' />;
 	}
 
 	return (
@@ -146,7 +142,6 @@ const Register = ({ isAuthenticated, profile, register, setAlert }) => {
 
 const mapStateToProps = (state) => ({
 	isAuthenticated: state.auth.isAuthenticated,
-	profile: state.profile.profile,
 });
 
 export default connect(mapStateToProps, { register, setAlert })(Register);

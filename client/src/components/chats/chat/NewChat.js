@@ -24,7 +24,6 @@ const NewChat = ({
 			const check = chat.participants.filter(
 				(p) => p.id === user._id || p.id === id
 			);
-			console.log(check, chat);
 
 			if (check.length === 2) {
 				isChat = chat._id;

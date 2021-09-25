@@ -1,23 +1,21 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
-import { updateProfile } from '../../redux/actions/profile';
-import { useHistory } from 'react-router';
+import { editProfile } from '../../redux/actions/profile';
+import DeleteAccount from './DeleteAccount';
 
 const Settings = ({
 	profile: {
 		name: { first, last },
 		bio,
 	},
-	updateProfile,
+	editProfile,
 }) => {
 	const [data, setData] = useState({
 		firstName: first ? first : '',
 		lastName: last ? last : '',
 		biography: bio ? bio : '',
 	});
-
-	const history = useHistory();
 
 	const { firstName, lastName, biography } = data;
 
@@ -41,7 +39,8 @@ const Settings = ({
 			profile.bio = biography;
 		}
 
-		updateProfile(profile, history, true);
+		console.log(profile);
+		editProfile(profile);
 	};
 
 	return (
@@ -112,6 +111,8 @@ const Settings = ({
 				</FormGroup>
 				<Input type='submit' value='Save' className='btn btn-3 mb-3' />
 			</Form>
+
+			<DeleteAccount />
 		</div>
 	);
 };
@@ -120,4 +121,4 @@ const mapStateToProps = (state) => ({
 	profile: state.profile.profile,
 });
 
-export default connect(mapStateToProps, { updateProfile })(Settings);
+export default connect(mapStateToProps, { editProfile })(Settings);

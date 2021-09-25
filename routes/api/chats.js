@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require('../../middleware/auth');
 const { body, validationResult } = require('express-validator');
 const Chat = require('../../models/Chat');
+const Message = require('../../models/Message');
 const User = require('../../models/User');
 
 // @route   POST api/chats
@@ -122,6 +123,10 @@ router.delete('/:id', auth, async (req, res) => {
 		if (!chat) {
 			return res.status(404).json({ msg: 'Chat not found' });
 		}
+
+		await Message.deleteMany({
+			chat: req.params.id,
+		});
 
 		await chat.remove();
 

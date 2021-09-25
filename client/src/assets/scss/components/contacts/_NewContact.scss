@@ -1,0 +1,56 @@
+#new-contact {
+	.new-contact-modal-trigger {
+		position: fixed;
+		bottom: 2.5rem;
+		right: 2.5rem;
+
+		&:focus {
+			&:not(:active) {
+				display: unset;
+				position: fixed;
+			}
+		}
+
+		&:active {
+			position: fixed;
+			top: unset;
+		}
+	}
+
+	.new-contact-modal {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		z-index: 1000;
+
+		background-color: darken($dark, 10%);
+		border-radius: 0.25rem;
+		padding: 1rem;
+
+		.new-contact-modal-header {
+			display: flex;
+			align-items: center;
+			justify-content: flex-start;
+			width: 100%;
+
+			.new-contact-modal-close {
+				margin-left: auto;
+				padding: 0.25rem;
+				cursor: pointer;
+			}
+		}
+
+		.new-contact-modal-results {
+			.contact-actions {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+
+				.contact-action-btn {
+					margin: 0.5rem;
+				}
+			}
+		}
+	}
+}

@@ -1,6 +1,4 @@
-import React from 'react';
 import { connect } from 'react-redux';
-import { NavItem } from 'reactstrap';
 
 const NavUser = ({
 	user: { username, email },
@@ -11,23 +9,25 @@ const NavUser = ({
 	},
 }) => {
 	return (
-		<NavItem className='nav-user' id='nav-user'>
-			<div className='status-dot'>
+		<div className='nav-user' id='nav-user'>
+			<div className='nav-user-header'>
+				<h5 className='new-user-title'>
+					{first} {last && last}
+				</h5>
 				<i
-					className={`fas fa-circle
+					className={`fas fa-circle status-dot
 					${status === 'online' ? 'color-green' : ''} 
 					${status === 'hidden' ? 'color-1' : ''} 
 					${status === 'offline' ? 'color-1' : ''}
 					`}></i>
 			</div>
-			<h5>
-				{first}
-				{last && last}
-			</h5>
-			<small>{bio}</small>
-			<p className='nav-user-user'>{username}</p>
-			<p className='nav-user-email'>{email}</p>
-		</NavItem>
+
+			<div className='nav-user-info'>
+				<small className='nav-user-bio'>{bio}</small>
+				<p className='nav-user-user'>{username}</p>
+				<p className='nav-user-email'>{email}</p>
+			</div>
+		</div>
 	);
 };
 

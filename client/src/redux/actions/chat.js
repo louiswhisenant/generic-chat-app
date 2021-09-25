@@ -61,7 +61,7 @@ export const deleteChat = (id) => async (dispatch) => {
 			payload: id,
 		});
 
-		dispatch(setAlert('Post removed', 'success'));
+		dispatch(setAlert('Chat deleted', 'success'));
 	} catch (err) {
 		dispatch({
 			type: CHAT_ERROR,

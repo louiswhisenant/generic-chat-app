@@ -7,6 +7,9 @@ import {
 	PROFILE_ERROR,
 	CLEAR_PROFILE,
 	DELETE_ACCOUNT,
+	PROFILE_LOADING,
+	GET_PROFILE_SEARCH,
+	CLEAR_PROFILE_SEARCH,
 } from './types';
 
 // Get current user profile
@@ -25,6 +28,32 @@ export const getCurrentProfile = () => async (dispatch) => {
 				msg: err.response.statusText,
 				status: err.response.status,
 			},
+		});
+	}
+};
+
+// Search for profile by username
+export const getProfileBySearch = (search) => async (dispatch) => {
+	try {
+		const authRes = await axios.get(`/api/auth/${search}`);
+
+		const res = await axios.get(`/api/profiles/${authRes.data}`);
+
+		dispatch({
+			type: GET_PROFILE_SEARCH,
+			payload: res.data,
+		});
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		if (errors) {
+			errors.forEach((err) => {
+				dispatch(setAlert(err.msg, 'danger'));
+			});
+		}
+
+		dispatch({
+			type: CLEAR_PROFILE_SEARCH,
 		});
 	}
 };
@@ -49,10 +78,8 @@ export const getProfileById = (userId) => async (dispatch) => {
 	}
 };
 
-// Get all profiles
-export const getProfiles = () => async (dispatch) => {
-	dispatch({ type: CLEAR_PROFILE });
-
+// Get user contacts' profiles
+export const getContactProfiles = () => async (dispatch) => {
 	try {
 		const res = await axios.get('/api/profiles');
 
@@ -71,75 +98,140 @@ export const getProfiles = () => async (dispatch) => {
 	}
 };
 
-// Create/update profile
-export const updateProfile =
-	(formData, history, edit = false) =>
-	async (dispatch) => {
-		try {
-			const config = {
-				headers: {
-					'Content-Type': 'application/json',
-				},
-			};
+// Create profile
+export const createProfile = (formData, history) => async (dispatch) => {
+	try {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
 
-			const res = await axios.post('/api/profiles', formData, config);
+		const res = await axios.post('/api/profiles', formData, config);
 
-			dispatch({
-				type: GET_PROFILE,
-				payload: res.data,
-			});
+		dispatch({
+			type: GET_PROFILE,
+			payload: res.data,
+		});
 
-			dispatch(
-				setAlert(
-					edit ? 'Profile changes saved' : 'New profile created',
-					'success'
-				)
-			);
+		dispatch(setAlert('New profile created', 'success'));
 
-			if (!edit) {
-				history.push('/dash');
-			}
-		} catch (err) {
-			const errors = err.response.data.errors;
+		history.push('/dash');
+	} catch (err) {
+		const errors = err.response.data.errors;
 
-			if (errors) {
-				errors.forEach((err) => {
-					dispatch(setAlert(err.msg, 'danger'));
-				});
-			}
-
-			dispatch({
-				type: PROFILE_ERROR,
-				payload: {
-					msg: err.response.statusText,
-					status: err.response.status,
-				},
+		if (errors) {
+			errors.forEach((err) => {
+				dispatch(setAlert(err.msg, 'danger'));
 			});
 		}
-	};
+
+		dispatch({
+			type: PROFILE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Edit profile
+export const editProfile = (formData) => async (dispatch) => {
+	try {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+
+		const res = await axios.put('/api/profiles', formData, config);
+
+		dispatch({
+			type: GET_PROFILE,
+			payload: res.data,
+		});
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		if (errors) {
+			errors.forEach((err) => {
+				dispatch(setAlert(err.msg, 'danger'));
+			});
+		}
+
+		dispatch({
+			type: PROFILE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Add profile contact
+export const addContact = (formData) => async (dispatch) => {
+	try {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+
+		const res = await axios.put(
+			'/api/profiles/add-contact',
+			formData,
+			config
+		);
+
+		dispatch({
+			type: GET_PROFILE,
+			payload: res.data,
+		});
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		if (errors) {
+			errors.forEach((err) => {
+				dispatch(setAlert(err.msg, 'danger'));
+			});
+		}
+
+		dispatch({
+			type: PROFILE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
 
 // Delete account & profile
 export const deleteAccount = () => async (dispatch) => {
-	if (
-		window.confirm(
-			'Please confirm that you wish to delete your account. This action cannot be undone.'
-		)
-	) {
-		try {
-			await axios.delete(`/api/profiles`);
+	try {
+		await axios.delete(`/api/profiles`);
 
-			dispatch({ type: CLEAR_PROFILE });
-			dispatch({ type: DELETE_ACCOUNT });
+		dispatch({ type: CLEAR_PROFILE });
+		dispatch({ type: DELETE_ACCOUNT });
 
-			dispatch(setAlert('Account deleted', 'success'));
-		} catch (err) {
-			dispatch({
-				type: PROFILE_ERROR,
-				payload: {
-					msg: err.response.statusText,
-					status: err.response.status,
-				},
-			});
-		}
+		dispatch(setAlert('Account deleted', 'success'));
+	} catch (err) {
+		dispatch({
+			type: PROFILE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
 	}
+};
+
+export const setProfileLoading = () => (dispatch) => {
+	dispatch({ type: PROFILE_LOADING });
+};
+
+export const clearProfileSearch = () => (dispatch) => {
+	dispatch({ type: CLEAR_PROFILE_SEARCH });
 };

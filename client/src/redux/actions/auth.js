@@ -11,6 +11,7 @@ import {
 	CLEAR_PROFILE,
 } from './types';
 import setAuthToken from '../../utils/setAuthToken';
+import { getCurrentProfile, setProfileLoading } from './profile';
 
 // Load User
 export const loadUser = () => async (dispatch) => {
@@ -83,12 +84,16 @@ export const login = (account, password) => async (dispatch) => {
 	try {
 		const res = await axios.post('api/auth', body, config);
 
+		dispatch(setProfileLoading());
+
 		dispatch({
 			type: LOGIN_SUCCESS,
 			payload: res.data,
 		});
 
-		dispatch(loadUser());
+		await dispatch(loadUser());
+
+		dispatch(getCurrentProfile());
 
 		dispatch(setAlert('Login successful', 'success'));
 	} catch (err) {

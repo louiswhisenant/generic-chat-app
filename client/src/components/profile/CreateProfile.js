@@ -2,9 +2,9 @@ import { useState } from 'react';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
 import { Redirect, useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { updateProfile } from '../../redux/actions/profile';
+import { createProfile } from '../../redux/actions/profile';
 
-const CreateProfile = ({ profile, updateProfile }) => {
+const CreateProfile = ({ profile, createProfile }) => {
 	const [data, setData] = useState({
 		first: '',
 		last: '',
@@ -35,7 +35,7 @@ const CreateProfile = ({ profile, updateProfile }) => {
 			profile.bio = bio;
 		}
 
-		updateProfile(profile, history);
+		createProfile(profile, history);
 	};
 
 	if (profile) {
@@ -116,4 +116,4 @@ const mapStateToProps = (state) => ({
 	profile: state.profile.profile,
 });
 
-export default connect(mapStateToProps, { updateProfile })(CreateProfile);
+export default connect(mapStateToProps, { createProfile })(CreateProfile);

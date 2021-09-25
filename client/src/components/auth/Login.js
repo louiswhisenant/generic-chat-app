@@ -4,7 +4,7 @@ import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { login } from '../../redux/actions/auth';
 
-const Login = ({ isAuthenticated, profile: { profile, loading }, login }) => {
+const Login = ({ isAuthenticated, login }) => {
 	const [data, setData] = useState({
 		account: '',
 		password: '',
@@ -23,11 +23,7 @@ const Login = ({ isAuthenticated, profile: { profile, loading }, login }) => {
 	};
 
 	if (isAuthenticated) {
-		if (!profile && !loading) {
-			return <Redirect to='/create-profile' />;
-		} else {
-			return <Redirect to='/dash' />;
-		}
+		return <Redirect to='/dash' />;
 	}
 
 	return (
@@ -86,7 +82,6 @@ const Login = ({ isAuthenticated, profile: { profile, loading }, login }) => {
 
 const mapStateToProps = (state) => ({
 	isAuthenticated: state.auth.isAuthenticated,
-	profile: state.profile,
 });
 
 export default connect(mapStateToProps, { login })(Login);

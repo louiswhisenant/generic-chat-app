@@ -28,14 +28,22 @@
 
 // ---------- contacts ----------- //
 @import './components/contacts/_Contacts.scss';
+@import './components/contacts/_Contact.scss';
+@import './components/contacts/_NewContact.scss';
+
+// ---------- dash-nav ----------- //
+@import './components/dash-nav/_DashNav.scss';
+@import './components/dash-nav/_NavUser.scss';
 
 // ---------- profile ----------- //
 @import './components/profile/_CreateProfile.scss';
 
+// ---------- settings ----------- //
+@import './components/settings/_DeleteAccount.scss';
+
 // ---------- layout ----------- //
 @import './components/layout/_Alert.scss';
 @import './components/layout/_Landing.scss';
-@import './components/layout/_DashNav.scss';
 @import './components/layout/_Dashboard.scss';
 
 // ---------- loading ----------- //
@@ -85,4 +93,16 @@ html,
 
 .color-4 {
 	color: $color-4;
+}
+
+.color-red {
+	color: $color-red;
+}
+
+.color-green {
+	color: $color-green;
+}
+
+.color-grey {
+	color: $color-grey;
 }

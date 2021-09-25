@@ -5,11 +5,12 @@ const ProfileSchema = new mongoose.Schema({
 		type: mongoose.Schema.Types.ObjectId,
 		ref: 'user',
 		required: true,
+		unique: true,
 	},
 	name: {
 		first: {
 			type: String,
-			required: true,
+			// required: true,
 		},
 		last: {
 			type: String,
@@ -37,6 +38,7 @@ const ProfileSchema = new mongoose.Schema({
 				type: String,
 				default: '',
 			},
+			_id: false,
 		},
 	],
 	blocklist: [

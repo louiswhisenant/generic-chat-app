@@ -1,15 +1,23 @@
-import { Container } from 'reactstrap';
+import { Container, Spinner } from 'reactstrap';
 import Chats from '../chats/Chats';
 import DashNav from './dash-nav/DashNav';
 import { Switch, useRouteMatch } from 'react-router';
 import PrivateRoute from '../routing/PrivateRoute';
 import Contacts from '../contacts/Contacts';
-import Settings from './Settings';
+import Settings from '../settings/Settings';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
-const Dashboard = () => {
+const Dashboard = ({ profile: { profile, loading } }) => {
 	let { path, url } = useRouteMatch();
 
-	return (
+	if (!profile && !loading) {
+		return <Redirect to='/create-profile' />;
+	}
+
+	return loading ? (
+		<Spinner />
+	) : (
 		<div className='' id='dashboard'>
 			<DashNav path={path} url={url} />
 
@@ -30,4 +38,8 @@ const Dashboard = () => {
 	);
 };
 
-export default Dashboard;
+const mapStateToProps = (state) => ({
+	profile: state.profile,
+});
+
+export default connect(mapStateToProps, null)(Dashboard);
