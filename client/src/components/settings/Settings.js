@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { connect } from 'react-redux';
 import { Form, FormGroup, Input, Label } from 'reactstrap';
+import { setAlert } from '../../redux/actions/alert';
 import { editProfile } from '../../redux/actions/profile';
 import DeleteAccount from './DeleteAccount';
 
@@ -28,7 +29,7 @@ const Settings = ({
 
 		const profile = {
 			name: {
-				first,
+				first: firstName,
 			},
 		};
 
@@ -39,7 +40,6 @@ const Settings = ({
 			profile.bio = biography;
 		}
 
-		console.log(profile);
 		editProfile(profile);
 	};
 

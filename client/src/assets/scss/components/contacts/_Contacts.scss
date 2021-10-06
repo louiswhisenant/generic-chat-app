@@ -55,6 +55,21 @@
 
 		cursor: pointer;
 
+		position: relative;
+
+		.first-of-letter {
+			background-color: $color-4;
+			height: 2rem;
+			width: 2rem;
+			border-radius: 50%;
+			text-align: center;
+			line-height: 2rem;
+
+			position: absolute;
+			top: 0rem;
+			left: -1rem;
+		}
+
 		.contact-actions {
 			padding: 1rem;
 

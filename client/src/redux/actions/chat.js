@@ -3,12 +3,15 @@ import { setAlert } from './alert';
 
 import {
 	GET_CHAT,
+	GET_CHAT_BOOKMARKS,
+	GET_CHAT_PARTICIPANTS,
 	GET_CHATS,
 	CHAT_ERROR,
 	DELETE_CHAT,
 	CREATE_CHAT,
 	CLEAR_CHAT,
 	EDIT_CHAT,
+	EDIT_BOOKMARKS,
 } from './types';
 
 // Get chat
@@ -18,6 +21,56 @@ export const getChat = (id) => async (dispatch) => {
 
 		dispatch({
 			type: GET_CHAT,
+			payload: res.data,
+		});
+	} catch (err) {
+		dispatch({
+			type: CHAT_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Get chat bookmarks
+export const getBookmarks = (id) => async (dispatch) => {
+	try {
+		const res = await axios.get(`/api/chats/${id}/bookmarks`);
+
+		dispatch({
+			type: GET_CHAT_BOOKMARKS,
+			payload: res.data,
+		});
+	} catch (err) {
+		dispatch({
+			type: CHAT_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Get chat
+export const getChatParticipants = (id, participants) => async (dispatch) => {
+	const config = {
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	};
+
+	try {
+		const res = await axios.post(
+			`/api/profiles/chat/${id}`,
+			participants,
+			config
+		);
+
+		dispatch({
+			type: GET_CHAT_PARTICIPANTS,
 			payload: res.data,
 		});
 	} catch (err) {
@@ -116,6 +169,37 @@ export const editChat = (chat, formData) => async (dispatch) => {
 		});
 
 		dispatch(setAlert('Changes saved', 'success'));
+	} catch (err) {
+		dispatch({
+			type: CHAT_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Edit bookmarks
+export const editBookmarks = (chat, user, bookmarks) => async (dispatch) => {
+	const config = {
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	};
+	try {
+		const res = await axios.put(
+			`/api/chats/${chat}/${user}`,
+			bookmarks,
+			config
+		);
+
+		dispatch({
+			type: EDIT_BOOKMARKS,
+			payload: res.data,
+		});
+
+		dispatch(setAlert('Bookmarks updated', 'success'));
 	} catch (err) {
 		dispatch({
 			type: CHAT_ERROR,

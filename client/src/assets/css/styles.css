@@ -612,12 +612,21 @@
   margin-left: auto;
   cursor: pointer;
 }
-#bookmarks-anchor .bookmarks .bookmark .bookmark-date {
+#bookmarks-anchor .bookmarks .bookmark .bookmark-content .bookmark-date {
   opacity: 0.5;
 }
-#bookmarks-anchor .bookmarks .bookmark .bookmark-text {
+#bookmarks-anchor .bookmarks .bookmark .bookmark-content .bookmark-text {
   max-height: 6rem;
   overflow-y: scroll;
+}
+#bookmarks-anchor .bookmarks .bookmark .bookmark-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+#bookmarks-anchor .bookmarks .bookmark .bookmark-actions .fas {
+  padding: 0.5rem;
+  cursor: pointer;
 }
 #bookmarks-anchor .bookmarks .bookmark hr {
   color: #118392;
@@ -673,6 +682,18 @@
   margin-bottom: 0.5rem;
   border-radius: 0.25rem;
   cursor: pointer;
+  position: relative;
+}
+#contacts .contact-card .first-of-letter {
+  background-color: #ad7100;
+  height: 2rem;
+  width: 2rem;
+  border-radius: 50%;
+  text-align: center;
+  line-height: 2rem;
+  position: absolute;
+  top: 0rem;
+  left: -1rem;
 }
 #contacts .contact-card .contact-actions {
   padding: 1rem;
@@ -710,7 +731,7 @@
   top: unset;
 }
 #new-contact .new-contact-modal {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -945,9 +966,9 @@
 #alert-anchor {
   position: fixed;
   width: 100%;
-  top: 3.5rem;
+  top: 0;
   left: 0;
-  z-index: 100;
+  z-index: 3000;
 }
 #alert-anchor .alert {
   width: 100%;

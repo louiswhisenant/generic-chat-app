@@ -24,7 +24,15 @@ const NewContact = ({
 	const [modal, setModal] = useState(false);
 	const [formData, setFormData] = useState('');
 
-	const onSubmit = (e) => {
+	const onChange = (e) => {
+		setFormData(e.target.value);
+
+		if (search) {
+			clearProfileSearch();
+		}
+	};
+
+	const onSearch = (e) => {
 		e.preventDefault();
 
 		getProfileBySearch(formData);
@@ -39,7 +47,7 @@ const NewContact = ({
 
 		// const profileData = profile;
 
-		const data = {
+		const newContact = {
 			contact: {
 				nickname: `${search.name.first} ${
 					search.name.last && search.name.last
@@ -48,7 +56,9 @@ const NewContact = ({
 			},
 		};
 
-		addContact(data);
+		addContact({ newContact, search });
+		setModal(false);
+		clearProfileSearch();
 	};
 
 	const onCancel = (e) => {
@@ -90,7 +100,7 @@ const NewContact = ({
 
 					<Form
 						onSubmit={(e) => {
-							onSubmit(e);
+							onSearch(e);
 						}}>
 						<FormGroup>
 							<InputGroup>
@@ -99,7 +109,7 @@ const NewContact = ({
 									className='input new-contact-modal-input'
 									value={formData}
 									onChange={(e) => {
-										setFormData(e.target.value);
+										onChange(e);
 									}}
 								/>
 								<InputGroupAddon addonType='append'>

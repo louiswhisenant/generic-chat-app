@@ -132,7 +132,6 @@ router.put(
 			}
 
 			message.text = encryptString(req.body.text);
-			message.__v = message.__v + 1;
 
 			await message.save();
 
@@ -150,7 +149,7 @@ router.put(
 	}
 );
 
-// @route   DELETE api/messages/:chat/:message
+// @route   DELETE api/messages/:chat
 // @desc    Delete a chat
 // @access  Private
 router.delete('/:chat', auth, async (req, res) => {

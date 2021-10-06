@@ -4,6 +4,8 @@ const path = require('path');
 const config = require('./config');
 const http = require('http');
 const socketio = require('socket.io');
+const auth = require('./middleware/auth');
+const Chat = require('./models/Chat');
 // TODO IMPORT SOCKET FUNCTIONS
 
 const { MONGO_URI } = config;

@@ -5,44 +5,52 @@ import {
 	deselectMessage,
 	selectMessage,
 } from '../../../../redux/actions/message';
+import { setAlert } from '../../../../redux/actions/alert';
 
 const Message = ({
-	text,
-	createdAt,
-	updatedAt,
-	status,
-	author,
+	message,
 	auth: { user, loading },
-	id,
-	reply,
 	selected,
 	selectMessage,
 	deselectMessage,
+	setAlert,
 }) => {
 	const replyRef = useRef(null);
+	const { text, createdAt, updatedAt, status, author, _id, reply } = message;
 
-	const onReplyClick = (id, author) => {
-		const original = document.getElementById(id);
+	const onReplyClick = (message) => {
+		const original = document.getElementById(message._id);
 
-		original.scrollIntoView({
-			block: 'center',
-			behavior: 'smooth',
-		});
+		if (original) {
+			original.scrollIntoView({
+				block: 'center',
+				behavior: 'smooth',
+			});
 
-		setTimeout(() => {
-			selectMessage({ id, author });
-		}, 250);
+			setTimeout(() => {
+				selectMessage(message);
+			}, 250);
+		} else {
+			setAlert('The original message no longer exists', 'danger');
+		}
 	};
 
-	const onClick = (e, id, author) => {
+	const onClick = (e, message) => {
 		if (replyRef.current && replyRef.current.contains(e.target)) {
 			return;
 		} else {
 			document.removeEventListener('click', clickListener);
 
-			selected.find((obj) => obj.id === id)
-				? deselectMessage(id)
-				: selectMessage({ id, author });
+			if (
+				selected.find(
+					(obj) => obj._id === message._id || obj.id === message._id
+				)
+			) {
+				deselectMessage(message._id);
+				deselectMessage(message.id);
+			} else {
+				selectMessage(message);
+			}
 		}
 	};
 
@@ -66,14 +74,14 @@ const Message = ({
 				className={`message ${
 					author === user._id ? 'user-true' : 'user-false'
 				} ${
-					selected.find((obj) => obj.id === id)
+					selected.find((obj) => obj._id === _id || obj.id === _id)
 						? 'message-selected'
 						: ''
 				}`}
 				onClick={(e) => {
-					onClick(e, id, author);
+					onClick(e, message);
 				}}
-				id={id}>
+				id={_id}>
 				<div className='message-info'>
 					<Moment format='hh:mm a' className='message-info-time'>
 						{updatedAt}
@@ -128,6 +136,8 @@ const mapStateToProps = (state) => ({
 	selected: state.message.selected,
 });
 
-export default connect(mapStateToProps, { selectMessage, deselectMessage })(
-	Message
-);
+export default connect(mapStateToProps, {
+	selectMessage,
+	deselectMessage,
+	setAlert,
+})(Message);

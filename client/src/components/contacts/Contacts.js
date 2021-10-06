@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 import { Fragment, useEffect, useState } from 'react';
 import NewContact from './NewContact';
 import { createChat } from '../../redux/actions/chat';
-import { getContactProfiles } from '../../redux/actions/profile';
+import { getContactProfiles, removeContact } from '../../redux/actions/profile';
 import { Spinner } from 'reactstrap';
 import Contact from './Contact';
 import { useHistory } from 'react-router';
@@ -17,11 +17,16 @@ const Contacts = ({
 	user,
 	createChat,
 	getContactProfiles,
+	removeContact,
 }) => {
 	const history = useHistory();
 
 	const [page2, setPage2] = useState(false);
 	const [collapse, setCollapse] = useState(null);
+
+	const onCollapse = (id) => {
+		collapse === id ? setCollapse(null) : setCollapse(id);
+	};
 
 	const goToChat = (id) => {
 		let isChat;
@@ -90,34 +95,45 @@ const Contacts = ({
 					<Fragment>
 						{!page2 ? (
 							<div id='contacts-contacts'>
-								{profiles.map((profile) => (
-									<div
-										className='contact-card'
-										onClick={() => {
-											setCollapse(profile.user._id);
-										}}>
-										<Contact contact={profile} />
-										{collapse === profile.user._id && (
-											<div className='contact-actions'>
-												<button className='btn btn-4'>
-													<i className='fas fa-search'></i>
-												</button>
-												<button
-													className='btn btn-3'
-													onClick={() => {
-														goToChat(
-															profile.user._id
-														);
-													}}>
-													<i className='fas fa-comment-alt'></i>
-												</button>
-												<button className='btn btn-red'>
-													<i className='fas fa-user-minus'></i>
-												</button>
-											</div>
-										)}
-									</div>
-								))}
+								{profiles
+									.sort((a, b) =>
+										a.name.first.localeCompare(b.name.first)
+									)
+									.map((profile) => (
+										<div
+											className='contact-card'
+											onClick={() => {
+												onCollapse(profile.user._id);
+											}}>
+											<Contact contact={profile} />
+											{collapse === profile.user._id && (
+												<div className='contact-actions'>
+													<button className='btn btn-4'>
+														<i className='fas fa-search'></i>
+													</button>
+													<button
+														className='btn btn-3'
+														onClick={() => {
+															goToChat(
+																profile.user._id
+															);
+														}}>
+														<i className='fas fa-comment-alt'></i>
+													</button>
+													<button
+														className='btn btn-red'
+														onClick={() => {
+															removeContact({
+																id: profile.user
+																	._id,
+															});
+														}}>
+														<i className='fas fa-user-minus'></i>
+													</button>
+												</div>
+											)}
+										</div>
+									))}
 							</div>
 						) : (
 							<div id='contacts-blocklisted'>
@@ -158,6 +174,8 @@ const mapStateToProps = (state) => ({
 	user: state.auth.user,
 });
 
-export default connect(mapStateToProps, { createChat, getContactProfiles })(
-	Contacts
-);
+export default connect(mapStateToProps, {
+	createChat,
+	getContactProfiles,
+	removeContact,
+})(Contacts);

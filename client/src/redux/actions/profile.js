@@ -10,6 +10,8 @@ import {
 	PROFILE_LOADING,
 	GET_PROFILE_SEARCH,
 	CLEAR_PROFILE_SEARCH,
+	ADD_PROFILE_CONTACT,
+	REMOVE_PROFILE_CONTACT,
 } from './types';
 
 // Get current user profile
@@ -151,6 +153,8 @@ export const editProfile = (formData) => async (dispatch) => {
 			type: GET_PROFILE,
 			payload: res.data,
 		});
+
+		dispatch(setAlert('Profile changes saved', 'success'));
 	} catch (err) {
 		const errors = err.response.data.errors;
 
@@ -171,7 +175,9 @@ export const editProfile = (formData) => async (dispatch) => {
 };
 
 // Add profile contact
-export const addContact = (formData) => async (dispatch) => {
+export const addContact = (data) => async (dispatch) => {
+	const { newContact, search } = data;
+
 	try {
 		const config = {
 			headers: {
@@ -181,14 +187,61 @@ export const addContact = (formData) => async (dispatch) => {
 
 		const res = await axios.put(
 			'/api/profiles/add-contact',
-			formData,
+			newContact,
+			config
+		);
+
+		const payload = {
+			res: res.data,
+			profile: search,
+		};
+
+		dispatch({
+			type: ADD_PROFILE_CONTACT,
+			payload,
+		});
+
+		dispatch(setAlert('Contact added', 'success'));
+	} catch (err) {
+		const errors = err.response.data.errors;
+
+		if (errors) {
+			errors.forEach((err) => {
+				dispatch(setAlert(err.msg, 'danger'));
+			});
+		}
+
+		dispatch({
+			type: PROFILE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
+
+// Remove profile contact
+export const removeContact = (data) => async (dispatch) => {
+	try {
+		const config = {
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		};
+
+		const res = await axios.put(
+			'/api/profiles/remove-contact',
+			data,
 			config
 		);
 
 		dispatch({
-			type: GET_PROFILE,
-			payload: res.data,
+			type: REMOVE_PROFILE_CONTACT,
+			payload: { profile: res.data, id: data.id },
 		});
+
+		dispatch(setAlert('Contact removed', 'success'));
 	} catch (err) {
 		const errors = err.response.data.errors;
 

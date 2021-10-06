@@ -50,6 +50,28 @@ router.get('/', auth, async (req, res) => {
 	}
 });
 
+// @route   POST api/profiles/chat/:chat
+// @desc    get chat participants' profiles
+// @access  private
+router.post('/chat/:chat', auth, async (req, res) => {
+	try {
+		const query = req.body.participants.map(
+			(participant) => participant.id
+		);
+
+		const profiles = await Profile.find({
+			user: { $in: query },
+		})
+			.select('-contacts -blocklist')
+			.populate('user', ['name']);
+
+		res.json(profiles);
+	} catch (err) {
+		console.error(err.message);
+		res.status(500).send('Server Error');
+	}
+});
+
 // @route   GET api/profiles/:user
 // @desc    get profile by user
 // @access  public
@@ -119,43 +141,51 @@ router.post(
 // @route    PUT api/profiles/
 // @desc     Update user profile
 // @access   Private
-router.put('/', auth, async (req, res) => {
-	const {
-		name: { first, last },
-		bio,
-		blocklist: { block, unblock },
-		status,
-	} = req.body;
-
-	// Build profile data
-	const profileData = {
-		name: {
-			first,
-		},
-	};
-
-	if (status) profileData.status = status;
-	if (last) profileData.name.last = last;
-	if (bio) profileData.bio = bio;
-
-	try {
-		const profile = await Profile.findOneAndUpdate(
-			{ user: req.user.id },
-			{ $set: profileData },
-			{ new: true }
-		);
-
-		if (!profile) {
-			const errors = [{ msg: 'Invalid request' }];
-			return res.status(400).json({ errors });
-		} else {
-			res.json(profile);
+router.put(
+	'/',
+	[auth, [body('name.first', 'First name is required').not().isEmpty()]],
+	async (req, res) => {
+		const errors = validationResult(req);
+		if (!errors.isEmpty()) {
+			return res.status(400).json({ errors: errors.array() });
 		}
-	} catch (err) {
-		console.error(err.message);
-		return res.status(500).send('Server Error');
+
+		const {
+			name: { first, last },
+			bio,
+			status,
+		} = req.body;
+
+		// Build profile data
+		const profileData = {
+			name: {
+				first,
+			},
+		};
+
+		if (status) profileData.status = status;
+		if (last) profileData.name.last = last;
+		if (bio) profileData.bio = bio;
+
+		try {
+			const profile = await Profile.findOneAndUpdate(
+				{ user: req.user.id },
+				{ $set: profileData },
+				{ new: true }
+			);
+
+			if (!profile) {
+				const errors = [{ msg: 'Invalid request' }];
+				return res.status(400).json({ errors });
+			} else {
+				res.json(profile);
+			}
+		} catch (err) {
+			console.error(err.message);
+			return res.status(500).send('Server Error');
+		}
 	}
-});
+);
 
 // @route    PUT api/profiles/add-contact
 // @desc     Add new contact
@@ -191,12 +221,12 @@ router.put('/add-contact', auth, async (req, res) => {
 // @desc     Remove contact
 // @access   Private
 router.put('/remove-contact', auth, async (req, res) => {
-	const { contact } = req.body;
+	const { id } = req.body;
 
 	try {
 		const profile = await Profile.findOneAndUpdate(
-			{ user: req.user.id, 'contacts.id': { $eq: contact.id } },
-			{ $pull: { contacts: contact } },
+			{ user: req.user.id, 'contacts.id': { $eq: id } },
+			{ $pull: { contacts: { id: id } } },
 			{ new: true }
 		);
 

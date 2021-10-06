@@ -54,7 +54,7 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				messages: state.messages.filter(
-					(message) => payload.includes(message._id) === false
+					(message) => !payload.includes(message._id)
 				),
 				loading: false,
 			};
@@ -67,7 +67,9 @@ export default (state = initialState, action) => {
 		case DESELECT_MESSAGE:
 			return {
 				...state,
-				selected: state.selected.filter((obj) => obj.id !== payload),
+				selected: state.selected.filter(
+					(message) => message._id !== payload
+				),
 				loading: false,
 			};
 		case CLEAR_SELECTED:

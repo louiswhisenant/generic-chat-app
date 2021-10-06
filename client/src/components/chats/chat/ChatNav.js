@@ -7,10 +7,11 @@ import {
 	deleteMessage,
 	getMessage,
 } from '../../../redux/actions/message';
-import { editChat } from '../../../redux/actions/chat';
+import { editBookmarks } from '../../../redux/actions/chat';
+import { setAlert } from '../../../redux/actions/alert';
 
 const ChatNav = ({
-	chat: { chat, loading },
+	chat: { chat, bookmarks, loading },
 	selected,
 	chatId,
 	user,
@@ -18,44 +19,44 @@ const ChatNav = ({
 	getMessage,
 	clearSelectedMessages,
 	deleteMessage,
+	editBookmarks,
+	setAlert,
 }) => {
 	const onEdit = () => {
-		getMessage(chatId, selected[0].id, 'edit');
+		getMessage(chatId, selected[0]._id, 'edit');
 	};
 
 	const onReply = () => {
-		getMessage(chatId, selected[0].id, 'reply');
+		getMessage(chatId, selected[0]._id, 'reply');
 	};
 
 	// const onCopy = () => {
 	// 	console.log('copy');
 	// };
 
-	const onBookmark = async () => {
-		await getMessage(chatId, selected[0].id, 'bookmark');
+	const onBookmark = () => {
+		const messageToAdd = {
+			date: selected[0].deliverAt,
+			id: selected[0]._id,
+			author: selected[0].author,
+			text: selected[0].text,
+		};
 
-		if (message) {
-			const messageToAdd = {
-				date: message.deliverAt,
-				id: message._id,
-				author: message.author,
-				text: message.text,
-			};
+		const duplicate = bookmarks.find((obj) => obj.id === messageToAdd.id);
 
-			const participants = chat.participants.forEach((p) => {
-				if (p.id === user._id) {
-					p.bookmarks = [...p.bookmarks, messageToAdd];
-				}
-			});
-
-			editChat(chatId, { participants });
+		if (duplicate) {
+			setAlert('This message has already been bookmarked', 'danger');
 		} else {
-			console.log("message hasn't loaded yet");
+			const newBookmarks = [...bookmarks, messageToAdd];
+
+			editBookmarks(chatId, user._id, { bookmarks: newBookmarks });
 		}
 	};
 
 	const onDelete = () => {
-		const toDelete = selected.map((obj) => obj.id);
+		const toDelete = selected.map((obj) =>
+			obj._id ? obj._id : obj.id && obj.id
+		);
 		deleteMessage(chatId, toDelete);
 	};
 
@@ -128,4 +129,6 @@ export default connect(mapStateToProps, {
 	getMessage,
 	clearSelectedMessages,
 	deleteMessage,
+	editBookmarks,
+	setAlert,
 })(ChatNav);

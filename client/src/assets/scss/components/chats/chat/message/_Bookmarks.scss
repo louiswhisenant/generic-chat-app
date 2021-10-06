@@ -28,13 +28,26 @@
 		}
 
 		.bookmark {
-			.bookmark-date {
-				opacity: 0.5;
+			.bookmark-content {
+				.bookmark-date {
+					opacity: 0.5;
+				}
+
+				.bookmark-text {
+					max-height: 6rem;
+					overflow-y: scroll;
+				}
 			}
 
-			.bookmark-text {
-				max-height: 6rem;
-				overflow-y: scroll;
+			.bookmark-actions {
+				display: flex;
+				align-items: center;
+				justify-content: space-around;
+
+				.fas {
+					padding: 0.5rem;
+					cursor: pointer;
+				}
 			}
 
 			hr {

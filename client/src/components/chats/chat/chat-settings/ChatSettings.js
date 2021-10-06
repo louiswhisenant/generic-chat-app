@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react';
+import { Fragment, useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -10,12 +10,19 @@ import {
 	Label,
 	Navbar,
 	NavbarBrand,
+	Spinner,
 } from 'reactstrap';
 import { setAlert } from '../../../../redux/actions/alert';
-import { editChat } from '../../../../redux/actions/chat';
+import { editChat, getChatParticipants } from '../../../../redux/actions/chat';
+import Contact from '../../../contacts/Contact';
 import DeleteChat from './DeleteChat';
 
-const ChatSettings = ({ chat, editChat, setAlert }) => {
+const ChatSettings = ({
+	chat: { chat, participants, loading },
+	editChat,
+	getChatParticipants,
+	setAlert,
+}) => {
 	const [name, setName] = useState(``);
 
 	const onChange = (e) => {
@@ -34,19 +41,31 @@ const ChatSettings = ({ chat, editChat, setAlert }) => {
 		setName('');
 	};
 
+	useEffect(() => {
+		if (chat) {
+			const { participants } = chat;
+
+			getChatParticipants(chat._id, { participants });
+		}
+	}, [getChatParticipants, chat]);
+
 	const nav = (
 		<Navbar dark className='fixed-top' id='chat-nav'>
-			<Link to={`/chats/${chat._id}`} className='back-to-chats'>
-				<i className='fas fa-arrow-left'></i>
-			</Link>
-			<NavbarBrand>{chat.name} Settings</NavbarBrand>
+			{!loading && (
+				<Fragment>
+					<Link to={`/chats/${chat._id}`} className='back-to-chats'>
+						<i className='fas fa-arrow-left'></i>
+					</Link>
+					<NavbarBrand>{chat.name} Settings</NavbarBrand>
+				</Fragment>
+			)}
 		</Navbar>
 	);
 
 	return (
 		<Fragment>
 			{nav}
-			{!chat.loading && (
+			{!loading && (
 				<Container id='chat-settings'>
 					<div className='chat-name'>
 						<h2 className='title color-3 chat-name-title'>
@@ -85,12 +104,17 @@ const ChatSettings = ({ chat, editChat, setAlert }) => {
 						<h2 className='title color-4 chat-participants-title'>
 							Manage Participants
 						</h2>
-						{chat.participants.map((p) => (
-							<div key={p.id} className='participant-card'>
-								<div className='p-name'>Name: {p.id}</div>
-								<div className='p-role'>Role: {p.role}</div>
-							</div>
-						))}
+						{participants && !loading && participants.length > 0 ? (
+							participants.map((p) => (
+								<div
+									key={p.user._id}
+									className='participant-card'>
+									<Contact contact={p} />
+								</div>
+							))
+						) : (
+							<Spinner />
+						)}
 					</div>
 
 					<DeleteChat />
@@ -101,7 +125,11 @@ const ChatSettings = ({ chat, editChat, setAlert }) => {
 };
 
 const mapStateToProps = (state) => ({
-	chat: state.chat.chat,
+	chat: state.chat,
 });
 
-export default connect(mapStateToProps, { editChat, setAlert })(ChatSettings);
+export default connect(mapStateToProps, {
+	editChat,
+	getChatParticipants,
+	setAlert,
+})(ChatSettings);

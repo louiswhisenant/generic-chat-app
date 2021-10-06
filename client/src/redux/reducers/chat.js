@@ -1,8 +1,11 @@
 import {
 	CREATE_CHAT,
 	GET_CHAT,
+	GET_CHAT_BOOKMARKS,
+	GET_CHAT_PARTICIPANTS,
 	GET_CHATS,
 	EDIT_CHAT,
+	EDIT_BOOKMARKS,
 	DELETE_CHAT,
 	CHAT_ERROR,
 	CLEAR_CHAT,
@@ -10,6 +13,8 @@ import {
 
 const initialState = {
 	chat: null,
+	participants: [],
+	bookmarks: [],
 	chats: [],
 	loading: true,
 	error: {},
@@ -30,6 +35,19 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				chat: payload,
+				loading: false,
+			};
+		case GET_CHAT_BOOKMARKS:
+		case EDIT_BOOKMARKS:
+			return {
+				...state,
+				bookmarks: payload,
+				loading: false,
+			};
+		case GET_CHAT_PARTICIPANTS:
+			return {
+				...state,
+				participants: payload,
 				loading: false,
 			};
 		case GET_CHATS:
@@ -64,6 +82,8 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				chat: null,
+				participants: [],
+				bookmarks: [],
 				loading: false,
 			};
 		default:

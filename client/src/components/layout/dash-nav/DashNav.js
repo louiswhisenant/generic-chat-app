@@ -67,7 +67,9 @@ const DashNav = ({ auth, profile, url, logout }) => {
 						onClick={() => {
 							setIsOpen(false);
 						}}></i>
-					{!auth.loading && !profile.loading && <NavUser />}
+					{profile && !auth.loading && !profile.loading && (
+						<NavUser />
+					)}
 					<NavItem className='dash-nav-settings'>
 						<Link
 							to={`${url}/settings`}

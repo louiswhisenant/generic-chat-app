@@ -2,12 +2,12 @@ import { Fragment, useEffect } from 'react';
 import { Spinner } from 'reactstrap';
 import { connect } from 'react-redux';
 import { getMessages } from '../../../redux/actions/message';
-import { getChat } from '../../../redux/actions/chat';
+import { getBookmarks, getChat } from '../../../redux/actions/chat';
 import Message from './message/Message';
 import ChatNav from './ChatNav';
 import NewMessage from './message/NewMessage';
 import MessagePreview from './message/MessagePreview';
-import Bookmarks from './message/Bookmarks';
+import Bookmarks from './Bookmarks';
 
 const Chat = ({
 	match,
@@ -15,11 +15,13 @@ const Chat = ({
 	chat,
 	getMessages,
 	getChat,
+	getBookmarks,
 }) => {
 	useEffect(() => {
 		getMessages(match.params.id);
 		getChat(match.params.id);
-	}, [getMessages, getChat, match]);
+		getBookmarks(match.params.id);
+	}, [getMessages, getChat, getBookmarks, match]);
 
 	useEffect(() => {
 		if (!chat.loading && !loading && messages.length > 0) {
@@ -37,32 +39,13 @@ const Chat = ({
 			<div id='chat'>
 				<ChatNav chatId={match.params.id} />
 				<div id='chat-messages'>
-					<Bookmarks chat={chat} />
+					<Bookmarks />
 					<div className='chat-fade'></div>
 					{!loading && messages.length > 0 ? (
 						<Fragment>
-							{messages.map(
-								({
-									text,
-									createdAt,
-									updatedAt,
-									status,
-									author,
-									_id,
-									reply,
-								}) => (
-									<Message
-										text={text}
-										createdAt={createdAt}
-										updatedAt={updatedAt}
-										status={status}
-										author={author}
-										id={_id}
-										reply={reply}
-										key={_id}
-									/>
-								)
-							)}
+							{messages.map((message) => (
+								<Message message={message} key={message._id} />
+							))}
 							<div
 								className='last-message'
 								id='last-message'></div>
@@ -90,4 +73,5 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
 	getMessages,
 	getChat,
+	getBookmarks,
 })(Chat);

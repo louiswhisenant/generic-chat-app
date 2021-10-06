@@ -4,7 +4,6 @@ import { removeAlert } from '../../redux/actions/alert';
 
 const Alert = ({ alerts, removeAlert }) => {
 	const closeAlert = (id) => {
-		console.log('closeAlert');
 		removeAlert(id);
 	};
 

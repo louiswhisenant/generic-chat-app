@@ -88,7 +88,7 @@ const NewMessage = ({
 								<i className='fas fa-expand'></i>
 							</Button>
 						</InputGroupAddon>
-						<textarea
+						<Input
 							type='text'
 							name='message'
 							value={messageText}
@@ -98,7 +98,8 @@ const NewMessage = ({
 							}`}
 							autoFocus
 							id='message-input'
-							autoComplete='off'></textarea>
+							autoComplete='off'
+						/>
 						<InputGroupAddon addonType='append'>
 							<Button
 								type='submit'

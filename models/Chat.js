@@ -18,6 +18,7 @@ const ChatSchema = new Schema(
 				},
 				bookmarks: [
 					{
+						_id: false,
 						id: {
 							type: Schema.Types.ObjectId,
 							ref: 'message',

@@ -146,24 +146,22 @@ export const deleteMessage = (chat, messages) => async (dispatch) => {
 };
 
 // Select Message
-export const selectMessage =
-	({ id, author }) =>
-	(dispatch) => {
-		try {
-			dispatch({
-				type: SELECT_MESSAGE,
-				payload: { id, author },
-			});
-		} catch (err) {
-			dispatch({
-				type: MESSAGE_ERROR,
-				payload: {
-					msg: err.response.statusText,
-					status: err.response.status,
-				},
-			});
-		}
-	};
+export const selectMessage = (message) => (dispatch) => {
+	try {
+		dispatch({
+			type: SELECT_MESSAGE,
+			payload: message,
+		});
+	} catch (err) {
+		dispatch({
+			type: MESSAGE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+	}
+};
 
 // Deselect Message
 export const deselectMessage = (id) => (dispatch) => {

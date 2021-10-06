@@ -7,6 +7,8 @@ import {
 	PROFILE_LOADING,
 	GET_PROFILE_SEARCH,
 	CLEAR_PROFILE_SEARCH,
+	ADD_PROFILE_CONTACT,
+	REMOVE_PROFILE_CONTACT,
 } from '../actions/types';
 
 const initialState = {
@@ -26,6 +28,22 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				profile: payload,
+				loading: false,
+			};
+		case ADD_PROFILE_CONTACT:
+			return {
+				...state,
+				profile: payload.res,
+				profiles: [...state.profiles, payload.profile],
+				loading: false,
+			};
+		case REMOVE_PROFILE_CONTACT:
+			return {
+				...state,
+				profile: payload.profile,
+				profiles: state.profiles.filter(
+					(profile) => profile.user._id !== payload.id
+				),
 				loading: false,
 			};
 		case GET_PROFILES:
