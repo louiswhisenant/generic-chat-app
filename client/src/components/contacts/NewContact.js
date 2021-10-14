@@ -70,8 +70,8 @@ const NewContact = ({
 
 	useEffect(() => {
 		!modal && setFormData('');
-		clearProfileSearch();
-	}, [modal]);
+		!modal && search && clearProfileSearch();
+	}, [modal, search, clearProfileSearch]);
 
 	return (
 		<div id='new-contact'>

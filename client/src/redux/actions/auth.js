@@ -35,7 +35,7 @@ export const loadUser = () => async (dispatch) => {
 
 // Register User
 export const register =
-	({ username, email, password }) =>
+	({ username, email, password, registrationkey }) =>
 	async (dispatch) => {
 		const config = {
 			headers: {
@@ -43,7 +43,12 @@ export const register =
 			},
 		};
 
-		const body = JSON.stringify({ username, email, password });
+		const body = JSON.stringify({
+			username,
+			email,
+			password,
+			registrationkey,
+		});
 
 		try {
 			const res = await axios.post('api/users', body, config);
@@ -115,4 +120,6 @@ export const login = (account, password) => async (dispatch) => {
 export const logout = () => (dispatch) => {
 	dispatch({ type: CLEAR_PROFILE });
 	dispatch({ type: LOGOUT });
+
+	window.location.reload(true);
 };

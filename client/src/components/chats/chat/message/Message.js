@@ -4,31 +4,36 @@ import Moment from 'react-moment';
 import {
 	deselectMessage,
 	selectMessage,
+	clearSelectedMessages,
 } from '../../../../redux/actions/message';
 import { setAlert } from '../../../../redux/actions/alert';
 
 const Message = ({
 	message,
+	messages,
 	auth: { user, loading },
 	selected,
 	selectMessage,
 	deselectMessage,
+	clearSelectedMessages,
 	setAlert,
 }) => {
 	const replyRef = useRef(null);
 	const { text, createdAt, updatedAt, status, author, _id, reply } = message;
 
-	const onReplyClick = (message) => {
-		const original = document.getElementById(message._id);
+	const onReplyClick = (id) => {
+		clearSelectedMessages();
+		const originalMessage = messages.find((msg) => msg._id === id);
+		const originalEl = document.getElementById(id);
 
-		if (original) {
-			original.scrollIntoView({
+		if (originalEl) {
+			originalEl.scrollIntoView({
 				block: 'center',
 				behavior: 'smooth',
 			});
 
 			setTimeout(() => {
-				selectMessage(message);
+				selectMessage(originalMessage);
 			}, 250);
 		} else {
 			setAlert('The original message no longer exists', 'danger');
@@ -118,7 +123,7 @@ const Message = ({
 							className='message-reply-scroll'
 							ref={replyRef}
 							onClick={() => {
-								onReplyClick(reply.id, reply.author);
+								onReplyClick(reply.id);
 							}}>
 							<i className='fas fa-comment-alt'></i>
 						</div>
@@ -134,10 +139,12 @@ const Message = ({
 const mapStateToProps = (state) => ({
 	auth: state.auth,
 	selected: state.message.selected,
+	messages: state.message.messages,
 });
 
 export default connect(mapStateToProps, {
 	selectMessage,
 	deselectMessage,
+	clearSelectedMessages,
 	setAlert,
 })(Message);

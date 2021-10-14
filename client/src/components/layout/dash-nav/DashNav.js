@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Navbar, NavbarBrand, Nav, NavItem, Button, Spinner } from 'reactstrap';
+import { Navbar, NavbarBrand, Nav, NavItem, Button } from 'reactstrap';
 import { Link, useLocation } from 'react-router-dom';
 import { logout } from '../../../redux/actions/auth';
 import { connect } from 'react-redux';

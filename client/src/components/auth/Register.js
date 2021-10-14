@@ -11,13 +11,15 @@ const Register = ({ isAuthenticated, register, setAlert }) => {
 		email: '',
 		password: '',
 		password2: '',
+		registrationkey: '',
 	});
 	const usernameInput = document.querySelector('#register-username');
 	const emailInput = document.querySelector('#register-email');
 	const passwordInput = document.querySelector('#register-password');
 	const password2Input = document.querySelector('#register-password-2');
+	const registrationKeyInput = document.querySelector('#registration-key');
 
-	const { username, email, password, password2 } = data;
+	const { username, email, password, password2, registrationkey } = data;
 
 	const onChange = (e) => {
 		setData({ ...data, [e.target.name]: e.target.value });
@@ -29,7 +31,7 @@ const Register = ({ isAuthenticated, register, setAlert }) => {
 		if (password !== password2) {
 			setAlert('Passwords must match', 'danger');
 		} else {
-			await register({ username, email, password });
+			await register({ username, email, password, registrationkey });
 		}
 	};
 
@@ -108,7 +110,7 @@ const Register = ({ isAuthenticated, register, setAlert }) => {
 						</Label>
 					)}
 				</FormGroup>
-				<FormGroup className='mb-4'>
+				<FormGroup className='mb-2'>
 					<Input
 						type='password'
 						name='password2'
@@ -124,6 +126,27 @@ const Register = ({ isAuthenticated, register, setAlert }) => {
 							className='label'
 							onClick={() => password2Input.focus()}>
 							retype password
+						</Label>
+					)}
+				</FormGroup>
+				<FormGroup className='mb-4'>
+					<Input
+						type='password'
+						name='registrationkey'
+						value={registrationkey}
+						onChange={(e) => onChange(e)}
+						className='input'
+						autoFocus
+						id='registration-key'
+						placeholder='registration key'
+						autoComplete='registrationkey'
+					/>
+					{username === '' && (
+						<Label
+							for='registrationkey'
+							className='label'
+							onClick={() => registrationKeyInput.focus()}>
+							registration key
 						</Label>
 					)}
 				</FormGroup>

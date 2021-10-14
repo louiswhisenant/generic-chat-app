@@ -19,7 +19,7 @@ const Chats = ({ chat: { chats, loading }, getChats, resetMessages }) => {
 		<div id='chats'>
 			{loading ? (
 				<Spinner />
-			) : (
+			) : chats.length > 0 ? (
 				chats.map((chat) => (
 					<Link
 						to={`/chats/${chat._id}#last-message`}
@@ -48,6 +48,8 @@ const Chats = ({ chat: { chats, loading }, getChats, resetMessages }) => {
 						</div>
 					</Link>
 				))
+			) : (
+				<div className='no-chats'>No chats to show.</div>
 			)}
 			{!loading && <NewChat />}
 		</div>

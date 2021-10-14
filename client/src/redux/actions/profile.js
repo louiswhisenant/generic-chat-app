@@ -8,6 +8,7 @@ import {
 	CLEAR_PROFILE,
 	DELETE_ACCOUNT,
 	PROFILE_LOADING,
+	PROFILES_LOADING,
 	GET_PROFILE_SEARCH,
 	CLEAR_PROFILE_SEARCH,
 	ADD_PROFILE_CONTACT,
@@ -84,6 +85,8 @@ export const getProfileById = (userId) => async (dispatch) => {
 export const getContactProfiles = () => async (dispatch) => {
 	try {
 		const res = await axios.get('/api/profiles');
+
+		dispatch(setProfilesLoading());
 
 		dispatch({
 			type: GET_PROFILES,
@@ -283,6 +286,10 @@ export const deleteAccount = () => async (dispatch) => {
 
 export const setProfileLoading = () => (dispatch) => {
 	dispatch({ type: PROFILE_LOADING });
+};
+
+export const setProfilesLoading = () => (dispatch) => {
+	dispatch({ type: PROFILES_LOADING });
 };
 
 export const clearProfileSearch = () => (dispatch) => {

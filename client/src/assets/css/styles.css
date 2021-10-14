@@ -258,16 +258,15 @@
 }
 
 #new-chat #new-chat-modal {
-  position: absolute;
-  top: 25%;
+  position: fixed;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 1rem;
   background-color: #111111;
-  width: 20rem;
-  max-width: 75%;
-  max-height: 50%;
-  overflow-y: scroll;
+  max-width: 80%;
+  max-height: 75%;
+  overflow-y: hidden;
   border-radius: 0.25rem;
 }
 #new-chat #new-chat-modal .new-chat-modal-header {
@@ -284,8 +283,16 @@
   border: none;
   padding: 0.5rem;
 }
+#new-chat #new-chat-modal .new-chat-modal-body {
+  max-height: 15rem;
+  overflow-y: scroll;
+  padding: 0 1rem;
+}
+#new-chat #new-chat-modal .new-chat-modal-body .contact-card {
+  cursor: pointer;
+}
 #new-chat #new-chat-btn {
-  position: absolute;
+  position: fixed;
   top: 90vh;
   right: 3rem;
   background-color: #111111;
@@ -331,6 +338,13 @@
   display: flex;
   justify-content: space-between;
 }
+#chats .no-chats {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  text-align: center;
+  transform: translate(-50%, -50%);
+}
 
 #chat {
   position: relative;
@@ -372,7 +386,7 @@
 #chat-nav .back-to-chats {
   margin: 0 1rem 0 1rem;
 }
-#chat-nav .navbar-brand-name {
+#chat-nav .navbar-brand {
   font-family: "Lobster", cursive;
 }
 #chat-nav .chat-context-options,
@@ -597,7 +611,7 @@
 }
 #bookmarks-anchor .bookmarks {
   position: fixed;
-  width: 50vw;
+  width: 75vw;
   height: calc(100vh - 7rem);
   top: 3.5rem;
   left: 0;
@@ -674,7 +688,7 @@
   margin-bottom: -0.2rem;
 }
 #contacts .contacts-page {
-  padding-bottom: 100%;
+  padding-bottom: 5rem;
 }
 #contacts .contact-card {
   background-color: #111111;
@@ -770,9 +784,10 @@
   padding: 0;
   padding-left: 0.5rem;
   justify-content: flex-start;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  z-index: 100;
 }
 #nav-anchor #dash-nav .navbar-toggler {
   width: auto;

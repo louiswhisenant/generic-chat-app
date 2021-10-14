@@ -7,7 +7,7 @@ const jwt = require('jsonwebtoken');
 const config = require('../../config');
 const profile = require('./profiles');
 
-const { JWT_SECRET } = config;
+const { JWT_SECRET, REGISTRATION_KEY } = config;
 
 // @route   POST api/users
 // @desc    Register user
@@ -16,6 +16,7 @@ router.post(
 	'/',
 	[
 		body('username', 'Username is required').not().isEmpty(),
+		body('registrationkey', 'Registration Key is required').not().isEmpty(),
 		body('email', 'Valid email required').isEmail(),
 		body('password', 'Password with 6+ characters is required').isLength({
 			min: 6,
@@ -29,7 +30,13 @@ router.post(
 			return res.status(400).json({ errors: errors.array() });
 		}
 		// else
-		const { username, email, password } = req.body;
+		const { username, email, password, registrationkey } = req.body;
+
+		if (registrationkey !== REGISTRATION_KEY) {
+			return res
+				.status(400)
+				.json({ errors: [{ msg: 'Registraion Key is invalid' }] });
+		}
 
 		try {
 			let user = await User.findOne({ $or: [{ email }, { username }] });

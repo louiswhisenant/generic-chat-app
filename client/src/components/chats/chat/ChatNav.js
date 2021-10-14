@@ -66,7 +66,7 @@ const ChatNav = ({
 
 	const nothingSelected = (
 		<Fragment>
-			<NavbarBrand className='navbar-brand-name'>
+			<NavbarBrand className='navbar-brand'>
 				{!loading && chat !== null
 					? chat.name
 						? chat.name

@@ -5,6 +5,7 @@ import {
 	CLEAR_PROFILE,
 	UPDATE_PROFILE,
 	PROFILE_LOADING,
+	PROFILES_LOADING,
 	GET_PROFILE_SEARCH,
 	CLEAR_PROFILE_SEARCH,
 	ADD_PROFILE_CONTACT,
@@ -16,6 +17,7 @@ const initialState = {
 	profiles: [],
 	search: null,
 	loading: true,
+	profilesLoading: true,
 	error: {},
 };
 
@@ -51,6 +53,7 @@ export default (state = initialState, action) => {
 				...state,
 				profiles: payload,
 				loading: false,
+				profilesLoading: false,
 			};
 		case GET_PROFILE_SEARCH:
 			return {
@@ -80,6 +83,11 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				loading: true,
+			};
+		case PROFILES_LOADING:
+			return {
+				...state,
+				profilesLoading: true,
 			};
 		default:
 			return state;

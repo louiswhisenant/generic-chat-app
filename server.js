@@ -3,9 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const config = require('./config');
 const http = require('http');
-const socketio = require('socket.io');
-const auth = require('./middleware/auth');
-const Chat = require('./models/Chat');
+const { Server } = require('socket.io');
 // TODO IMPORT SOCKET FUNCTIONS
 
 const { MONGO_URI } = config;
@@ -56,8 +54,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Instantiate socket.io
-const server = http.createServer(app);
-const io = socketio(server);
+const httpServer = http.createServer(app);
+const io = new Server(httpServer);
 
 // declare PORT var
 const PORT = config.PORT || 5000;
@@ -65,3 +63,33 @@ const PORT = config.PORT || 5000;
 app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 
 // Socket logic
+io.on('connection', (socket) => {
+	// ...
+	console.log('Socket.io connected...');
+
+	socket.on('joinChat', ({ username, chat }) => {
+		// TODO make socket use user._id as id
+		const user = { id: socket.id, username, chat };
+
+		socket.join(user.chat);
+
+		console.log(`${user.username} has joined ${chat}`);
+	});
+
+	// Listen for 'chatMessage'
+	socket.on('chatMessage', (msg) => {
+		const user = users.find((user) => user.id === socket.id);
+
+		io.to(user.room).emit('message', msg);
+	});
+
+	socket.on('typing', () => {
+		console.log('User is typing...');
+	});
+
+	socket.on('disconnect', (reason) => {
+		console.log(reason); // e.g. "ping timeout"
+	});
+});
+
+httpServer.listen(8000, () => console.log('Socket.io started on port 8000'));

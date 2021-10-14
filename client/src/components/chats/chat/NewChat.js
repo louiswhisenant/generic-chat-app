@@ -1,14 +1,17 @@
-import { useState, useRef, useEffect } from 'react';
-import { Button } from 'reactstrap';
+import { useState, useRef, useEffect, Fragment } from 'react';
+import { Button, Spinner } from 'reactstrap';
+import Contact from '../../contacts/Contact';
 import { connect } from 'react-redux';
 import { createChat } from '../../../redux/actions/chat';
+import { getContactProfiles } from '../../../redux/actions/profile';
 import { useHistory } from 'react-router';
 
 const NewChat = ({
-	profile: { profile, loading },
+	profile: { profiles, loading, profilesLoading },
 	chats,
 	user,
 	createChat,
+	getContactProfiles,
 }) => {
 	const [modal, setModal] = useState(false);
 	const modalRef = useRef(null);
@@ -51,6 +54,21 @@ const NewChat = ({
 		setModal(false);
 	};
 
+	const mapContacts = (profiles) => {
+		return profiles
+			.sort((a, b) => a.name.first.localeCompare(b.name.first))
+			.map((profile) => (
+				<Fragment>
+					<div
+						className='contact-card'
+						onClick={() => createNewChat(profile.id)}>
+						<Contact contact={profile} />
+					</div>
+					<hr />
+				</Fragment>
+			));
+	};
+
 	const clickListener = (e) => {
 		if (modalRef.current && modalRef.current.contains(e.target)) {
 			return;
@@ -64,6 +82,11 @@ const NewChat = ({
 		return () => {
 			document.removeEventListener('click', clickListener);
 		};
+		// eslint-disable-next-line
+	}, []);
+
+	useEffect(() => {
+		getContactProfiles();
 		// eslint-disable-next-line
 	}, []);
 
@@ -89,15 +112,15 @@ const NewChat = ({
 						</div>
 						<hr className='header-line' />
 						<div className='new-chat-modal-body'>
-							{profile.contacts.map((contact) => (
-								<div
-									onClick={() => createNewChat(contact.id)}
-									key={contact.id}>
-									<h3>{contact.nickname}</h3>
-									<p>{contact.id}</p>
-									<hr className='contact-line' />
+							{profilesLoading ? (
+								<Spinner />
+							) : profiles.length > 0 ? (
+								mapContacts(profiles)
+							) : (
+								<div className='no-contacts'>
+									No contacts to show.
 								</div>
-							))}
+							)}
 						</div>
 					</div>
 				)}
@@ -112,4 +135,6 @@ const mapStateToProps = (state) => ({
 	user: state.auth.user,
 });
 
-export default connect(mapStateToProps, { createChat })(NewChat);
+export default connect(mapStateToProps, { createChat, getContactProfiles })(
+	NewChat
+);
