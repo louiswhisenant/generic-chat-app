@@ -9,6 +9,7 @@ import {
 	CLEAR_SELECTED,
 	CLEAR_MESSAGE,
 	MESSAGE_ERROR,
+	CREATE_MESSAGE_ERROR,
 	MESSAGE_RESET,
 } from '../actions/types';
 
@@ -97,6 +98,13 @@ export default (state = initialState, action) => {
 				...state,
 				loading: false,
 				error: payload,
+			};
+		case CREATE_MESSAGE_ERROR:
+			return {
+				...state,
+				loading: false,
+				error: payload.error,
+				messages: [...state.messages, payload.message],
 			};
 		default:
 			return state;

@@ -1,10 +1,13 @@
 import axios from 'axios';
 import { setAlert } from './alert';
+import db from '../../db';
+import { v4 as uuid } from 'uuid';
 
 import {
 	GET_MESSAGE,
 	GET_MESSAGES,
 	MESSAGE_ERROR,
+	CREATE_MESSAGE_ERROR,
 	DELETE_MESSAGE,
 	CREATE_MESSAGE,
 	EDIT_MESSAGE,
@@ -16,7 +19,7 @@ import {
 } from './types';
 
 // Create message
-export const createMessage = (formData, chat) => async (dispatch) => {
+export const createMessage = (formData, chat, user) => async (dispatch) => {
 	const config = {
 		headers: {
 			'Content-Type': 'application/json',
@@ -25,6 +28,7 @@ export const createMessage = (formData, chat) => async (dispatch) => {
 
 	try {
 		const res = await axios.post(`/api/messages/${chat}`, formData, config);
+		console.log('successful message', res);
 
 		dispatch({
 			type: CREATE_MESSAGE,
@@ -33,11 +37,27 @@ export const createMessage = (formData, chat) => async (dispatch) => {
 
 		dispatch(setAlert('Message sent', 'success'));
 	} catch (err) {
+		const message = {
+			_id: uuid(),
+			status: 'error',
+			chat,
+			text: formData.text,
+			createdAt: false,
+			updatedAt: false,
+			deliverAt: formData.deliverAt ?? Date.now(),
+			author: user,
+		};
+
+		db.messages.add(message);
+
 		dispatch({
-			type: MESSAGE_ERROR,
+			type: CREATE_MESSAGE_ERROR,
 			payload: {
-				msg: err.response.statusText,
-				status: err.response.status,
+				error: {
+					msg: err.response.statusText,
+					status: err.response.status,
+				},
+				message,
 			},
 		});
 		dispatch(setAlert('Something went wrong', 'danger'));

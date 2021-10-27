@@ -18,6 +18,7 @@ import { connect } from 'react-redux';
 const NewMessage = ({
 	chat,
 	message: { message, loading },
+	user,
 	createMessage,
 	clearMessage,
 	clearSelectedMessages,
@@ -56,13 +57,17 @@ const NewMessage = ({
 					author: message.author,
 				};
 
-				await createMessage({ text: messageText, reply }, chat);
+				await createMessage(
+					{ text: messageText, reply },
+					chat,
+					user._id
+				);
 			}
 
 			clearMessage();
 			clearSelectedMessages();
 		} else {
-			await createMessage({ text: messageText }, chat);
+			await createMessage({ text: messageText }, chat, user._id);
 			setMessageText('');
 			setExpand(false);
 			messageInput.focus();
@@ -133,6 +138,7 @@ const NewMessage = ({
 
 const mapStateToProps = (state) => ({
 	message: state.message,
+	user: state.auth.user,
 });
 
 export default connect(mapStateToProps, {
