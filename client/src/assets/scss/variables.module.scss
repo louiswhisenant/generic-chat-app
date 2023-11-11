@@ -2,17 +2,10 @@ $color-1: #292929;
 $color-2: #eeeeee;
 $color-3: #118392;
 $color-4: #ad7100;
-// $dark: #4b4b4b;
+
 $dark: #111111;
 
 $shadow: #202020;
-
-$initialized: #7397af;
-$submitted: #067d9b;
-$retrieving: #d19945;
-$retrieved: #e06c00;
-$stocking: #4fc25b;
-$complete: #00750a;
 
 $color-orange: #e06c00;
 $color-green: #06720f;
@@ -32,14 +25,7 @@ $bp-xxl: 1400px;
 	color4: $color-4;
 
 	dark: $dark;
-	colorShadow: $shadow;
-
-	initialized: $initialized;
-	submitted: $submitted;
-	retrieving: $retrieving;
-	retrieved: $retrieved;
-	stocking: $stocking;
-	complete: $complete;
+	// colorShadow: $shadow;
 
 	colorOrange: $color-orange;
 	colorGreen: $color-green;

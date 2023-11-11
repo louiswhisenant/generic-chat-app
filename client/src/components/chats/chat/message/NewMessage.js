@@ -49,7 +49,9 @@ const NewMessage = ({
 
 		if (message) {
 			if (message.type === 'edit') {
-				await editMessage(message.chat, message._id, messageText);
+				await editMessage(message.chat, message._id, {
+					text: messageText,
+				});
 			} else if (message.type === 'reply') {
 				const reply = {
 					text: message.text,

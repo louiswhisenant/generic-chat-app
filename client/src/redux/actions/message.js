@@ -28,7 +28,6 @@ export const createMessage = (formData, chat, user) => async (dispatch) => {
 
 	try {
 		const res = await axios.post(`/api/messages/${chat}`, formData, config);
-		console.log('successful message', res);
 
 		dispatch({
 			type: CREATE_MESSAGE,
@@ -37,16 +36,25 @@ export const createMessage = (formData, chat, user) => async (dispatch) => {
 
 		dispatch(setAlert('Message sent', 'success'));
 	} catch (err) {
+		// If try block fails, persist the data to indexedDB instead for future resend attempts
 		const message = {
 			_id: uuid(),
 			status: 'error',
 			chat,
 			text: formData.text,
-			createdAt: false,
-			updatedAt: false,
-			deliverAt: formData.deliverAt ?? Date.now(),
+			createdAt: new Date().toISOString(),
+			updatedAt: new Date().toISOString(),
 			author: user,
 		};
+
+		if (formData.reply) {
+			message.reply = formData.reply;
+		}
+		if (formData.deliverAt) {
+			message.deliverAt = new Date(formData.deliverAt).toISOString();
+		} else {
+			message.deliverAt = new Date().toISOString();
+		}
 
 		db.messages.add(message);
 
@@ -61,6 +69,35 @@ export const createMessage = (formData, chat, user) => async (dispatch) => {
 			},
 		});
 		dispatch(setAlert('Something went wrong', 'danger'));
+	}
+};
+
+// Resend message
+export const resendMessage = (formData, chat, user) => async (dispatch) => {
+	const config = {
+		headers: {
+			'Content-Type': 'application/json',
+		},
+	};
+
+	try {
+		const res = await axios.post(`/api/messages/${chat}`, formData, config);
+
+		dispatch({
+			type: CREATE_MESSAGE,
+			payload: res.data,
+		});
+
+		dispatch(setAlert('Message sent', 'success'));
+	} catch (err) {
+		dispatch({
+			type: MESSAGE_ERROR,
+			payload: {
+				msg: err.response.statusText,
+				status: err.response.status,
+			},
+		});
+		dispatch(setAlert('Failed to resend message', 'danger'));
 	}
 };
 
@@ -88,10 +125,17 @@ export const getMessage = (chat, message, type) => async (dispatch) => {
 export const getMessages = (chat) => async (dispatch) => {
 	try {
 		const res = await axios.get(`/api/messages/${chat}`);
+		const dexRes = await db.messages.where('chat').equals(chat).toArray();
+
+		let messages = [...res.data];
+
+		if (dexRes) {
+			messages = [...res.data, ...dexRes];
+		}
 
 		dispatch({
 			type: GET_MESSAGES,
-			payload: res.data,
+			payload: messages,
 		});
 	} catch (err) {
 		dispatch({
@@ -114,7 +158,7 @@ export const editMessage = (chat, message, formData) => async (dispatch) => {
 	try {
 		const res = await axios.put(
 			`/api/messages/${chat}/${message}`,
-			{ text: formData },
+			formData,
 			config
 		);
 

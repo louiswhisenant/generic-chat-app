@@ -26,6 +26,7 @@ router.post(
 				chat: req.params.chat,
 				author: req.user.id,
 				text: encryptString(req.body.text),
+				status: 'sent',
 			});
 
 			if (req.body.deliverAt) {
@@ -132,6 +133,9 @@ router.put(
 			}
 
 			message.text = encryptString(req.body.text);
+			if (req.body.status) {
+				message.status = req.body.status;
+			}
 
 			await message.save();
 

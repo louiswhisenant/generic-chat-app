@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 // Styles
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './assets/css/styles.css';
+import './assets/scss/styles.scss';
 
 // components
 import Landing from './components/layout/Landing';

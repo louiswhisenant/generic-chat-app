@@ -7,6 +7,8 @@ import {
 	clearSelectedMessages,
 } from '../../../../redux/actions/message';
 import { setAlert } from '../../../../redux/actions/alert';
+import MessageError from './MessageError';
+// import useOnScreen from '../../../../utils/useOnScreen';
 
 const Message = ({
 	message,
@@ -19,6 +21,8 @@ const Message = ({
 	setAlert,
 }) => {
 	const replyRef = useRef(null);
+	// const seenRef = useRef(null);
+	// const isVisible = useOnScreen(seenRef);
 	const { text, createdAt, updatedAt, status, author, _id, reply } = message;
 
 	const onReplyClick = (id) => {
@@ -72,6 +76,13 @@ const Message = ({
 		};
 		// eslint-disable-next-line
 	}, []);
+
+	// @TODO apdate to useMemo
+	// useEffect(() => {
+	// 	if (isVisible && user._id !== author && status !== 'read') {
+	// 		editMessage(chat, _id, { status: 'read' });
+	// 	}
+	// }, [user, author, isVisible, status, chat, _id]);
 
 	return (
 		!loading && (
@@ -129,6 +140,8 @@ const Message = ({
 						</div>
 					</div>
 				)}
+
+				{status === 'error' && <MessageError message={message} />}
 
 				<p className='message-text'>{text}</p>
 			</div>
